@@ -4,6 +4,8 @@ import os
 
 # Create your views here.
 
+# class ChatView(ModelViewSet)
+
 def index(request):
     file_path = os.path.join('..', '..', 'frontend', 'public', 'index.html')
 
