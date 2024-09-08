@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'tcc_llm.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tccdb',
+        'USER': 'postgres',
+        'PASSWORD': 'AtumSQL29*',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
