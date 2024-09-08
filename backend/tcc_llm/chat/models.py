@@ -19,7 +19,7 @@ class Chat(models.Model):
         return str(self.title)
 
 class Message(models.Model):
-    chat_id = models.PositiveBigIntegerField()
+    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.SET_DEFAULT, default=1)
     content = models.CharField(max_length=1024)
     sender_is_llm = models.BooleanField(blank=False)
     date = models.DateField()
