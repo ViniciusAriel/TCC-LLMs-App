@@ -13,15 +13,15 @@ from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
 
 class ChatView(ModelViewSet):
       
-      def retrieve(self, request, pk):
-            queryset = Chat.objects.filter(pk=pk).first()
+    def retrieve(self, request, pk):
+        queryset = Chat.objects.filter(pk=pk).first()
 
-            if not queryset:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-            
-            serializer = ChatSerializer(queryset)
+        if not queryset:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ChatSerializer(queryset)
 
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 def index(request):
     file_path = os.path.join('..', '..', 'frontend', 'public', 'index.html')
