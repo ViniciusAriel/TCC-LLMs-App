@@ -22,6 +22,17 @@ class ChatView(ModelViewSet):
         serializer = ChatSerializer(queryset)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def create(self, request):
+         serializer = ChatSerializer(data=request.data)
+
+         if not serializer.is_valid():
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+         
+         queryset = Chat.objects.create(**serializer.validated_data)
+         serializer = ChatSerializer(queryset)
+
+         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class UserView(ModelViewSet):
      
@@ -34,7 +45,31 @@ class UserView(ModelViewSet):
           serializer = ChatUserSerializer(queryset)
 
           return Response(serializer.data, status=status.HTTP_200_OK)
+     
+     def create(self, request):
+         serializer = ChatUserSerializer(data=request.data)
 
+         if not serializer.is_valid():
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+         
+         queryset = ChatUser.objects.create(**serializer.validated_data)
+         serializer = ChatUserSerializer(queryset)
+
+         return Response(serializer.data, status=status.HTTP_201_CREATED)
+     
+class MessageView(ModelViewSet):
+     
+     def create(self, request):
+         serializer = MessageSerializer(data=request.data)
+
+         if not serializer.is_valid():
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+         
+         queryset = Message.objects.create(**serializer.validated_data)
+         serializer = MessageSerializer(queryset)
+
+         return Response(serializer.data, status=status.HTTP_201_CREATED)
+     
 def index(request):
     file_path = os.path.join('..', '..', 'frontend', 'public', 'index.html')
 
