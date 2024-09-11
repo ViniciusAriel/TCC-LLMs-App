@@ -33,6 +33,17 @@ class ChatView(ModelViewSet):
          serializer = ChatSerializer(queryset)
 
          return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    def delete(self, request, pk):
+        queryset = Chat.objects.filter(pk=pk).first()
+
+        if not queryset:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        queryset.delete()
+        serializer = ChatSerializer(queryset)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserView(ModelViewSet):
      
