@@ -10,7 +10,7 @@ class ChatUser(models.Model):
         return str(self.name)
     
 class Chat(models.Model):
-    user_id = models.ForeignKey(ChatUser, related_name='user', on_delete=models.SET_DEFAULT, default=1)
+    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
     llm = models.CharField(max_length=255, null=False)
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
