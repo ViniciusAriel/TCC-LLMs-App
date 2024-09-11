@@ -23,6 +23,18 @@ class ChatView(ModelViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class UserView(ModelViewSet):
+     
+     def retrieve(self, request, pk):
+          queryset = ChatUser.objects.filter(pk=pk).first()
+
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+          
+          serializer = ChatUserSerializer(queryset)
+
+          return Response(serializer.data, status=status.HTTP_200_OK)
+
 def index(request):
     file_path = os.path.join('..', '..', 'frontend', 'public', 'index.html')
 
