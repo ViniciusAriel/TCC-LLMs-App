@@ -10,10 +10,10 @@ class ChatUser(models.Model):
         return str(self.name)
     
 class Chat(models.Model):
-    user_id = models.PositiveBigIntegerField(unique=True)
+    user_id = models.ForeignKey(ChatUser, related_name='user', on_delete=models.SET_DEFAULT, default=1)
     llm = models.CharField(max_length=255, null=False)
     title = models.CharField(max_length=255)
-    date = models.DateField()
+    date = models.DateTimeField()
 
     def __str__(self):
         return str(self.title)
@@ -22,7 +22,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.SET_DEFAULT, default=1)
     content = models.CharField(max_length=1024)
     sender_is_llm = models.BooleanField(blank=False)
-    date = models.DateField()
+    date = models.DateTimeField()
 
     def __str__(self):
         return str(self.content)
