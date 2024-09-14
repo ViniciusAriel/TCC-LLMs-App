@@ -9,6 +9,13 @@ from rest_framework.viewsets import ModelViewSet
 from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
 
+from dotenv import load_dotenv, find_dotenv
+
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+
+chat_open_ai = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
+
 # Create your views here.
 
 class ChatView(ModelViewSet):
@@ -78,6 +85,22 @@ class MessageView(ModelViewSet):
          
          queryset = Message.objects.create(**serializer.validated_data)
          serializer = MessageSerializer(queryset)
+
+         message_content = request.POST.get('content', None)
+
+         if message_content:
+              chat_response = chat_open_ai(message_content)
+              chat_message = Message()
+              chat_message.chat = 2 ## FIX THIS LATER?
+              chat_message.content = chat_response
+              chat_message.sender_is_llm = True
+              #chat_message.date = ???? DONT KNOW HOW TO GET THIS IN THE RIGHT FORMAT
+
+              # HOW TO ADD THIS TO THE SERIALIZER?
+              #querryset = Message.objects.create(**chat_serializer.validated_data)
+
+         else:
+              return HttpResponse("No message content found", status=400)
 
          return Response(serializer.data, status=status.HTTP_201_CREATED)
      
