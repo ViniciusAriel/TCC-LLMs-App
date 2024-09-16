@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
+from datetime import datetime
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -11,9 +12,12 @@ from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
 
 from dotenv import load_dotenv, find_dotenv
 
-from langchain.chat_models import ChatOpenAI
+# from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 
+# os.environ["OPENAI_API_KEY"] = getpass.getpass()
+_ = load_dotenv(find_dotenv())
 chat_open_ai = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
 
 # Create your views here.
@@ -94,10 +98,9 @@ class MessageView(ModelViewSet):
               chat_message.chat = 2 ## FIX THIS LATER?
               chat_message.content = chat_response
               chat_message.sender_is_llm = True
-              #chat_message.date = ???? DONT KNOW HOW TO GET THIS IN THE RIGHT FORMAT
+              chat_message.date = datetime.now()
 
-              # HOW TO ADD THIS TO THE SERIALIZER?
-              #querryset = Message.objects.create(**chat_serializer.validated_data)
+              Message.objects.create(chat_message)
 
          else:
               return HttpResponse("No message content found", status=400)
