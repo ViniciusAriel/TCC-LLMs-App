@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-from datetime import datetime
+import json
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,16 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
-
-from dotenv import load_dotenv, find_dotenv
-
-# from langchain_community.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-
-# os.environ["OPENAI_API_KEY"] = getpass.getpass()
-_ = load_dotenv(find_dotenv())
-chat_open_ai = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
+from .utils import get_chat_response
 
 # Create your views here.
 
@@ -82,6 +73,8 @@ class UserView(ModelViewSet):
 class MessageView(ModelViewSet):
      
      def create(self, request):
+         body_data = json.loads(request.body)
+
          serializer = MessageSerializer(data=request.data)
 
          if not serializer.is_valid():
@@ -90,18 +83,10 @@ class MessageView(ModelViewSet):
          queryset = Message.objects.create(**serializer.validated_data)
          serializer = MessageSerializer(queryset)
 
-         message_content = request.POST.get('content', None)
+         message_content = body_data["content"]
 
          if message_content:
-              chat_response = chat_open_ai(message_content)
-              chat_message = Message()
-              chat_message.chat = 2 ## FIX THIS LATER?
-              chat_message.content = chat_response
-              chat_message.sender_is_llm = True
-              chat_message.date = datetime.now()
-
-              Message.objects.create(chat_message)
-
+              get_chat_response(message_content, body_data["chat"])
          else:
               return HttpResponse("No message content found", status=400)
 
