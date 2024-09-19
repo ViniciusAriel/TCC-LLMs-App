@@ -1,0 +1,19 @@
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.logo-container h1 {
+    color: #B5CDD2;
+    font-size: 30px;
+}
+
+.logo-image {
+    height: 4.5rem;
+    width: 4.5rem;
+    background-color: #B5CDD2;
+    border-radius: 50%;
+    display: inline-block;
+}

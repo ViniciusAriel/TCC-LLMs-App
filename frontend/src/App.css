@@ -2,5 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Poppins", sans-serif;
+    background-color: #B5CDD2;
+    height: 100vh;
+    width: 100vw;
 }

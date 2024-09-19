@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-import "./logo.css"
+import "./logo.css";
 
 export default function Logo() {
-  return (
-    <div>logo</div>
-  )
+    return (
+        <div className="logo-container">
+            <div className="logo-image" />
+            <h1>Blabinha</h1>
+        </div>
+    );
 }

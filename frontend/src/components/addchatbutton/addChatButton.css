@@ -1,0 +1,28 @@
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B5CDD2;
+    border-radius: 35px;
+    gap: 10px;
+    width: fit-content;
+    height: 40px;
+    cursor: pointer;
+}
+
+.button-container.close {
+    background-color:#2F4D65;
+    width: fit-content;
+    height: fit-content;
+    p {
+        display: none;
+    }
+}
+
+.button-container p {
+    position: relative;
+    margin: 10px;
+    font-size: 19px;
+    right: 10px;
+    color: #2F4D65;
+}
