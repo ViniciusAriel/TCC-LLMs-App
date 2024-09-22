@@ -15,37 +15,62 @@ from .utils import get_chat_response
 
 class ChatView(ModelViewSet):
       
-    def retrieve(self, request, pk):
-        queryset = Chat.objects.filter(pk=pk).first()
+     def retrieve(self, request, pk):
+          queryset = Chat.objects.filter(pk=pk).first()
 
-        if not queryset:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = ChatSerializer(queryset)
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+          
+          serializer = ChatSerializer(queryset)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    def create(self, request):
-         serializer = ChatSerializer(data=request.data)
+          return Response(serializer.data, status=status.HTTP_200_OK)
 
-         if not serializer.is_valid():
-              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-         
-         queryset = Chat.objects.create(**serializer.validated_data)
-         serializer = ChatSerializer(queryset)
+     def create(self, request):
+          serializer = ChatSerializer(data=request.data)
 
-         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    def delete(self, request, pk):
-        queryset = Chat.objects.filter(pk=pk).first()
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          queryset = Chat.objects.create(**serializer.validated_data)
+          serializer = ChatSerializer(queryset)
 
-        if not queryset:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        queryset.delete()
-        serializer = ChatSerializer(queryset)
+     def delete(self, request, pk):
+          queryset = Chat.objects.filter(pk=pk).first()
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+
+          queryset.delete()
+          serializer = ChatSerializer(queryset)
+
+          return Response(serializer.data, status=status.HTTP_200_OK)
+
+     # Replicate a chat on another LLM, using the same inputs
+     # def replicate(self, request, pk):
+     #      #messages = Message.objects.filter(Chat=Chat.objects.filter(pk=pk).first())
+     #      messages = Message.objects.filter(Chat=pk)
+
+     #      serializer = ChatSerializer(data=request.data)
+
+     #      if not serializer.is_valid():
+     #           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+     #      queryset = Chat.objects.create(**serializer.validated_data)
+     #      serializer = ChatSerializer(queryset)
+
+     #      for message in messages:
+     #           new_user_message = Message()
+     #           new_user_message.chat = Chat.objects.filter(pk=pk).first()
+     #           new_user_message.content = message.content
+     #           new_user_message.sender_is_llm = False
+     #           new_user_message.date = datetime.now()
+
+     #           new_user_message.save()
+
+     #           get_chat_response(prompt=message.content, chat_id=pk)
+
 
 class UserView(ModelViewSet):
      
