@@ -4,13 +4,11 @@ import SideBarChatItem from "../sidebarchatitem/sideBarChatItem";
 
 import "./sideBarChatList.css";
 
-export default function SideBarChatList({ chatList }) {
-    const [currentChat, setCurrentChat] = useState(null);
-    
-    useEffect(() => {
-        console.log(currentChat);
-    }, [currentChat]);
-
+export default function SideBarChatList({
+    chatList,
+    isClosed,
+    selectedCurrentChat,
+}) {
     const chatsByDate = chatList.reduce((groupedChats, chat) => {
         const date = chat.date;
         if (!groupedChats[date]) {
@@ -31,7 +29,10 @@ export default function SideBarChatList({ chatList }) {
                                 <SideBarChatItem
                                     chatTitle={chat.chatTitle}
                                     onClick={() => {
-                                        setCurrentChat(chat.chatId);
+                                        selectedCurrentChat({
+                                            id: chat.chatId,
+                                            title: chat.chatTitle,
+                                        });
                                     }}
                                 />
                             );

@@ -1,0 +1,8 @@
+.dialogfooter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 100%;
+    gap: 20px;
+}

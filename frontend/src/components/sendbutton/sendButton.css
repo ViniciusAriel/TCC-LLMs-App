@@ -1,0 +1,10 @@
+.sendbutton-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #436987;
+    width: 45px;
+    height: 45px;
+    border-radius: 25px;
+    cursor: pointer;
+}

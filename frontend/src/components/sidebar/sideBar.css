@@ -13,8 +13,8 @@
 }
 
 .sidebar-container.close {
-    min-width: 8%;
-    width: 8%;
+    min-width: 150px;
+    width: 150px;
 }
 
 .sidebar-items {

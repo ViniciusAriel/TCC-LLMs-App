@@ -19,15 +19,15 @@
 }
 
 .chatlist-container::-webkit-scrollbar-track {
-background: #FEFFFC;
-border-radius: 10px;
+  background: #FEFFFC;
+  border-radius: 10px;
 }
 
 /* Handle */
 .chatlist-container::-webkit-scrollbar-thumb {
-background: #FEFFFC;
-box-shadow: inset 0 0 5px rgb(56, 56, 56);
-border-radius: 10px;
+  background: #FEFFFC;
+  box-shadow: inset 0 0 5px rgb(56, 56, 56);
+  border-radius: 10px;
 }
 
 .chatlist-items {

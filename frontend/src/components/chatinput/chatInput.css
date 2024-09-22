@@ -1,0 +1,22 @@
+.chatinput-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+
+    input {
+        width: 100%;
+        height: 40px;
+        border-radius: 30px;
+        border: none;
+        background: #FEFFFC;
+        padding: 2px 15px;
+        box-shadow: inset 5px #436987;
+        font-size: 17px;
+        color: #252525
+    }
+
+    input:focus {
+        outline: none !important;
+    }
+}
