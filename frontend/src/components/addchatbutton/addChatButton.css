@@ -8,12 +8,12 @@
     width: fit-content;
     height: 40px;
     cursor: pointer;
+    transition: 0.5 ease;
 }
 
 .button-container.close {
     background-color:#2F4D65;
     width: fit-content;
-    height: fit-content;
     p {
         display: none;
     }

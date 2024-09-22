@@ -6,6 +6,7 @@ function App() {
     return (
         <div className="App">
             <SideBar />
+            <div className="chat-container">Hello</div>
         </div>
     );
 }

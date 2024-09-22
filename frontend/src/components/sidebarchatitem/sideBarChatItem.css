@@ -1,0 +1,18 @@
+.chatitem-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 2.25rem;
+    width: 100%;
+    gap: 0.7rem;
+    margin-left: 0.7rem;
+    color: #FEFFFC;
+    cursor: pointer;
+
+    p {
+        font-size: 15px;
+        max-width: 75%;
+        overflow: hidden;
+    }
+
+}

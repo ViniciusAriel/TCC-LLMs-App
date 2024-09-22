@@ -1,12 +1,10 @@
-import { React, useState } from "react";
+import { React } from "react";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 import "./addChatButton.css";
 
-export default function AddChatButton({ close, onClick }) {
-    const [isClosed, setIsClosed] = useState(false);
-
+export default function AddChatButton({ isClosed, onClick }) {
     return (
         <div
             className={`button-container ${isClosed ? "close" : ""}`}
