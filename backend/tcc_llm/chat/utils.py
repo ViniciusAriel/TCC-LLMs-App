@@ -40,3 +40,17 @@ def get_chat_response(prompt, chat_id):
         chat_message.date = datetime.now()
 
         chat_message.save()
+
+def duplicate_messages(messages, new_chat):
+        for message in messages:
+                if(not message.sender_is_llm):
+                        new_user_message = Message()
+                        # new_user_message.chat = Chat.objects.filter(pk=pk).first()
+                        new_user_message.chat = new_chat
+                        new_user_message.content = message.content
+                        new_user_message.sender_is_llm = False
+                        new_user_message.date = datetime.now()
+
+                        new_user_message.save()
+
+                        get_chat_response(prompt=message.content, chat_id=new_chat.id)

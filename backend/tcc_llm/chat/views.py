@@ -9,7 +9,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
-from .utils import get_chat_response
+from .utils import get_chat_response, duplicate_messages
 
 # Create your views here.
 
@@ -47,29 +47,22 @@ class ChatView(ModelViewSet):
 
           return Response(serializer.data, status=status.HTTP_200_OK)
 
-     # Replicate a chat on another LLM, using the same inputs
-     # def replicate(self, request, pk):
-     #      #messages = Message.objects.filter(Chat=Chat.objects.filter(pk=pk).first())
-     #      messages = Message.objects.filter(Chat=pk)
+     # duplicate a chat on another LLM, using the same inputs
+     def duplicate(self, request, pk):
+          #messages = Message.objects.filter(Chat=Chat.objects.filter(pk=pk).first())
+          messages = Message.objects.filter(chat=pk)
 
-     #      serializer = ChatSerializer(data=request.data)
+          serializer = ChatSerializer(data=request.data)
 
-     #      if not serializer.is_valid():
-     #           return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
           
-     #      queryset = Chat.objects.create(**serializer.validated_data)
-     #      serializer = ChatSerializer(queryset)
+          queryset = Chat.objects.create(**serializer.validated_data)
+          serializer = ChatSerializer(queryset)
 
-     #      for message in messages:
-     #           new_user_message = Message()
-     #           new_user_message.chat = Chat.objects.filter(pk=pk).first()
-     #           new_user_message.content = message.content
-     #           new_user_message.sender_is_llm = False
-     #           new_user_message.date = datetime.now()
+          duplicate_messages(messages, queryset)
 
-     #           new_user_message.save()
-
-     #           get_chat_response(prompt=message.content, chat_id=pk)
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class UserView(ModelViewSet):
