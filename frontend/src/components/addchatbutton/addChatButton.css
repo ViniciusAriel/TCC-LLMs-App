@@ -9,6 +9,10 @@
     height: 40px;
     cursor: pointer;
     transition: 0.5 ease;
+
+    p {
+        text-overflow: ellipsis;
+    }
 }
 
 .button-container.close {
