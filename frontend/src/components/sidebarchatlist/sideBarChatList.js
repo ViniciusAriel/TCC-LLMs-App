@@ -1,6 +1,6 @@
 import { React } from "react";
 
-import SideBarChatItem from "../sidebarchatitem/sideBarChatItem";
+import SideBarChatItem from "../sidebarchatitem/sideBarChatItem.js";
 
 import "./sideBarChatList.css";
 

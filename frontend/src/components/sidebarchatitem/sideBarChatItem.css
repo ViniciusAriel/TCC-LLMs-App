@@ -4,7 +4,7 @@
     justify-content: start;
     height: 2.25rem;
     width: 100%;
-    gap: 0.5rem;
+    gap: 10px;
     color: #FEFFFC;
     cursor: pointer;
     white-space: nowrap;

@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 
-import SideBar from "./components/sidebar/sideBar";
-import Dialog from "./components/dialog/dialog";
-import DialogHeader from "./components/dialogheader/dialogHeader";
-import DialogFooter from "./components/dialogfooter/dialogFooter";
+import SideBar from "./components/sidebar/sideBar.js";
+import Dialog from "./components/dialog/dialog.js";
+import DialogHeader from "./components/dialogheader/dialogHeader.js";
+import DialogFooter from "./components/dialogfooter/dialogFooter.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
 
 import "./App.css";
@@ -46,7 +46,11 @@ function App() {
 
     const handleSendMessage = (message) => {
         const newMessage = { fromChat: false, content: message };
-        const newBotMessage = { fromChat: true, content: "Resposta do Chat" };
+        const newBotMessage = {
+            fromChat: true,
+            content:
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        };
         setMessages([...messages, newMessage, newBotMessage]);
     };
 

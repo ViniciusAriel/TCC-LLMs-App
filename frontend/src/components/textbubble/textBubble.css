@@ -3,8 +3,9 @@
     height: inherit;
     text-align: justify;
     text-justify: inter-word;
-    font-size: 14px;
+    font-size: 15px;
     word-break: break-word;
+    line-height: 23px;
 }
 
 .user-message {
@@ -19,6 +20,7 @@
         color: #FEFFFC;
         float: right;
         padding: 0px 15px;
+        margin: 10px 0px;
     }
 }
 
@@ -34,5 +36,6 @@
         color: #252525;
         float: left;
         padding: 0px 15px;
+        margin: 10px 0px;
     }
 }
