@@ -4,7 +4,11 @@ import { RiFileDownloadFill } from "react-icons/ri";
 
 import "./dialogHeader.css";
 
-export default function DialogHeader({ chatTitle }) {
+export default function DialogHeader({ chatTitle, setSaveLogModal }) {
+    const handleSaveLogModal = () => {
+        setSaveLogModal(true);
+    };
+
     return (
         <div className="dialogheader-container">
             <div className="header-content">
@@ -13,7 +17,11 @@ export default function DialogHeader({ chatTitle }) {
                 </div>
                 <div className="header-icons">
                     <div className="chat-log">
-                        <RiFileDownloadFill size={35} color="#2F4D65" />
+                        <RiFileDownloadFill
+                            size={35}
+                            color="#2F4D65"
+                            onClick={handleSaveLogModal}
+                        />
                     </div>
                     <div className="chat-settings">
                         <IoSettingsSharp size={35} color="#2F4D65" />

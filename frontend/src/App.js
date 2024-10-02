@@ -5,6 +5,7 @@ import Dialog from "./components/dialog/dialog.js";
 import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
+import SaveLogModal from "./components/savelogmodal/saveLogModal.js";
 
 import "./App.css";
 
@@ -43,6 +44,7 @@ function App() {
     });
 
     const [newChatModal, setNewChatModal] = useState(false);
+    const [saveLogModal, setSaveLogModal] = useState(false);
 
     const handleSendMessage = (message) => {
         const newMessage = { fromChat: false, content: message };
@@ -66,7 +68,10 @@ function App() {
                 setNewChatModal={setNewChatModal}
             />
             <div className="chat-container">
-                <DialogHeader chatTitle={currentChat.title} />
+                <DialogHeader
+                    chatTitle={currentChat.title}
+                    setSaveLogModal={setSaveLogModal}
+                />
                 <Dialog messages={messages} />
                 <DialogFooter sendMessage={handleSendMessage} />
             </div>
@@ -76,6 +81,7 @@ function App() {
                     setNewChat={handleCreateNewChat}
                 />
             )}
+            {saveLogModal && <SaveLogModal setSaveLogModal={setSaveLogModal} />}
         </div>
     );
 }
