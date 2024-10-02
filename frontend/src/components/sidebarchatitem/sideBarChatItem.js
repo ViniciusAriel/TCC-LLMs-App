@@ -3,11 +3,13 @@ import { BsChatLeft } from "react-icons/bs";
 
 import "./sideBarChatItem.css";
 
-export default function SideBarChatItem({ chatTitle, onClick, isClosed }) {
+export default function SideBarChatItem({ chatTitle, onClick, llm, isClosed }) {
     return (
         <div className="chatitem-container" onClick={onClick}>
             <BsChatLeft size={17} />
-            <p>{chatTitle}</p>
+            <p>
+                {llm} - {chatTitle}
+            </p>
         </div>
     );
 }

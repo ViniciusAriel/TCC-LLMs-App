@@ -7,7 +7,9 @@ export default function DialogHeader({ chatTitle }) {
     return (
         <div className="dialogheader-container">
             <div className="header-content">
-                <h1> {chatTitle ? chatTitle : "Escolha um Chat"}</h1>
+                <div className="header-title">
+                    <h1> {chatTitle ? chatTitle : "Escolha um Chat"}</h1>
+                </div>
                 <div className="chat-settings">
                     <IoSettingsSharp size={40} color="#2F4D65" />
                 </div>

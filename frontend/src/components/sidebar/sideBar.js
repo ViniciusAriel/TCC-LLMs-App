@@ -30,6 +30,7 @@ export default function SideBar({
                 <SideBarChatList
                     chatList={chatList}
                     selectedCurrentChat={selectedCurrentChat}
+                    isClosed={isClosed}
                 />
             </div>
             <div className="sidebar-buttons">

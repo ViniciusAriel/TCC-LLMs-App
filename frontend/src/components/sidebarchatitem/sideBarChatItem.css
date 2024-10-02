@@ -8,11 +8,14 @@
     margin-left: 0.7rem;
     color: #FEFFFC;
     cursor: pointer;
+    white-space: nowrap;
 
     p {
+        display: inline;
         font-size: 15px;
         max-width: 75%;
         overflow: hidden;
+        text-overflow: ellipsis;
     }
 
 }

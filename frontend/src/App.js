@@ -10,16 +10,15 @@ import "./App.css";
 
 function App() {
     const [chatList, setChatList] = useState([
-        { chatId: 1, chatTitle: "Chat 1", date: "20/09/2023" },
-        { chatId: 2, chatTitle: "Chat 2", date: "20/09/2023" },
-        { chatId: 3, chatTitle: "Chat 3", date: "21/09/2023" },
-        { chatId: 4, chatTitle: "Chat 4", date: "21/09/2023" },
-        { chatId: 5, chatTitle: "Chat 5", date: "22/09/2023" },
-        { chatId: 6, chatTitle: "Chat 6", date: "22/09/2023" },
-        { chatId: 7, chatTitle: "Chat 7", date: "23/09/2023" },
-        { chatId: 8, chatTitle: "Chat 8", date: "23/09/2023" },
-        { chatId: 9, chatTitle: "Chat 9", date: "24/09/2023" },
-        { chatId: 10, chatTitle: "Chat 10", date: "24/09/2023" },
+        { chatId: 1, chatTitle: "Chat 1", llm: "GPT", date: "20/09/2023" },
+        { chatId: 2, chatTitle: "Chat 2", llm: "Mistral", date: "20/09/2023" },
+        { chatId: 3, chatTitle: "Chat 3", llm: "Llma", date: "21/09/2023" },
+        { chatId: 4, chatTitle: "Chat 4", llm: "Bloom", date: "21/09/2023" },
+        { chatId: 5, chatTitle: "Chat 5", llm: "GPT", date: "22/09/2023" },
+        { chatId: 6, chatTitle: "Chat 6", llm: "Mistral", date: "22/09/2023" },
+        { chatId: 7, chatTitle: "Chat 7", llm: "Bloom", date: "23/09/2023" },
+        { chatId: 8, chatTitle: "Chat 8", llm: "Mistral", date: "23/09/2023" },
+        { chatId: 9, chatTitle: "Chat 9", llm: "GPT", date: "24/09/2023" },
     ]);
 
     const [messages, setMessages] = useState([
@@ -51,6 +50,10 @@ function App() {
         setMessages([...messages, newMessage, newBotMessage]);
     };
 
+    const handleCreateNewChat = (newChatInfo) => {
+        setChatList([...chatList, newChatInfo]);
+    };
+
     return (
         <div className="App">
             <SideBar
@@ -63,7 +66,12 @@ function App() {
                 <Dialog messages={messages} />
                 <DialogFooter sendMessage={handleSendMessage} />
             </div>
-            {newChatModal && <NewChatModal setNewChatModal={setNewChatModal} />}
+            {newChatModal && (
+                <NewChatModal
+                    setNewChatModal={setNewChatModal}
+                    setNewChat={handleCreateNewChat}
+                />
+            )}
         </div>
     );
 }

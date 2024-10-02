@@ -19,27 +19,30 @@ export default function SideBarChatList({
     }, {});
 
     return (
-        <div className="chatlist-container">
-            {Object.keys(chatsByDate).map((date) => {
-                return (
-                    <div className="chatlist-items">
-                        <h3>{date}</h3>
-                        {chatsByDate[date].map((chat) => {
-                            return (
-                                <SideBarChatItem
-                                    chatTitle={chat.chatTitle}
-                                    onClick={() => {
-                                        selectedCurrentChat({
-                                            id: chat.chatId,
-                                            title: chat.chatTitle,
-                                        });
-                                    }}
-                                />
-                            );
-                        })}
-                    </div>
-                );
-            })}
+        <div className={`chatlist-container ${isClosed ? "close" : ""}`}>
+            {Object.keys(chatsByDate)
+                .toReversed()
+                .map((date) => {
+                    return (
+                        <div className="chatlist-items">
+                            <h3>{date}</h3>
+                            {chatsByDate[date].toReversed().map((chat) => {
+                                return (
+                                    <SideBarChatItem
+                                        llm={chat.llm}
+                                        chatTitle={chat.chatTitle}
+                                        onClick={() => {
+                                            selectedCurrentChat({
+                                                id: chat.chatId,
+                                                title: chat.chatTitle,
+                                            });
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    );
+                })}
         </div>
     );
 }
