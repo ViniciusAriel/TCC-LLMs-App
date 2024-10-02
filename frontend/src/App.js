@@ -9,7 +9,7 @@ import NewChatModal from "./components/newchatmodal/newChatModal.js";
 import "./App.css";
 
 function App() {
-    const chatList = [
+    const [chatList, setChatList] = useState([
         { chatId: 1, chatTitle: "Chat 1", date: "20/09/2023" },
         { chatId: 2, chatTitle: "Chat 2", date: "20/09/2023" },
         { chatId: 3, chatTitle: "Chat 3", date: "21/09/2023" },
@@ -20,7 +20,23 @@ function App() {
         { chatId: 8, chatTitle: "Chat 8", date: "23/09/2023" },
         { chatId: 9, chatTitle: "Chat 9", date: "24/09/2023" },
         { chatId: 10, chatTitle: "Chat 10", date: "24/09/2023" },
-    ];
+    ]);
+
+    const [messages, setMessages] = useState([
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
+        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
+    ]);
 
     const [currentChat, setCurrentChat] = useState({
         id: 1,
@@ -28,6 +44,12 @@ function App() {
     });
 
     const [newChatModal, setNewChatModal] = useState(false);
+
+    const handleSendMessage = (message) => {
+        const newMessage = { fromChat: false, content: message };
+        const newBotMessage = { fromChat: true, content: "Resposta do Chat" };
+        setMessages([...messages, newMessage, newBotMessage]);
+    };
 
     return (
         <div className="App">
@@ -38,8 +60,8 @@ function App() {
             />
             <div className="chat-container">
                 <DialogHeader chatTitle={currentChat.title} />
-                <Dialog />
-                <DialogFooter />
+                <Dialog messages={messages} />
+                <DialogFooter sendMessage={handleSendMessage} />
             </div>
             {newChatModal && <NewChatModal setNewChatModal={setNewChatModal} />}
         </div>

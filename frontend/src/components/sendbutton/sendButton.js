@@ -3,9 +3,9 @@ import { LuSendHorizonal } from "react-icons/lu";
 
 import "./sendButton.css";
 
-export default function SendButton() {
+export default function SendButton({ onClick }) {
     return (
-        <div className="sendbutton-container">
+        <div className="sendbutton-container" onClick={onClick}>
             <LuSendHorizonal size={27} color="#FEFFFC" />
         </div>
     );
