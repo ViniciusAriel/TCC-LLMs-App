@@ -11,4 +11,6 @@ urlpatterns = [
     path('user/create', UserView.as_view(actions={"post": "create"})),
     path('chat/create', ChatView.as_view(actions={"post": "create"})),
     path('message/create', MessageView.as_view(actions={"post": "create"})),
+
+    path('chat/duplicate/<int:pk>', ChatView.as_view(actions={"post": "duplicate"})),
 ]

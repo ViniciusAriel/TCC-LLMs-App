@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import os
-from datetime import datetime
+import json
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,52 +9,61 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
-
-from dotenv import load_dotenv, find_dotenv
-
-# from langchain_community.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-
-# os.environ["OPENAI_API_KEY"] = getpass.getpass()
-_ = load_dotenv(find_dotenv())
-chat_open_ai = ChatOpenAI(temperature=0.0, model="gpt-3.5-turbo")
+from .utils import get_chat_response, duplicate_messages
 
 # Create your views here.
 
 class ChatView(ModelViewSet):
       
-    def retrieve(self, request, pk):
-        queryset = Chat.objects.filter(pk=pk).first()
+     def retrieve(self, request, pk):
+          queryset = Chat.objects.filter(pk=pk).first()
 
-        if not queryset:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = ChatSerializer(queryset)
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+          
+          serializer = ChatSerializer(queryset)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    def create(self, request):
-         serializer = ChatSerializer(data=request.data)
+          return Response(serializer.data, status=status.HTTP_200_OK)
 
-         if not serializer.is_valid():
-              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-         
-         queryset = Chat.objects.create(**serializer.validated_data)
-         serializer = ChatSerializer(queryset)
+     def create(self, request):
+          serializer = ChatSerializer(data=request.data)
 
-         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    def delete(self, request, pk):
-        queryset = Chat.objects.filter(pk=pk).first()
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          queryset = Chat.objects.create(**serializer.validated_data)
+          serializer = ChatSerializer(queryset)
 
-        if not queryset:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        queryset.delete()
-        serializer = ChatSerializer(queryset)
+     def delete(self, request, pk):
+          queryset = Chat.objects.filter(pk=pk).first()
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+
+          queryset.delete()
+          serializer = ChatSerializer(queryset)
+
+          return Response(serializer.data, status=status.HTTP_200_OK)
+
+     # duplicate a chat on another LLM, using the same inputs
+     def duplicate(self, request, pk):
+          #messages = Message.objects.filter(Chat=Chat.objects.filter(pk=pk).first())
+          messages = Message.objects.filter(chat=pk)
+
+          serializer = ChatSerializer(data=request.data)
+
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          queryset = Chat.objects.create(**serializer.validated_data)
+          serializer = ChatSerializer(queryset)
+
+          duplicate_messages(messages, queryset)
+
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class UserView(ModelViewSet):
      
@@ -82,6 +91,8 @@ class UserView(ModelViewSet):
 class MessageView(ModelViewSet):
      
      def create(self, request):
+         body_data = json.loads(request.body)
+
          serializer = MessageSerializer(data=request.data)
 
          if not serializer.is_valid():
@@ -90,18 +101,10 @@ class MessageView(ModelViewSet):
          queryset = Message.objects.create(**serializer.validated_data)
          serializer = MessageSerializer(queryset)
 
-         message_content = request.POST.get('content', None)
+         message_content = body_data["content"]
 
          if message_content:
-              chat_response = chat_open_ai(message_content)
-              chat_message = Message()
-              chat_message.chat = 2 ## FIX THIS LATER?
-              chat_message.content = chat_response
-              chat_message.sender_is_llm = True
-              chat_message.date = datetime.now()
-
-              Message.objects.create(chat_message)
-
+              get_chat_response(message_content, body_data["chat"])
          else:
               return HttpResponse("No message content found", status=400)
 
