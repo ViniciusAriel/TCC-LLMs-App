@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { FiSidebar } from "react-icons/fi";
 
 import Logo from "../logo/logo.js";
@@ -13,10 +13,21 @@ export default function SideBar({
     setNewChatModal,
 }) {
     const [isClosed, setIsClosed] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        if (width < 1256) {
+            setIsClosed(true);
+        } else {
+            setIsClosed(false);
+        }
+        return () => window.removeEventListener("resize", handleResize);
+    }, [width]);
 
     const toggleSideBar = () => {
         setIsClosed(!isClosed);
-        console.log(isClosed);
     };
 
     const handleOpenModal = () => {

@@ -31,6 +31,7 @@ export default function SideBarChatList({
                                     <SideBarChatItem
                                         llm={chat.llm}
                                         chatTitle={chat.chatTitle}
+                                        isClosed={isClosed}
                                         onClick={() => {
                                             selectedCurrentChat({
                                                 id: chat.chatId,

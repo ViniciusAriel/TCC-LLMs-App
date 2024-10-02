@@ -38,8 +38,8 @@ function App() {
     ]);
 
     const [currentChat, setCurrentChat] = useState({
-        id: 1,
-        title: "Chat 1",
+        id: 9,
+        title: "Chat 9",
     });
 
     const [newChatModal, setNewChatModal] = useState(false);
