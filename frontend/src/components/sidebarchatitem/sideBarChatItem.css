@@ -4,18 +4,21 @@
     justify-content: start;
     height: 2.25rem;
     width: 100%;
-    gap: 0.7rem;
-    margin-left: 0.7rem;
+    gap: 0.5rem;
     color: #FEFFFC;
     cursor: pointer;
     white-space: nowrap;
 
     p {
         display: inline;
-        font-size: 15px;
+        font-size: 16px;
         max-width: 75%;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
+}
+
+.chatitem-icon {
+    margin-top: 5px;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { BsChatLeft } from "react-icons/bs";
+import { BsFillChatSquareFill } from "react-icons/bs";
 
 import "./sideBarChatItem.css";
 
@@ -9,7 +9,9 @@ export default function SideBarChatItem({ chatTitle, onClick, llm, isClosed }) {
             className={`chatitem-container ${isClosed ? "close" : ""}`}
             onClick={onClick}
         >
-            <BsChatLeft size={17} />
+            <div className="chatitem-icon">
+                <BsFillChatSquareFill size={17} />
+            </div>
             {isClosed ? (
                 <p>{llm}</p>
             ) : (
