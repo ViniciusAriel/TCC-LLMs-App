@@ -1,5 +1,6 @@
 import { React } from "react";
 import { IoSettingsSharp } from "react-icons/io5";
+import { RiFileDownloadFill } from "react-icons/ri";
 
 import "./dialogHeader.css";
 
@@ -10,8 +11,13 @@ export default function DialogHeader({ chatTitle }) {
                 <div className="header-title">
                     <h1> {chatTitle ? chatTitle : "Escolha um Chat"}</h1>
                 </div>
-                <div className="chat-settings">
-                    <IoSettingsSharp size={40} color="#2F4D65" />
+                <div className="header-icons">
+                    <div className="chat-log">
+                        <RiFileDownloadFill size={35} color="#2F4D65" />
+                    </div>
+                    <div className="chat-settings">
+                        <IoSettingsSharp size={35} color="#2F4D65" />
+                    </div>
                 </div>
             </div>
             <hr />

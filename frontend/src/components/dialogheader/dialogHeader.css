@@ -29,8 +29,22 @@
     h1 {
         color: #252525;
         padding-left: 3rem;
-        font-size: 30px;
+        font-size: 28px;
     }
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    gap: 15px;
+}
+
+.chat-log {
+    padding-top: 8px;
+    cursor: pointer;
 }
 
 .chat-settings {
