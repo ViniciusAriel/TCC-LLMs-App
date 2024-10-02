@@ -1,0 +1,46 @@
+.newchat-modal-container {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    inset: 0;
+    background-color: #252525aa;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.newchat-modal-content {
+    background-color: #B5CDD2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    padding: 20px 30px 20px 30px;
+    border-radius: 20px;
+    color: #252525;
+    gap: 15px;
+
+    h2 {
+        margin: 0px;
+    }
+}
+
+.newchat-item {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}

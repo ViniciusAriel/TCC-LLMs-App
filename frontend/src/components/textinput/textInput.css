@@ -1,0 +1,27 @@
+.textinput-container {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 15px;
+    width: 100%;
+
+    p {
+        font-weight: 600;
+    }
+
+    input {
+        width: 320px;
+        height: 32px;
+        border-radius: 25px;
+        border: none;
+        background: #FEFFFC;
+        padding: 2px 15px;
+        font-size: 15px;
+        font-family: "Poppins", sans-serif;
+        color: #252525
+    }
+
+    input:focus {
+        outline: none !important;
+    }
+}

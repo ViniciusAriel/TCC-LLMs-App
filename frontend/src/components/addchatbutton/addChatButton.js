@@ -7,7 +7,7 @@ import "./addChatButton.css";
 export default function AddChatButton({ isClosed, onClick }) {
     return (
         <div
-            className={`button-container ${isClosed ? "close" : ""}`}
+            className={`addbutton-container ${isClosed ? "close" : ""}`}
             onClick={onClick}
         >
             <IoIosAddCircleOutline

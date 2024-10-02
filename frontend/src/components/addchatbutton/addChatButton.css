@@ -1,4 +1,4 @@
-.button-container {
+.addbutton-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,21 +12,18 @@
 
     p {
         text-overflow: ellipsis;
+        position: relative;
+        margin: 10px;
+        font-size: 19px;
+        right: 10px;
+        color: #2F4D65;
     }
 }
 
-.button-container.close {
+.addbutton-container.close {
     background-color:#2F4D65;
     width: fit-content;
     p {
         display: none;
     }
-}
-
-.button-container p {
-    position: relative;
-    margin: 10px;
-    font-size: 19px;
-    right: 10px;
-    color: #2F4D65;
 }

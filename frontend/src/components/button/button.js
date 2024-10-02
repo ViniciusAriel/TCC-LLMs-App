@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-import "./button.css"
+import "./button.css";
 
-export default function Button() {
-  return (
-    <div>button</div>
-  )
+export default function Button({ title, onClick, color }) {
+    return (
+        <div className={`button-container ${color}`} onClick={onClick}>
+            {title}
+        </div>
+    );
 }

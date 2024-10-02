@@ -7,12 +7,20 @@ import SideBarChatList from "../sidebarchatlist/sideBarChatList.js";
 
 import "./sideBar.css";
 
-export default function SideBar({ selectedCurrentChat, chatList }) {
+export default function SideBar({
+    selectedCurrentChat,
+    chatList,
+    setNewChatModal,
+}) {
     const [isClosed, setIsClosed] = useState(false);
 
     const toggleSideBar = () => {
         setIsClosed(!isClosed);
         console.log(isClosed);
+    };
+
+    const handleOpenModal = () => {
+        setNewChatModal(true);
     };
 
     return (
@@ -31,7 +39,7 @@ export default function SideBar({ selectedCurrentChat, chatList }) {
                     onClick={toggleSideBar}
                     cursor={"pointer"}
                 />
-                <AddChatButton isClosed={isClosed} />
+                <AddChatButton isClosed={isClosed} onClick={handleOpenModal} />
             </div>
         </div>
     );

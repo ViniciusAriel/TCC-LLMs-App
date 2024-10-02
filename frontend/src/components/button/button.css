@@ -1,0 +1,20 @@
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 100px;
+    height: fit-content;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.button-container.blue {
+    background-color: #436987;
+    color: #FEFFFC;
+}
+
+.button-container.white {
+    background-color: #FEFFFC;
+    color: #252525;
+}
