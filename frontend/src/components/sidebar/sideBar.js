@@ -14,14 +14,17 @@ export default function SideBar({
 }) {
     const [isClosed, setIsClosed] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
+    const [hasSpace, setHasSpace] = useState(true);
 
     useEffect(() => {
         const handleResize = () => setWidth(window.innerWidth);
         window.addEventListener("resize", handleResize);
         if (width < 1256) {
             setIsClosed(true);
+            setHasSpace(false);
         } else {
             setIsClosed(false);
+            setHasSpace(true);
         }
         return () => window.removeEventListener("resize", handleResize);
     }, [width]);
@@ -45,12 +48,14 @@ export default function SideBar({
                 />
             </div>
             <div className="sidebar-buttons">
-                <FiSidebar
-                    size={40}
-                    color="#B5CDD2"
-                    onClick={toggleSideBar}
-                    cursor={"pointer"}
-                />
+                {hasSpace ? (
+                    <FiSidebar
+                        size={40}
+                        color="#B5CDD2"
+                        onClick={toggleSideBar}
+                        cursor={"pointer"}
+                    />
+                ) : null}
                 <AddChatButton isClosed={isClosed} onClick={handleOpenModal} />
             </div>
         </div>
