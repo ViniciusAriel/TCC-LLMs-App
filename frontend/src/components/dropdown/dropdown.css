@@ -1,0 +1,22 @@
+.dropdown-container {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 15px;
+
+    p {
+        font-weight: 600;
+    }
+}
+
+.react-select .react-select__control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    font-size: 15px;
+    border-radius: 25px;
+    background: #FEFFFC;
+}

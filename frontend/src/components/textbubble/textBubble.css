@@ -1,0 +1,41 @@
+.textbubble-container {
+    width: 90%;
+    height: inherit;
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 15px;
+    word-break: break-word;
+    line-height: 23px;
+}
+
+.user-message {
+    max-width: 60%;
+    width: fit-content;
+    height: fit-content;
+    background-color: #436987;
+    float: right;
+    border-radius: 25px;
+
+    p {
+        color: #FEFFFC;
+        float: right;
+        padding: 0px 15px;
+        margin: 10px 0px;
+    }
+}
+
+.chat-message {
+    width: 100%;
+    width: fit-content;
+    height: fit-content;
+    background-color: #FEFFFC;
+    float: left;
+    border-radius: 25px;
+
+    p {
+        color: #252525;
+        float: left;
+        padding: 0px 15px;
+        margin: 10px 0px;
+    }
+}

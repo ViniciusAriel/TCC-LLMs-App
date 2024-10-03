@@ -1,0 +1,54 @@
+.dialogheader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 140px;
+    top: 0;
+
+    hr {
+        background-color: #2F4D65;
+        width: 40%;
+        height: 1px;
+        opacity: 0.33;
+        position: absolute;
+        top: 5rem
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.header-title {
+    width: fit-content;
+    h1 {
+        color: #252525;
+        padding-left: 3rem;
+        font-size: 28px;
+    }
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: fit-content;
+    gap: 15px;
+}
+
+.chat-log {
+    padding-top: 8px;
+    cursor: pointer;
+}
+
+.chat-settings {
+    padding-top: 8px;
+    padding-right: 3rem;
+    cursor: pointer;
+}

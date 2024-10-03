@@ -1,0 +1,29 @@
+.addbutton-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #B5CDD2;
+    border-radius: 35px;
+    gap: 10px;
+    width: fit-content;
+    height: 40px;
+    cursor: pointer;
+    transition: 0.5 ease;
+
+    p {
+        text-overflow: ellipsis;
+        position: relative;
+        margin: 10px;
+        font-size: 18px;
+        right: 10px;
+        color: #2F4D65;
+    }
+}
+
+.addbutton-container.close {
+    background-color:#2F4D65;
+    width: fit-content;
+    p {
+        display: none;
+    }
+}
