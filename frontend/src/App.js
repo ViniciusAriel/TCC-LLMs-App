@@ -81,7 +81,12 @@ function App() {
                     setNewChat={handleCreateNewChat}
                 />
             )}
-            {saveLogModal && <SaveLogModal setSaveLogModal={setSaveLogModal} />}
+            {saveLogModal && (
+                <SaveLogModal
+                    setSaveLogModal={setSaveLogModal}
+                    title={currentChat.title}
+                />
+            )}
         </div>
     );
 }
