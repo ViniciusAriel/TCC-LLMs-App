@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import FileResponse
 import os
 import json
 
@@ -9,7 +10,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
-from .utils import get_chat_response, duplicate_messages
+from .utils import get_chat_response, duplicate_messages, create_chat_log
 
 # Create your views here.
 
@@ -49,7 +50,6 @@ class ChatView(ModelViewSet):
 
      # duplicate a chat on another LLM, using the same inputs
      def duplicate(self, request, pk):
-          #messages = Message.objects.filter(Chat=Chat.objects.filter(pk=pk).first())
           messages = Message.objects.filter(chat=pk)
 
           serializer = ChatSerializer(data=request.data)
@@ -63,6 +63,19 @@ class ChatView(ModelViewSet):
           duplicate_messages(messages, queryset)
 
           return Response(serializer.data, status=status.HTTP_201_CREATED)
+     
+     def download_log(request, pk):
+          serializer = ChatSerializer(data=request.data)
+
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+          messages = Message.objects.filter(chat=pk)
+
+          json_file = create_chat_log(messages)
+
+          return FileResponse(json_file, as_attachment=True, filename="chat_log.json")
+
 
 
 class UserView(ModelViewSet):

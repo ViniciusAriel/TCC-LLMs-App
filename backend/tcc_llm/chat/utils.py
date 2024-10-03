@@ -2,6 +2,7 @@ from .models import Message, Chat, ChatUser
 from datetime import datetime
 import os
 from dotenv import load_dotenv, find_dotenv
+import json
 
 from langchain.prompts import ChatPromptTemplate
 
@@ -45,7 +46,6 @@ def duplicate_messages(messages, new_chat):
         for message in messages:
                 if(not message.sender_is_llm):
                         new_user_message = Message()
-                        # new_user_message.chat = Chat.objects.filter(pk=pk).first()
                         new_user_message.chat = new_chat
                         new_user_message.content = message.content
                         new_user_message.sender_is_llm = False
@@ -54,3 +54,24 @@ def duplicate_messages(messages, new_chat):
                         new_user_message.save()
 
                         get_chat_response(prompt=message.content, chat_id=new_chat.id)
+
+def create_chat_log(messages):
+        data = { "instances": [] }
+
+        message_data = {}
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        message_data = {}
+                        message_data["id"] = 0
+                        message_data["input"] = message.content
+                        message_data["expected_output"] = []
+                else:
+                        message_data["actual_output"] = message.content
+                        data["instances"].append(message_data)
+
+        with open("data.json", "w") as json_file:
+               json.dump(data, json_file, indent=4)
+
+        json_file = open("data.json", "rb")
+        return json_file
