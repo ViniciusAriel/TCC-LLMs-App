@@ -11,7 +11,7 @@ export default function AddChatButton({ isClosed, onClick }) {
             onClick={onClick}
         >
             <IoIosAddCircleOutline
-                size={40}
+                size={37}
                 color={isClosed ? "#B5CDD2" : "#2F4D65"}
                 strokeWidth={isClosed ? 10 : null}
             />

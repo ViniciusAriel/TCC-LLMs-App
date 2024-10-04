@@ -18,13 +18,13 @@ export default function DialogHeader({ chatTitle, setSaveLogModal }) {
                 <div className="header-icons">
                     <div className="chat-log">
                         <RiFileDownloadFill
-                            size={35}
+                            size={32}
                             color="#2F4D65"
                             onClick={handleSaveLogModal}
                         />
                     </div>
                     <div className="chat-settings">
-                        <IoSettingsSharp size={35} color="#2F4D65" />
+                        <IoSettingsSharp size={32} color="#2F4D65" />
                     </div>
                 </div>
             </div>

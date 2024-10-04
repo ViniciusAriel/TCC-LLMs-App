@@ -8,6 +8,7 @@
     color: #FEFFFC;
     cursor: pointer;
     white-space: nowrap;
+    margin-left: 10px;
 
     p {
         display: inline;

@@ -50,7 +50,7 @@ export default function SideBar({
             <div className="sidebar-buttons">
                 {hasSpace ? (
                     <FiSidebar
-                        size={40}
+                        size={36}
                         color="#B5CDD2"
                         onClick={toggleSideBar}
                         cursor={"pointer"}
