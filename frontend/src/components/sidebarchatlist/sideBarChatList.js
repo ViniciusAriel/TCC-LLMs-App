@@ -33,10 +33,10 @@ export default function SideBarChatList({
                                         chatTitle={chat.chatTitle}
                                         isClosed={isClosed}
                                         onClick={() => {
-                                            selectedCurrentChat({
-                                                id: chat.chatId,
-                                                title: chat.chatTitle,
-                                            });
+                                            selectedCurrentChat(
+                                                chat.chatId,
+                                                chat.chatTitle
+                                            );
                                         }}
                                     />
                                 );
