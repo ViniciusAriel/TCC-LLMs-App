@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 
 import SideBar from "./components/sidebar/sideBar.js";
 import Dialog from "./components/dialog/dialog.js";
@@ -39,12 +39,25 @@ function App() {
     ]);
 
     const [currentChat, setCurrentChat] = useState({
-        id: 9,
-        title: "Chat 9",
+        id: null,
+        title: "Crie um Chat",
     });
 
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
+
+    useEffect(() => {
+        setChatList([]);
+    }, []);
+
+    useEffect(() => {
+        if (chatList.length === 0) setNewChatModal(true);
+        if (chatList.length === 1)
+            setCurrentChat({
+                id: chatList[0].chatId,
+                title: chatList[0].chatTitle,
+            });
+    }, [chatList]);
 
     const handleSendMessage = (message) => {
         const newMessage = { fromChat: false, content: message };
