@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import FileResponse
+from django.http import JsonResponse
 import os
 import json
 
@@ -64,17 +65,12 @@ class ChatView(ModelViewSet):
 
           return Response(serializer.data, status=status.HTTP_201_CREATED)
      
-     def download_log(request, pk):
-          serializer = ChatSerializer(data=request.data)
-
-          if not serializer.is_valid():
-               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+     def download_log(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
-          json_file = create_chat_log(messages)
+          json_data = create_chat_log(messages)
 
-          return FileResponse(json_file, as_attachment=True, filename="chat_log.json")
+          return JsonResponse(json_data)
 
 
 

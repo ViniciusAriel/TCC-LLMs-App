@@ -70,8 +70,4 @@ def create_chat_log(messages):
                         message_data["actual_output"] = message.content
                         data["instances"].append(message_data)
 
-        with open("data.json", "w") as json_file:
-               json.dump(data, json_file, indent=4)
-
-        json_file = open("data.json", "rb")
-        return json_file
+        return data
