@@ -4,7 +4,7 @@
 Para a realizações de testes e posteriormente alterações no projeto, é necessário a instalação do Node Js, Python e PostgresSQL
 - NodeJS: https://nodejs.org/en/download/package-manager
 - Python: https://www.python.org/downloads/
-- https://www.postgresql.org/download/
+- PostgresSQL: https://www.postgresql.org/download/
 
 ## Como Rodar Nosso Sistema
 ```
