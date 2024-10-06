@@ -1,6 +1,7 @@
 .chatlist-container {
     margin: 1rem;
     max-height: 85%;
+    height: 100%;
     width: 90%;
     line-height: 1;
     overflow-y: scroll;

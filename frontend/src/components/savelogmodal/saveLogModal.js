@@ -1,11 +1,13 @@
-import React from "react";
+import { React, useState } from "react";
 
 import TextInput from "../textinput/textInput.js";
 import Button from "../button/button.js";
 
 import "./saveLogModal.css";
 
-export default function saveLogModal({ title, setSaveLogModal }) {
+export default function SaveLogModal({ title, setSaveLogModal }) {
+    const [logTitle, setLogTitle] = useState("");
+
     const randomJSON = {
         id: 4321,
         usuario: {
@@ -39,8 +41,12 @@ export default function saveLogModal({ title, setSaveLogModal }) {
         setSaveLogModal(false);
     };
 
+    const handleTitleInput = (event) => {
+        setLogTitle(event.target.value);
+    };
+
     const handleDownloadFile = () => {
-        download(randomJSON, "arquivo.txt");
+        download(randomJSON, logTitle);
     };
 
     const download = (content, fileName) => {
@@ -49,7 +55,8 @@ export default function saveLogModal({ title, setSaveLogModal }) {
             type: "application/json",
         });
         a.href = URL.createObjectURL(file);
-        a.download = fileName;
+        if (fileName) a.download = `${fileName}.json`;
+        else a.download = "Log.json";
         a.click();
         URL.revokeObjectURL(a.href);
     };
@@ -63,7 +70,10 @@ export default function saveLogModal({ title, setSaveLogModal }) {
                     {title}?
                 </p>
                 <div className="savelog-item">
-                    <TextInput title={"Nome"} />
+                    <TextInput
+                        title={"Nome do Arquivo"}
+                        onChange={handleTitleInput}
+                    />
                 </div>
                 <div className="modal-buttons">
                     <Button
