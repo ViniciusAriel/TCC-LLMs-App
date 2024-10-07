@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tccdb',
         'USER': 'postgres',
-        'PASSWORD': 'AtumSQL29*',
+        'PASSWORD': 'Luna123!',
         'HOST': 'localhost',
         'PORT': '5432',
     }
