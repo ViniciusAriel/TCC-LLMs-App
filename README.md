@@ -8,7 +8,12 @@ npm install
 npm start
 
 cd ../backend
-(optional: create a virtual environment for you to install the python packages)
+
+Opcional: criar um ambiente virtual para instalar os pacotes sem conflitos
+pip install virtualenv
+virtualenv env
+env/Scripts/activate
+
 pip install -r requirements.txt
 cd tcc_llm
 python ./manage.py runserver
