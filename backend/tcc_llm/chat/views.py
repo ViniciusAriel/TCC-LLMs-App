@@ -16,6 +16,8 @@ from .utils import get_chat_response, duplicate_messages, create_chat_log
 # Create your views here.
 
 class ChatView(ModelViewSet):
+     
+     serializer_class = ChatSerializer;
       
      def retrieve(self, request, pk):
           queryset = Chat.objects.filter(pk=pk).first()
@@ -76,6 +78,8 @@ class ChatView(ModelViewSet):
 
 class UserView(ModelViewSet):
      
+     serializer_class = ChatUserSerializer;
+     
      def retrieve(self, request, pk):
           queryset = ChatUser.objects.filter(pk=pk).first()
 
@@ -98,6 +102,8 @@ class UserView(ModelViewSet):
          return Response(serializer.data, status=status.HTTP_201_CREATED)
      
 class MessageView(ModelViewSet):
+     
+     serializer_class = MessageSerializer;
      
      def create(self, request):
          body_data = json.loads(request.body)
