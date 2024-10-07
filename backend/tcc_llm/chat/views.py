@@ -119,7 +119,8 @@ class MessageView(ModelViewSet):
           message_content = body_data.get("content")
 
           if message_content:
-               get_chat_response(message_content, body_data.get("chat"))
+               chat_response = get_chat_response(message_content, body_data.get("chat"))
+               serializer = MessageSerializer(chat_response)
           else:
                return HttpResponse("No message content found", status=400)
 

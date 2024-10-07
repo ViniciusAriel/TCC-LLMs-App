@@ -41,6 +41,7 @@ def get_chat_response(prompt, chat_id):
         chat_message.date = datetime.now()
 
         chat_message.save()
+        return chat_message
 
 def duplicate_messages(messages, new_chat):
         for message in messages:
