@@ -13,7 +13,10 @@ cd ./frontend
 npm install
 npm start
 
+Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin
+
 cd ../backend
+Importante: no arquivo setting.py, setar em DATABASE o login e senha criados para o PostgresSQL
 
 Opcional: criar um ambiente virtual para instalar os pacotes sem conflitos
 pip install virtualenv
