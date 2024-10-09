@@ -114,7 +114,7 @@ function App() {
             {saveLogModal && (
                 <SaveLogModal
                     setSaveLogModal={setSaveLogModal}
-                    title={currentChat.title}
+                    currentChat={currentChat}
                 />
             )}
         </div>
