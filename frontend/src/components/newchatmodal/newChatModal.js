@@ -9,8 +9,8 @@ import "./newChatModal.css";
 
 export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const llmOptions = [
-        { value: "Mistral", label: "Mistral" },
-        { value: "Llama", label: "Llama" },
+        { value: "MistralAI", label: "Mistral" },
+        { value: "Groq", label: "Groq" },
     ];
 
     const otherOptions = [

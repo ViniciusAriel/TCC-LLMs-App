@@ -1,4 +1,4 @@
-from .models import Message, Chat, ChatUser
+from .models import Message, Chat, ChatUser, LLM
 from datetime import datetime
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -9,30 +9,44 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_openai import OpenAI
 from langchain_ollama.chat_models import ChatOllama
 from langchain_mistralai.chat_models import ChatMistralAI
+from langchain_groq import ChatGroq
 
 _ = load_dotenv(find_dotenv())
 
 openai_key = os.getenv('OPENAI_API_KEY')
 llama_key = os.getenv('LLAMA_API_KEY')
 mistral_key = os.getenv('MISTRAL_API_KEY')
+groq_key = os.getenv('GROQ_API_KEY')
 
 chat_openai = OpenAI(model="gpt-3.5-turbo", api_key=openai_key)
 chat_ollama = ChatOllama(model="llama3.1", api_key=llama_key)
 chat_mistral = ChatMistralAI(api_key=mistral_key)
+chat_groq = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
 
-template_string = """{text}"""
-prompt_template = ChatPromptTemplate.from_template(template_string)
+prompt_template = ChatPromptTemplate([
+                ("system", "Você deve responder xingando e de forma rude."),
+                ("human", "Oi eu sou o Bob. Como você está?"),
+                ("ai", "Olá, Bob! Eu estou bem, obrigado"),
+                ("human", "{text}"),
+            ])
 
 openai_chain = prompt_template | chat_openai
 llama_chain = prompt_template | chat_ollama
 mistral_chain = prompt_template | chat_mistral
+groq_chain = prompt_template | chat_groq
 
-def get_chat_response(prompt, chat_id):
-        llm_prompt = prompt_template.format_messages(text=prompt)
+def get_chat_response(prompt, chat_id, llm):
 
-        # chat_response = openai_chain.invoke(llm_prompt).content
-        # chat_response = llama_chain.invoke(llm_prompt).content
-        chat_response = mistral_chain.invoke(llm_prompt).content
+        if llm == LLM.MISTRAL:
+                chat_response = mistral_chain.invoke({'text': prompt}).content
+        elif llm == LLM.OLLAMA:
+                chat_response = llama_chain.invoke({'text': prompt}).content
+        elif llm == LLM.OPENAI:
+                chat_response = openai_chain.invoke({'text': prompt}).content
+        elif llm == LLM.GROQ:
+                chat_response = groq_chain.invoke({'text': prompt}).content
+        else:
+                chat_response = mistral_chain.invoke({'text': prompt}).content
 
         chat_message = Message()
         chat_message.chat = Chat.objects.filter(pk=chat_id).first()
