@@ -28,7 +28,7 @@ function App() {
             id: chatId,
             title: chatTitle,
         });
-        handleChangeChat(chatId, chatTitle, true);
+        handleChangeChat(chatId, chatTitle);
     };
 
     useEffect(() => {
@@ -49,19 +49,17 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setChatList, chatList]);
 
-    const handleChangeChat = (id, title, isNewChat) => {
+    const handleChangeChat = (id, title) => {
         setCurrentChat({
             id: id,
             title: title,
         });
-        if (isNewChat) setMessages([]);
-        else
-            axios
-                .get(`http://127.0.0.1:8000/chat/${id}`)
-                .then((response) => {
-                    setMessages(response.data.messages);
-                })
-                .catch((err) => console.log(err));
+        axios
+            .get(`http://127.0.0.1:8000/chat/${id}`)
+            .then((response) => {
+                setMessages(response.data.messages);
+            })
+            .catch((err) => console.log(err));
     };
 
     const handleSendMessage = (message) => {
