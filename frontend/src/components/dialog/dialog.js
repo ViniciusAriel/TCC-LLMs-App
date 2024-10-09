@@ -16,8 +16,8 @@ export default function Dialog({ messages }) {
 
     return (
         <div className="dialog-container" ref={messagesEndRef}>
-            {messages.map((message) => {
-                return <TextBubble message={message} />;
+            {messages.map((message, index) => {
+                return <TextBubble message={message} key={index} />;
             })}
             <div ref={messagesEndRef}></div>
         </div>

@@ -1,12 +1,8 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 
 import "./textBubble.css";
 
 export default function TextBubble({ message }) {
-    useEffect(() => {
-        console.log(message);
-    }, [message]);
-
     return (
         <div className="textbubble-container">
             {!message.sender_is_llm ? (

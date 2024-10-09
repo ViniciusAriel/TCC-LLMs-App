@@ -54,21 +54,18 @@ function App() {
             id: id,
             title: title,
         });
-        if (isNewChat) {
-            setMessages([]);
-        } else {
-            setMessages([]);
+        if (isNewChat) setMessages([]);
+        else
             axios
                 .get(`http://127.0.0.1:8000/chat/${id}`)
                 .then((response) => {
                     setMessages(response.data.messages);
                 })
                 .catch((err) => console.log(err));
-        }
     };
 
     const handleSendMessage = (message) => {
-        const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+        const tzoffset = new Date().getTimezoneOffset() * 60000;
         const localISOTime = new Date(Date.now() - tzoffset).toISOString();
         const newMessage = {
             content: message,
