@@ -113,10 +113,14 @@ class MessageView(ModelViewSet):
           if not serializer.is_valid():
                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
           
+          response_data = {}
+          
           queryset = Message.objects.create(**serializer.validated_data)
           serializer = MessageSerializer(queryset)
 
           message_content = body_data.get("content")
+
+          response_data["user_message"] = serializer.data
 
           if message_content:
                chat_response = get_chat_response(message_content, body_data.get("chat"))
@@ -124,7 +128,9 @@ class MessageView(ModelViewSet):
           else:
                return HttpResponse("No message content found", status=400)
 
-          return Response(serializer.data, status=status.HTTP_201_CREATED)
+          response_data["llm_response"] = serializer.data
+
+          return Response(response_data, status=status.HTTP_201_CREATED)
      
 def index(request):
     file_path = os.path.join('..', '..', 'frontend', 'public', 'index.html')
