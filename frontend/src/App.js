@@ -1,39 +1,34 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 
-import SideBar from "./components/sidebar/sideBar.js";
 import Dialog from "./components/dialog/dialog.js";
 import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
 import SaveLogModal from "./components/savelogmodal/saveLogModal.js";
+import SideBar from "./components/sidebar/sideBar.js";
 
 import "./App.css";
 
 function App() {
     const [chatList, setChatList] = useState([]);
-    const [isFirstRender, setIsFirstRender] = useState(true);
-
-    const [messages, setMessages] = useState([]);
-
     const [currentChat, setCurrentChat] = useState({
         id: null,
         title: "Crie um Chat",
     });
-
+    const [isFirstRender, setIsFirstRender] = useState(true);
+    const [messages, setMessages] = useState([]);
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
 
     const handleNewChatAdded = () => {
+        const chatId = chatList[chatList.length - 1].id;
+        const chatTitle = chatList[chatList.length - 1].title;
         setCurrentChat({
-            id: chatList[chatList.length - 1].id,
-            title: chatList[chatList.length - 1].title,
+            id: chatId,
+            title: chatTitle,
         });
-        handleChangeChat(
-            chatList[chatList.length - 1].id,
-            chatList[chatList.length - 1].title,
-            true
-        );
+        handleChangeChat(chatId, chatTitle, true);
     };
 
     useEffect(() => {
@@ -51,6 +46,7 @@ function App() {
             if (chatList.length === 0) setNewChatModal(true);
             else handleNewChatAdded();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setChatList, chatList]);
 
     const handleChangeChat = (id, title, isNewChat) => {
@@ -72,23 +68,25 @@ function App() {
     };
 
     const handleSendMessage = (message) => {
-        var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
-        var localISOTime = new Date(Date.now() - tzoffset).toISOString();
+        const tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+        const localISOTime = new Date(Date.now() - tzoffset).toISOString();
         const newMessage = {
             content: message,
             sender_is_llm: false,
             date: localISOTime,
             chat: currentChat.id,
         };
+        setMessages([...messages, newMessage]);
         axios
             .post(`http://127.0.0.1:8000/message/create`, newMessage)
             .then((response) => {
-                console.log(localISOTime);
-                console.log(response.data);
+                setMessages([
+                    ...messages,
+                    response.data.user_message,
+                    response.data.llm_response,
+                ]);
             })
             .catch((err) => console.log(err));
-        // TODO: API ENVIAR MENSAGEM PARA O BANCO E SALVAR
-        setMessages([...messages, newMessage]);
     };
 
     const handleCreateNewChat = (newChatInfo) => {
