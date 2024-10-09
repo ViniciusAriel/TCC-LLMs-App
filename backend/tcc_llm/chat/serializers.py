@@ -19,7 +19,7 @@ class ChatSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_messages(self, obj):
-        recent_messages = obj.messages.order_by('date')[:10]
+        recent_messages = obj.messages.order_by('date')
         return MessageSerializer(recent_messages, many=True).data
 
 class ChatSummarySerializer(serializers.ModelSerializer):
