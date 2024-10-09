@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import axios from "axios";
 
 import SideBar from "./components/sidebar/sideBar.js";
 import Dialog from "./components/dialog/dialog.js";
@@ -11,22 +12,9 @@ import "./App.css";
 
 function App() {
     const [chatList, setChatList] = useState([]);
+    const [isFirstRender, setIsFirstRender] = useState(true);
 
-    const [messages, setMessages] = useState([
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: false, content: "Lorem ipsum dolor sit amet" },
-        { fromChat: true, content: "Lorem ipsum dolor sit amet" },
-    ]);
+    const [messages, setMessages] = useState([]);
 
     const [currentChat, setCurrentChat] = useState({
         id: null,
@@ -38,45 +26,69 @@ function App() {
 
     const handleNewChatAdded = () => {
         setCurrentChat({
-            id: chatList[chatList.length - 1].chatId,
-            title: chatList[chatList.length - 1].chatTitle,
+            id: chatList[chatList.length - 1].id,
+            title: chatList[chatList.length - 1].title,
         });
-        setMessages([]);
+        handleChangeChat(
+            chatList[chatList.length - 1].id,
+            chatList[chatList.length - 1].title,
+            true
+        );
     };
 
-    // TODO: API INICIA O PROGRAMA PEGANDO TODOS OS CHATS: CHAT GET
     useEffect(() => {
-        setChatList([]);
-        if (chatList.length === 0) setNewChatModal(true);
-        else handleNewChatAdded();
+        axios
+            .get(`http://127.0.0.1:8000/user/1`)
+            .then((response) => {
+                setChatList(response.data.chats);
+            })
+            .catch((err) => console.log(err));
+        setIsFirstRender(false);
     }, []);
 
     useEffect(() => {
-        if (chatList.length !== 0) {
-            handleNewChatAdded();
+        if (!isFirstRender) {
+            if (chatList.length === 0) setNewChatModal(true);
+            else handleNewChatAdded();
         }
     }, [setChatList, chatList]);
 
-    const handleChangeChat = (id, title) => {
-        console.log(id);
-        console.log(title);
+    const handleChangeChat = (id, title, isNewChat) => {
         setCurrentChat({
             id: id,
             title: title,
         });
-        // TODO: API PEGAR MENSAGENS DO CHAT CORRESPONDENTE
-        setMessages([]);
+        if (isNewChat) {
+            setMessages([]);
+        } else {
+            setMessages([]);
+            axios
+                .get(`http://127.0.0.1:8000/chat/${id}`)
+                .then((response) => {
+                    setMessages(response.data.messages);
+                })
+                .catch((err) => console.log(err));
+        }
     };
 
     const handleSendMessage = (message) => {
-        const newMessage = { fromChat: false, content: message };
-        const newBotMessage = {
-            fromChat: true,
-            content:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        var tzoffset = new Date().getTimezoneOffset() * 60000; //offset in milliseconds
+        var localISOTime = new Date(Date.now() - tzoffset).toISOString();
+        const newMessage = {
+            content: message,
+            sender_is_llm: false,
+            date: localISOTime,
+            chat: currentChat.id,
         };
+        axios
+            .post(`http://127.0.0.1:8000/message/create`, newMessage)
+            .then((response) => {
+                console.log(localISOTime);
+                console.log(response.data);
+            })
+            .catch((err) => console.log(err));
         // TODO: API ENVIAR MENSAGEM PARA O BANCO E SALVAR
-        setMessages([...messages, newMessage, newBotMessage]);
+        setMessages([...messages, newMessage]);
     };
 
     const handleCreateNewChat = (newChatInfo) => {

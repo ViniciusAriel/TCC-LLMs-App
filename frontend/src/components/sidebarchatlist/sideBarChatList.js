@@ -10,7 +10,7 @@ export default function SideBarChatList({
     selectedCurrentChat,
 }) {
     const chatsByDate = chatList.reduce((groupedChats, chat) => {
-        const date = chat.date;
+        const date = new Date(chat.date).toLocaleDateString("pt-BR");
         if (!groupedChats[date]) {
             groupedChats[date] = [];
         }
@@ -30,12 +30,13 @@ export default function SideBarChatList({
                                 return (
                                     <SideBarChatItem
                                         llm={chat.llm}
-                                        chatTitle={chat.chatTitle}
+                                        chatTitle={chat.title}
                                         isClosed={isClosed}
                                         onClick={() => {
                                             selectedCurrentChat(
-                                                chat.chatId,
-                                                chat.chatTitle
+                                                chat.id,
+                                                chat.title,
+                                                false
                                             );
                                         }}
                                     />

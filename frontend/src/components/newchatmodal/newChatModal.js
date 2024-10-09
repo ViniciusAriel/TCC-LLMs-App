@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import axios from "axios";
 
 import Dropdown from "../dropdown/dropdown.js";
 import TextInput from "../textinput/textInput.js";
@@ -8,8 +9,8 @@ import "./newChatModal.css";
 
 export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const llmOptions = [
-        { value: "MISTRAL", label: "Mistral" },
-        { value: "LLAMA", label: "Llama" },
+        { value: "Mistral", label: "Mistral" },
+        { value: "Llama", label: "Llama" },
     ];
 
     const otherOptions = [
@@ -38,12 +39,16 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     };
 
     const handleCreateChat = () => {
-        setNewChat({
-            chatId: 1,
-            chatTitle: chatTitle,
-            llm: chatLlm,
-            date: new Date().toLocaleDateString(),
-        });
+        axios
+            .post(`http://127.0.0.1:8000/chat/create`, {
+                title: chatTitle,
+                llm: chatLlm,
+                date: new Date().toISOString(),
+            })
+            .then((response) => {
+                setNewChat(response.data);
+            })
+            .catch((err) => console.log(err));
         handleCloseModal();
     };
 
