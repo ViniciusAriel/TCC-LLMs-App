@@ -1,41 +1,14 @@
 import { React, useState } from "react";
 
-import TextInput from "../textinput/textInput.js";
+import axios from "axios";
+
 import Button from "../button/button.js";
+import TextInput from "../textinput/textInput.js";
 
 import "./saveLogModal.css";
 
-export default function SaveLogModal({ title, setSaveLogModal }) {
+export default function SaveLogModal({ currentChat, setSaveLogModal }) {
     const [logTitle, setLogTitle] = useState("");
-
-    const randomJSON = {
-        id: 4321,
-        usuario: {
-            nome: "Pedro",
-            sobrenome: "Silva",
-            email: "pedro@exemplo.com",
-            idade: 35,
-            endereco: {
-                rua: "Rua das Acácias",
-                numero: 234,
-                cidade: "Florianópolis",
-                cep: "56789-123",
-            },
-        },
-        compras: [
-            {
-                produto: "Notebook",
-                preco: 2499.99,
-                quantidade: 1,
-            },
-            {
-                produto: "Cadeira Gamer",
-                preco: 799.9,
-                quantidade: 2,
-            },
-        ],
-        assinatura_ativa: true,
-    };
 
     const handleCloseModal = () => {
         setSaveLogModal(false);
@@ -46,7 +19,13 @@ export default function SaveLogModal({ title, setSaveLogModal }) {
     };
 
     const handleDownloadFile = () => {
-        download(randomJSON, logTitle);
+        axios
+            .get(`http://127.0.0.1:8000/chat/download_log/${currentChat.id}`)
+            .then((response) => {
+                download(response.data, logTitle);
+            })
+            .catch((err) => console.log(err));
+        setSaveLogModal(false);
     };
 
     const download = (content, fileName) => {
@@ -56,7 +35,7 @@ export default function SaveLogModal({ title, setSaveLogModal }) {
         });
         a.href = URL.createObjectURL(file);
         if (fileName) a.download = `${fileName}.json`;
-        else a.download = "Log.json";
+        else a.download = `${currentChat.title}.json`;
         a.click();
         URL.revokeObjectURL(a.href);
     };
@@ -67,7 +46,7 @@ export default function SaveLogModal({ title, setSaveLogModal }) {
                 <h2>Baixar Log</h2>
                 <p>
                     Você tem certeza de que quer baixar o log da conversa{" "}
-                    {title}?
+                    {currentChat.title}?
                 </p>
                 <div className="savelog-item">
                     <TextInput

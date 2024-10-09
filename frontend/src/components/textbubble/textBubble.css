@@ -1,6 +1,6 @@
 .textbubble-container {
     width: 90%;
-    height: inherit;
+    height: fit-content;
     text-align: justify;
     text-justify: inter-word;
     font-size: 15px;

@@ -4,11 +4,11 @@
     justify-content: start;
     height: 2.25rem;
     width: 100%;
-    gap: 10px;
+    gap: 12px;
     color: #FEFFFC;
     cursor: pointer;
     white-space: nowrap;
-    margin-left: 10px;
+    margin-left: 8px;
 
     p {
         display: inline;
@@ -16,8 +16,16 @@
         max-width: 75%;
         overflow: hidden;
         text-overflow: ellipsis;
+        transition: all 0.2s ease;
     }
 
+}
+
+.chatitem-container:hover {
+
+    p {
+        font-weight: 600;
+    }
 }
 
 .chatitem-icon {

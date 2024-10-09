@@ -10,7 +10,7 @@ export default function SideBarChatList({
     selectedCurrentChat,
 }) {
     const chatsByDate = chatList.reduce((groupedChats, chat) => {
-        const date = chat.date;
+        const date = new Date(chat.date).toLocaleDateString("pt-BR");
         if (!groupedChats[date]) {
             groupedChats[date] = [];
         }
@@ -22,25 +22,29 @@ export default function SideBarChatList({
         <div className={`chatlist-container ${isClosed ? "close" : ""}`}>
             {Object.keys(chatsByDate)
                 .toReversed()
-                .map((date) => {
+                .map((date, index) => {
                     return (
-                        <div className="chatlist-items">
+                        <div className="chatlist-items" key={index}>
                             <h3>{date}</h3>
-                            {chatsByDate[date].toReversed().map((chat) => {
-                                return (
-                                    <SideBarChatItem
-                                        llm={chat.llm}
-                                        chatTitle={chat.chatTitle}
-                                        isClosed={isClosed}
-                                        onClick={() => {
-                                            selectedCurrentChat(
-                                                chat.chatId,
-                                                chat.chatTitle
-                                            );
-                                        }}
-                                    />
-                                );
-                            })}
+                            {chatsByDate[date]
+                                .toReversed()
+                                .map((chat, index) => {
+                                    return (
+                                        <SideBarChatItem
+                                            key={index}
+                                            llm={chat.llm}
+                                            chatTitle={chat.title}
+                                            isClosed={isClosed}
+                                            onClick={() => {
+                                                selectedCurrentChat(
+                                                    chat.id,
+                                                    chat.title,
+                                                    false
+                                                );
+                                            }}
+                                        />
+                                    );
+                                })}
                         </div>
                     );
                 })}
