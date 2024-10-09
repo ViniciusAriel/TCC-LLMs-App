@@ -14,6 +14,10 @@
     }
 }
 
+.chatlist-container.close {
+  margin-top: 11px;
+}
+
 .chatlist-container::-webkit-scrollbar {
   width: 0.6rem;
   max-height: 100px;
