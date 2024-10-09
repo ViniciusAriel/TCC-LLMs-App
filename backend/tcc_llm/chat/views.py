@@ -15,19 +15,22 @@ from .utils import get_chat_response, duplicate_messages, create_chat_log
 
 # Create your views here.
 
+def get_chat(pk):
+     queryset = Chat.objects.filter(pk=pk).first()
+
+     if not queryset:
+          return Response(status=status.HTTP_404_NOT_FOUND)
+          
+     serializer = ChatSerializer(queryset)
+
+     return Response(serializer.data, status=status.HTTP_200_OK)
+
 class ChatView(ModelViewSet):
      
      serializer_class = ChatSerializer;
       
      def retrieve(self, request, pk):
-          queryset = Chat.objects.filter(pk=pk).first()
-
-          if not queryset:
-               return Response(status=status.HTTP_404_NOT_FOUND)
-          
-          serializer = ChatSerializer(queryset)
-
-          return Response(serializer.data, status=status.HTTP_200_OK)
+          return get_chat(pk=pk)
 
      def create(self, request):
           serializer = ChatSerializer(data=request.data)
@@ -123,7 +126,10 @@ class MessageView(ModelViewSet):
           response_data["user_message"] = serializer.data
 
           if message_content:
-               chat_response = get_chat_response(message_content, body_data.get("chat"))
+               chat_id = body_data.get("chat")
+               chat = get_chat(pk=chat_id)
+               llm = chat.data['llm']
+               chat_response = get_chat_response(message_content, chat_id, llm)
                serializer = MessageSerializer(chat_response)
           else:
                return HttpResponse("No message content found", status=400)
