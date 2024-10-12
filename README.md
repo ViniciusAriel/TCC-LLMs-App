@@ -16,7 +16,11 @@ npm start
 Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin
 
 cd ../backend
-Importante: no arquivo setting.py, setar em DATABASE o login e senha criados para o PostgresSQL
+
+Criar um arquivo '.env' na pasta backend/tcc_llm/tcc_llm e adicionar uma variável para ser a senha de acesso ao banco de dados.
+Ela deve ser a mesma senha configurada ao baixar o postgres.
+Exemplo:
+DATABASE_PASSWORD='MY_POSTGRES_PASSWORD123'
 
 Opcional: criar um ambiente virtual para instalar os pacotes sem conflitos
 pip install virtualenv
