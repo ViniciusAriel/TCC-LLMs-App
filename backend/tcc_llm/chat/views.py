@@ -79,6 +79,15 @@ class ChatView(ModelViewSet):
 
           return JsonResponse(json_data)
      
+     def get_prompt(self, request, pk):
+        # Recupera o chat pelo pk
+        chat = Chat.objects.filter(pk=pk).first()
+        if not chat:
+            return Response({"error": "Chat not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Retorna o prompt
+        return Response({"prompt": chat.prompt}, status=status.HTTP_200_OK)
+
      def edit_prompt(self, request, pk):
         # Recupera o chat pelo pk
         chat = Chat.objects.filter(pk=pk).first()
