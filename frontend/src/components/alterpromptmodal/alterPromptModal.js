@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useRef } from "react";
 import { TiDelete } from "react-icons/ti";
+import axios from "axios";
 
 import Dropdown from "../dropdown/dropdown";
 import TextInput from "../textinput/textInput";
@@ -15,13 +16,19 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     ];
 
     const promptEndRef = useRef(null);
-    const [promptConfig, setPromptConfig] = useState([
-        { role: "system", text: "A" },
-        { role: "human", text: "B" },
-        { role: "ai", text: "C" },
-        { role: "system", text: "D" },
-        { role: "human", text: "E" },
-    ]);
+    const [promptConfig, setPromptConfig] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(`http://127.0.0.1:8000/chat/get_prompt/${currentChat.id}`)
+            .then((response) => {
+                setPromptConfig(
+                    response.data.prompt.map(([role, text]) => ({ role, text }))
+                );
+            })
+            .catch((err) => console.log(err));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (promptEndRef.current) {
