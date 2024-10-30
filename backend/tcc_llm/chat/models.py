@@ -1,5 +1,12 @@
 from django.db import models
 
+def default_prompt():
+    return [
+        ("system", "Responda as mensagens"),
+        ("human", "Olá, tudo bem?"),
+        ("ai", "Olá! Como posso ajudar?"),
+    ]
+
 # Create your models here.
 
 class LLM(models.TextChoices):
@@ -20,6 +27,7 @@ class Chat(models.Model):
     llm = models.CharField(choices=LLM.choices, null=False)
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
+    prompt = models.JSONField(default=default_prompt)
 
     def __str__(self):
         return str(self.title)
