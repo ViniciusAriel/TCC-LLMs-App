@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import Select from "react-select";
 
 import "./dropdown.css";
@@ -10,10 +10,6 @@ export default function Dropdown({
     handleSelectedOptions,
     value,
 }) {
-    useEffect(() => {
-        console.log(value);
-    }, [value]);
-
     return (
         <div className="dropdown-container">
             <p>{title}</p>

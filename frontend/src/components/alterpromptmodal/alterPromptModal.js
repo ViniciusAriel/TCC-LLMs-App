@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useRef } from "react";
+import { TiDelete } from "react-icons/ti";
 
 import Dropdown from "../dropdown/dropdown";
 import TextInput from "../textinput/textInput";
@@ -14,11 +15,11 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     ];
 
     const promptDummy = [
-        { model: "system", text: "A" },
-        { model: "human", text: "B" },
-        { model: "ai", text: "C" },
-        { model: "system", text: "D" },
-        { model: "human", text: "E" },
+        { role: "system", text: "A" },
+        { role: "human", text: "B" },
+        { role: "ai", text: "C" },
+        { role: "system", text: "D" },
+        { role: "human", text: "E" },
     ];
 
     const promptEndRef = useRef(null);
@@ -33,13 +34,13 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     const addPromtpConfig = () => {
         setPromptConfig([
             ...promptConfig,
-            { model: "system", value: "" }, // Novo input com id único e valor inicial vazio
+            { role: "system", value: "" }, // Novo input com id único e valor inicial vazio
         ]);
     };
 
     const handlePromptConfig = (index, value) => {
         const updatedPrompts = promptConfig.map((prompt, i) =>
-            i === index ? { ...prompt, model: value } : prompt
+            i === index ? { ...prompt, role: value } : prompt
         );
         setPromptConfig(updatedPrompts);
     };
@@ -51,13 +52,21 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
         setPromptConfig(updatedPrompts);
     };
 
-    const handleCloseModel = () => {
+    const handleCloseModal = () => {
         setPromptModal(false);
     };
 
     const handleUpdatePrompt = () => {
-        console.log(promptConfig);
-        handleCloseModel();
+        const transformedTemplates = promptConfig.map((message) => [
+            message.role,
+            message.text,
+        ]);
+        const finishedTemplate = {
+            prompt: transformedTemplates,
+        };
+
+        console.log(finishedTemplate);
+        handleCloseModal();
     };
 
     return (
@@ -75,11 +84,11 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                                     }
                                     options={promptOptions}
                                     placeholder={
-                                        prompt.model
-                                            ? prompt.model
-                                            : "Escolha o modelo"
+                                        prompt.role
+                                            ? prompt.role
+                                            : "Escolha o role"
                                     }
-                                    value={prompt.model}
+                                    value={prompt.role}
                                 />
                                 <TextInput
                                     onChange={(e) =>
@@ -87,6 +96,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                                     }
                                     value={prompt.text}
                                 />
+                                <TiDelete size={50} color="#2F4D65" />
                             </div>
                         );
                     })}
@@ -96,7 +106,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                     <Button
                         color={"white"}
                         title={"Voltar"}
-                        onClick={handleCloseModel}
+                        onClick={handleCloseModal}
                     />
                     <Button
                         color={"white"}
