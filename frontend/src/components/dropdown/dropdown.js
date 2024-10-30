@@ -1,4 +1,4 @@
-import React from "react";
+import { React } from "react";
 import Select from "react-select";
 
 import "./dropdown.css";
@@ -8,7 +8,7 @@ export default function Dropdown({
     placeholder,
     options,
     handleSelectedOptions,
-    selectedOption,
+    value,
 }) {
     return (
         <div className="dropdown-container">
@@ -19,8 +19,6 @@ export default function Dropdown({
                 placeholder={placeholder}
                 options={options}
                 onChange={handleSelectedOptions}
-                value={selectedOption}
-                defaultValue={selectedOption}
                 isSearchable={true}
             />
         </div>
