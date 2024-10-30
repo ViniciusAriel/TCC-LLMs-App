@@ -19,29 +19,34 @@ mistral_key = os.getenv('MISTRAL_API_KEY')
 groq_key = os.getenv('GROQ_API_KEY')
 
 
-def get_chat_response(prompt, chat_id, llm_type):
+def get_chat_response(prompt, chat_id, llm_type, prompt_array):
 
+        # Seleciona a LLM sendo usada
         if llm_type == LLM.MISTRAL:
                 llm = ChatMistralAI(api_key=mistral_key)
         elif llm_type == LLM.OLLAMA:
                 llm = ChatOllama(model="llama3.1", api_key=llama_key)
         elif llm_type == LLM.OPENAI:
-                llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
-        elif llm_type == LLM.GROQ:
                 llm = OpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+        elif llm_type == LLM.GROQ:
+                llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
         else:
                 llm = ChatMistralAI(api_key=mistral_key)
 
-        prompt_template = ChatPromptTemplate([
-                ("system", "Você está conversando com uma criança de 5 anos."),
-                ("human", "Oi eu sou o Bob. Como você está?"),
-                ("ai", "Olá, Bob! Eu estou bem, obrigado"),
-                ("human", "{text}"),
-            ])
+        # Prepara o prompt array para o ChatPromptTemplate
+        prompt_messages = [(role, content) for role, content in prompt_array]
 
+        # Adiciona a mensagem final do usuário
+        prompt_messages.append(("human", "{text}"))
+
+        # Cria o template do prompt com as mensagens
+        prompt_template = ChatPromptTemplate(prompt_messages)
+
+        # Cria a chain e chama a resposta do llm
         llm_chain = prompt_template | llm
         chat_response = llm_chain.invoke({'text': prompt}).content
 
+        # Prepara a mensagem para salvar
         chat_message = Message()
         chat_message.chat = Chat.objects.filter(pk=chat_id).first()
         chat_message.content = chat_response

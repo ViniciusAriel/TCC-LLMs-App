@@ -13,7 +13,7 @@ from .models import ChatUser, Chat, Message
 from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
 from .utils import get_chat_response, duplicate_messages, create_chat_log
 
-# Create your views here.
+# Common used functions
 
 def get_chat(pk):
      queryset = Chat.objects.filter(pk=pk).first()
@@ -24,6 +24,8 @@ def get_chat(pk):
      serializer = ChatSerializer(queryset)
 
      return Response(serializer.data, status=status.HTTP_200_OK)
+
+# Create your views here.
 
 class ChatView(ModelViewSet):
      
@@ -76,7 +78,42 @@ class ChatView(ModelViewSet):
           json_data = create_chat_log(messages)
 
           return JsonResponse(json_data)
+     
+     def get_prompt(self, request, pk):
+        # Recupera o chat pelo pk
+        chat = Chat.objects.filter(pk=pk).first()
+        if not chat:
+            return Response({"error": "Chat not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        # Retorna o prompt
+        return Response({"prompt": chat.prompt}, status=status.HTTP_200_OK)
+
+     def edit_prompt(self, request, pk):
+        # Recupera o chat pelo pk
+        chat = Chat.objects.filter(pk=pk).first()
+        if not chat:
+            return Response({"error": "Chat not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Obtém o novo prompt do corpo da requisição
+        new_prompt = request.data["prompt"]
+        if not isinstance(new_prompt, list):
+            return Response({"error": "Prompt must be a list."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Valida se cada item do prompt é uma tupla com duas strings
+        for item in new_prompt:
+            if not isinstance(item, list) or len(item) != 2 or not all(isinstance(i, str) for i in item):
+                return Response(
+                    {"error": "Each prompt entry must be a list with two string elements."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        # Atualiza o prompt e salva
+        chat.prompt = new_prompt
+        chat.save()
+
+        # Retorna o chat atualizado
+        serializer = ChatSerializer(chat)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UserView(ModelViewSet):
@@ -129,7 +166,8 @@ class MessageView(ModelViewSet):
                chat_id = body_data.get("chat")
                chat = get_chat(pk=chat_id)
                llm = chat.data['llm']
-               chat_response = get_chat_response(message_content, chat_id, llm)
+               prompt_array = chat.data['prompt']
+               chat_response = get_chat_response(message_content, chat_id, llm, prompt_array)
                serializer = MessageSerializer(chat_response)
           else:
                return HttpResponse("No message content found", status=400)
