@@ -48,6 +48,10 @@
     gap: 5px;
 }
 
+.delete-prompt-icon {
+    cursor: pointer;
+}
+
 .modal-buttons {
     width: 100%;
     display: flex;

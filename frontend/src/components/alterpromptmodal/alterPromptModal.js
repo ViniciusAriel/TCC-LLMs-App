@@ -14,16 +14,14 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
         { value: "ai", label: "AI" },
     ];
 
-    const promptDummy = [
+    const promptEndRef = useRef(null);
+    const [promptConfig, setPromptConfig] = useState([
         { role: "system", text: "A" },
         { role: "human", text: "B" },
         { role: "ai", text: "C" },
         { role: "system", text: "D" },
         { role: "human", text: "E" },
-    ];
-
-    const promptEndRef = useRef(null);
-    const [promptConfig, setPromptConfig] = useState(promptDummy);
+    ]);
 
     useEffect(() => {
         if (promptEndRef.current) {
@@ -32,10 +30,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     }, [promptConfig]);
 
     const addPromtpConfig = () => {
-        setPromptConfig([
-            ...promptConfig,
-            { role: "system", value: "" }, // Novo input com id único e valor inicial vazio
-        ]);
+        setPromptConfig([...promptConfig, { role: "system", value: "" }]);
     };
 
     const handlePromptConfig = (index, value) => {
@@ -54,6 +49,10 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
 
     const handleCloseModal = () => {
         setPromptModal(false);
+    };
+
+    const handleDeletePrompt = (index) => {
+        setPromptConfig(promptConfig.filter((_, i) => i !== index));
     };
 
     const handleUpdatePrompt = () => {
@@ -78,7 +77,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                         return (
                             <div className="prompt-item" key={index}>
                                 <Dropdown
-                                    title={index}
+                                    title={index + 1}
                                     handleSelectedOptions={(e) =>
                                         handlePromptConfig(index, e.value)
                                     }
@@ -96,7 +95,15 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                                     }
                                     value={prompt.text}
                                 />
-                                <TiDelete size={50} color="#2F4D65" />
+                                <div className="delete-prompt-icon">
+                                    <TiDelete
+                                        size={27}
+                                        color="#2F4D65"
+                                        onClick={() =>
+                                            handleDeletePrompt(index)
+                                        }
+                                    />
+                                </div>
                             </div>
                         );
                     })}
