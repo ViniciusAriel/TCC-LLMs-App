@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import Select from "react-select";
 
 import "./dropdown.css";
@@ -8,8 +8,12 @@ export default function Dropdown({
     placeholder,
     options,
     handleSelectedOptions,
-    selectedOption,
+    value,
 }) {
+    useEffect(() => {
+        console.log(value);
+    }, [value]);
+
     return (
         <div className="dropdown-container">
             <p>{title}</p>
@@ -19,8 +23,6 @@ export default function Dropdown({
                 placeholder={placeholder}
                 options={options}
                 onChange={handleSelectedOptions}
-                value={selectedOption}
-                defaultValue={selectedOption}
                 isSearchable={true}
             />
         </div>
