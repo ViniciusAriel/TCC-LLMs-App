@@ -2,10 +2,10 @@ from django.db import models
 
 def default_prompt():
     return [
-        ("system", "Responda as mensagens"),
-        ("human", "Olá, tudo bem?"),
-        ("ai", "Olá! Como posso ajudar?"),
-    ]
+    { "role": "system", "content": "Responda as mensagens." },
+    { "role": "human", "content": "Olá, tudo bem?" },
+    { "role": "ai", "content": "Olá! Como posso ajudar?" }
+]
 
 # Create your models here.
 

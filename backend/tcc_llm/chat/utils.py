@@ -34,10 +34,10 @@ def get_chat_response(prompt, chat_id, llm_type, prompt_array):
                 llm = ChatMistralAI(api_key=mistral_key)
 
         # Prepara o prompt array para o ChatPromptTemplate
-        prompt_messages = [(role, content) for role, content in prompt_array]
+        prompt_messages = [(item["role"], item["content"]) for item in prompt_array]
 
         # Adiciona a mensagem final do usuário
-        prompt_messages.append(("human", "{text}"))
+        prompt_messages.append(('human', '{text}'))
 
         # Cria o template do prompt com as mensagens
         prompt_template = ChatPromptTemplate(prompt_messages)

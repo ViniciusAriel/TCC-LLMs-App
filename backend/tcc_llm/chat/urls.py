@@ -14,6 +14,5 @@ urlpatterns = [
 
     path('chat/duplicate/<int:pk>', ChatView.as_view(actions={"post": "duplicate"})),
     path('chat/download_log/<int:pk>', ChatView.as_view(actions={"get": "download_log"})),
-    path('chat/edit_prompt/<int:pk>', ChatView.as_view(actions={"put": "edit_prompt"})),
-    path('chat/get_prompt/<int:pk>', ChatView.as_view(actions={"get": "get_prompt"})),
+    path('chat/prompt/<int:pk>', ChatView.as_view(actions={"put": "edit_prompt", "get": "get_prompt"})),
 ]
