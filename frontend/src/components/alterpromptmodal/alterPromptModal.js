@@ -20,7 +20,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
 
     useEffect(() => {
         axios
-            .get(`http://127.0.0.1:8000/chat/get_prompt/${currentChat.id}`)
+            .get(`http://127.0.0.1:8000/chat/prompt/${currentChat.id}`)
             .then((response) => {
                 setPromptConfig(
                     response.data.prompt.map(([role, text]) => ({ role, text }))
@@ -63,15 +63,21 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     };
 
     const handleUpdatePrompt = () => {
-        const transformedTemplates = promptConfig.map((message) => [
-            message.role,
-            message.text,
-        ]);
-        const finishedTemplate = {
-            prompt: transformedTemplates,
+        const transformedTemplate = {
+            prompt: promptConfig.map(({ role, text }) => [role, text]),
         };
 
-        console.log(finishedTemplate);
+        axios
+            .put(
+                `http://127.0.0.1:8000/chat/prompt/${currentChat.id}`,
+                transformedTemplate
+            )
+            .then((response) => {
+                setPromptConfig(
+                    response.data.prompt.map(([role, text]) => ({ role, text }))
+                );
+            })
+            .catch((err) => console.log(err));
         handleCloseModal();
     };
 
