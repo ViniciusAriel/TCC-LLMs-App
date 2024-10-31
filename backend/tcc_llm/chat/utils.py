@@ -19,7 +19,7 @@ mistral_key = os.getenv('MISTRAL_API_KEY')
 groq_key = os.getenv('GROQ_API_KEY')
 
 
-def get_chat_response(prompt, chat_id, llm_type, prompt_array):
+def get_chat_response(prompt, chat_id, llm_type, prompt_array, is_main_llm):
 
         # Seleciona a LLM sendo usada
         if llm_type == LLM.MISTRAL:
@@ -51,6 +51,7 @@ def get_chat_response(prompt, chat_id, llm_type, prompt_array):
         chat_message.chat = Chat.objects.filter(pk=chat_id).first()
         chat_message.content = chat_response
         chat_message.sender_is_llm = True
+        chat_message.sender_is_main_llm = is_main_llm
         chat_message.date = datetime.now()
 
         chat_message.save()
