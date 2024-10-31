@@ -9,8 +9,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import ChatUser, Chat, Message
-from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
+from .models import ChatUser, Chat, Message, MultiChat
+from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer, MultiChatSerializer
 from .utils import get_chat_response, duplicate_messages, create_chat_log
 
 # Common used functions
@@ -26,6 +26,115 @@ def get_chat(pk):
      return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Create your views here.
+class MultiChatView(ModelViewSet):
+     serializer_class = MultiChatSerializer;
+
+     def retrieve(seld, request, pk):
+          queryset = MultiChat.objects.filter(pk=pk).first()
+
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+          
+          serializer = MultiChatSerializer(queryset)
+          return Response(serializer.data, status=status.HTTP_200_OK)
+     
+     def create(self, request):
+          serializer = MultiChatSerializer(data=request.data)
+
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+          
+          queryset = MultiChat.objects.create(**serializer.validated_data)
+          serializer = MultiChatSerializer(queryset)
+          return Response(serializer.data, status=status.HTTP_201_CREATED)
+     
+     def delete(self, request, pk):
+          queryset = MultiChat.objects.filter(pk=pk).first()
+
+          if not queryset:
+               return Response(status=status.HTTP_404_NOT_FOUND)
+          
+          queryset.delete()
+          serializer = MultiChatSerializer(queryset)
+          return Response(serializer.data, status=status.HTTP_200_OK)
+     
+     def download_log(self, request, pk):
+          chats = Chat.objects.filter(multichat_id=pk)
+
+          # IMPLEMENT
+          json_data = create_multi_chat_log(chats)
+
+          return JsonResponse(json_data)
+     
+     def send_message(self, request, pk):
+          body_data = request.data
+
+          # serializer = MessageSerializer(data=request.data)
+
+          # if not serializer.is_valid():
+          #      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+          response_data = {}
+          response_data["user_message"] = serializer.data
+          llm_responses = []
+
+          chats = Chat.objects.filter(multichat_id=pk)
+
+          for chat in chats:
+               queryset = Message.objects.create(**serializer.validated_data)
+               serializer = MessageSerializer(queryset)
+
+               message_content = body_data.get("content")
+
+               if message_content:
+                    chat_id = chat.data['id']
+                    llm = chat.data['llm']
+                    prompt_array = chat.data['prompt']
+                    chat_response = get_chat_response(message_content, chat_id, llm, prompt_array)
+                    serializer = MessageSerializer(chat_response)
+               else:
+                    return HttpResponse("No message content found", status=400)
+               
+               llm_responses.append(serializer.data)
+
+          response_data["gold_standard_response"] = llm_responses[0]
+          response_data["other_llm_responses"] = llm_responses[1:]
+
+          return Response(response_data, status=status.HTTP_201_CREATED)
+     
+     def get_prompt(self, request, pk):
+          chat = Chat.objects.filter(multichat_id=pk).first()
+          if not chat:
+               return Response({"error": "Chat not found."}, status=status.HTTP_404_NOT_FOUND)
+
+          # Retorna o prompt
+          return Response({"prompt": chat.prompt}, status=status.HTTP_200_OK)
+     
+     def edit_prompt(self, request, pk):
+          chats = Chat.objects.filter(multichat_id=pk)
+
+          # Obtém o novo prompt do corpo da requisição
+          new_prompt = request.data["prompt"]
+          if not isinstance(new_prompt, list):
+               return Response({"error": "Prompt must be a list."}, status=status.HTTP_400_BAD_REQUEST)
+          
+          # Valida se cada item do prompt é uma tupla com duas strings
+          for item in new_prompt:
+               if not isinstance(item, list) or len(item) != 2 or not all(isinstance(i, str) for i in item):
+                    return Response(
+                    {"error": "Each prompt entry must be a list with two string elements."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                    )
+
+          for chat in chats:
+               # Atualiza o prompt e salva
+               chat.prompt = new_prompt
+               chat.save()
+
+          multichat = MultiChat.objects.filter(pk=pk).first()
+          serializer = MultiChatSerializer(multichat)
+          return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ChatView(ModelViewSet):
      

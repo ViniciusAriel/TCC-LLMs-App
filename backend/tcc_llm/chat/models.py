@@ -21,6 +21,11 @@ class ChatUser(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+class MultiChat(models.Model):
+    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
+    title = models.CharField(max_length=255)
+    date = models.DateTimeField()
     
 class Chat(models.Model):
     user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
@@ -28,6 +33,8 @@ class Chat(models.Model):
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
     prompt = models.JSONField(default=default_prompt)
+
+    multichat_id = models.ForeignKey(MultiChat, related_name='multi_chat', on_delete=models.SET_DEFAULT, default=1)
 
     def __str__(self):
         return str(self.title)
