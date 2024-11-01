@@ -1,3 +1,4 @@
+from argparse import Action
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import FileResponse
@@ -8,9 +9,10 @@ import json
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
 
 from .models import ChatUser, Chat, Message
-from .serializers import ChatUserSerializer, ChatSerializer, MessageSerializer
+from .serializers import ChatPromptSerializer, ChatUserSerializer, ChatSerializer, MessageSerializer
 from .utils import get_chat_response, duplicate_messages, create_chat_log
 
 # Common used functions
@@ -29,7 +31,7 @@ def get_chat(pk):
 
 class ChatView(ModelViewSet):
      
-     serializer_class = ChatSerializer;
+     serializer_class = ChatSerializer
       
      def retrieve(self, request, pk):
           return get_chat(pk=pk)
@@ -96,24 +98,19 @@ class ChatView(ModelViewSet):
 
         # Obtém o novo prompt do corpo da requisição
         new_prompt = request.data["prompt"]
-        if not isinstance(new_prompt, list):
-            return Response({"error": "Prompt must be a list."}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Valida se cada item do prompt é uma tupla com duas strings
-        for item in new_prompt:
-            if not isinstance(item, list) or len(item) != 2 or not all(isinstance(i, str) for i in item):
-                return Response(
-                    {"error": "Each prompt entry must be a list with two string elements."},
-                    status=status.HTTP_400_BAD_REQUEST,
-                )
 
         # Atualiza o prompt e salva
         chat.prompt = new_prompt
         chat.save()
 
         # Retorna o chat atualizado
-        serializer = ChatSerializer(chat)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = ChatPromptSerializer(chat, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserView(ModelViewSet):

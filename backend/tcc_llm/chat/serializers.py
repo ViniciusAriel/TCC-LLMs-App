@@ -34,3 +34,8 @@ class ChatUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChatUser
         fields = '__all__'
+
+class ChatPromptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ['prompt']
