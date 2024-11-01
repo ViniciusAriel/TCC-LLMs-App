@@ -159,17 +159,33 @@ class MessageView(ModelViewSet):
 
           response_data["user_message"] = serializer.data
 
+          #main llm response
           if message_content:
                chat_id = body_data.get("chat")
                chat = get_chat(pk=chat_id)
-               llm = chat.data['llm']
+               # llm = chat.data['llm']
+               llm = chat.data['main_llm']
                prompt_array = chat.data['prompt']
-               chat_response = get_chat_response(message_content, chat_id, llm, prompt_array)
+               chat_response = get_chat_response(message_content, chat_id, llm, prompt_array, True)
                serializer = MessageSerializer(chat_response)
           else:
                return HttpResponse("No message content found", status=400)
-
-          response_data["llm_response"] = serializer.data
+          
+          response_data["main_llm_response"] = serializer.data
+          
+          #secondary llm response
+          if message_content:
+               chat_id = body_data.get("chat")
+               chat = get_chat(pk=chat_id)
+               # llm = chat.data['llm']
+               llm = chat.data['secondary_llm']
+               prompt_array = chat.data['prompt']
+               chat_response = get_chat_response(message_content, chat_id, llm, prompt_array, False)
+               serializer = MessageSerializer(chat_response)
+          else:
+               return HttpResponse("No message content found", status=400)
+          
+          response_data["secondary_llm_response"] = serializer.data
 
           return Response(response_data, status=status.HTTP_201_CREATED)
      

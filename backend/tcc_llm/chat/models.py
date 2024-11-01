@@ -24,7 +24,8 @@ class ChatUser(models.Model):
     
 class Chat(models.Model):
     user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
-    llm = models.CharField(choices=LLM.choices, null=False)
+    main_llm = models.CharField(choices=LLM.choices, null=False)
+    secondary_llm = models.CharField(choices=LLM.choices, null=False, default='Groq')
     title = models.CharField(max_length=255)
     date = models.DateTimeField()
     prompt = models.JSONField(default=default_prompt)
@@ -36,6 +37,7 @@ class Message(models.Model):
     chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.SET_DEFAULT, default=1)
     content = models.CharField(max_length=4096)
     sender_is_llm = models.BooleanField(blank=False)
+    sender_is_main_llm = models.BooleanField(blank=False, default=False)
     date = models.DateTimeField()
 
     def __str__(self):
