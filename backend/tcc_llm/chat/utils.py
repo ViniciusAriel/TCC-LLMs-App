@@ -80,7 +80,8 @@ def create_chat_log(messages):
                         message_data = {}
                         message_data["id"] = 0
                         message_data["input"] = message.content
-                        message_data["expected_output"] = []
+                elif message.sender_is_main_llm:
+                        message_data["expected_output"] = [message.content]
                 else:
                         message_data["actual_output"] = message.content
                         data["instances"].append(message_data)
