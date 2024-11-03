@@ -25,7 +25,7 @@ class ChatSerializer(serializers.ModelSerializer):
 class ChatSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ['id', 'title', 'llm', 'date']
+        fields = ['id', 'title', 'main_llm', 'secondary_llm', 'date']
 
 
 class ChatUserSerializer(serializers.ModelSerializer):
