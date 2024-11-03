@@ -7,7 +7,7 @@ import { BiSolidTrashAlt } from "react-icons/bi";
 import "./dialogHeader.css";
 
 export default function DialogHeader({
-    chatTitle,
+    chat,
     setSaveLogModal,
     setPromptModal,
     setDeleteModal,
@@ -16,7 +16,15 @@ export default function DialogHeader({
         <div className="dialogheader-container">
             <div className="header-content">
                 <div className="header-title">
-                    <h1> {chatTitle ? chatTitle : "Escolha um Chat"}</h1>
+                    <h1>
+                        {chat.title
+                            ? chat.main_llm +
+                              "/" +
+                              chat.secondary_llm +
+                              " - " +
+                              chat.title
+                            : "Escolha um Chat"}
+                    </h1>
                 </div>
                 <div className="header-icons">
                     <div className="icon">
