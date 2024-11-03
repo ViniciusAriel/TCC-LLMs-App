@@ -2,6 +2,7 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 
 import AlterPromptModal from "./components/alterpromptmodal/alterPromptModal.js";
+import DeleteChatModal from "./components/deletechatmodal/deleteChatModal.js";
 import Dialog from "./components/dialog/dialog.js";
 import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
@@ -19,6 +20,7 @@ function App() {
     });
     const [isFirstRender, setIsFirstRender] = useState(true);
     const [messages, setMessages] = useState([]);
+    const [deleteModal, setDeleteModal] = useState(false);
     const [promptModal, setPromptModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
@@ -105,6 +107,7 @@ function App() {
                     chatTitle={currentChat.title}
                     setSaveLogModal={setSaveLogModal}
                     setPromptModal={setPromptModal}
+                    setDeleteModal={setDeleteModal}
                 />
                 <Dialog messages={messages} />
                 <DialogFooter sendMessage={handleSendMessage} />
@@ -124,6 +127,13 @@ function App() {
             {promptModal && (
                 <AlterPromptModal
                     setPromptModal={setPromptModal}
+                    currentChat={currentChat}
+                />
+            )}
+            {deleteModal && (
+                <DeleteChatModal
+                    setChatList={setChatList}
+                    setDeletePrompt={setDeleteModal}
                     currentChat={currentChat}
                 />
             )}

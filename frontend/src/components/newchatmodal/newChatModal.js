@@ -21,6 +21,7 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const [chatTitle, setChatTitle] = useState("Novo Chat");
     const [chatMainLlm, setChatMainLlm] = useState();
     const [chatSecondLlm, setChatSecondLlm] = useState();
+    // eslint-disable-next-line no-unused-vars
     const [chatOptions, setChatOptions] = useState();
 
     const handleCloseModal = () => {

@@ -54,7 +54,9 @@ class ChatView(ModelViewSet):
                return Response(status=status.HTTP_404_NOT_FOUND)
 
           queryset.delete()
-          serializer = ChatSerializer(queryset)
+
+          remaining_chats = Chat.objects.all()
+          serializer = ChatSerializer(remaining_chats, many=True)
 
           return Response(serializer.data, status=status.HTTP_200_OK)
 
