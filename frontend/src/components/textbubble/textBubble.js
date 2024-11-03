@@ -10,7 +10,11 @@ export default function TextBubble({ message }) {
                     <p>{message.content}</p>
                 </div>
             ) : (
-                <div className="chat-message">
+                <div
+                    className={`chat-message ${
+                        message.sender_is_main_llm ? "main" : ""
+                    }`}
+                >
                     <p>{message.content}</p>
                 </div>
             )}

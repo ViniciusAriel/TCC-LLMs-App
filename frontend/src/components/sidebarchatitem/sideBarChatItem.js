@@ -4,7 +4,13 @@ import { FiMessageSquare } from "react-icons/fi";
 
 import "./sideBarChatItem.css";
 
-export default function SideBarChatItem({ chatTitle, onClick, llm, isClosed }) {
+export default function SideBarChatItem({
+    chatTitle,
+    onClick,
+    mainLLm,
+    comparedLlm,
+    isClosed,
+}) {
     return (
         <div
             className={`chatitem-container ${isClosed ? "close" : ""}`}
@@ -14,10 +20,10 @@ export default function SideBarChatItem({ chatTitle, onClick, llm, isClosed }) {
                 <FiMessageSquare size={18} />
             </div>
             {isClosed ? (
-                <p>{llm}</p>
+                <p>{comparedLlm}</p>
             ) : (
                 <p>
-                    {llm} - {chatTitle}
+                    {mainLLm} - {comparedLlm}
                 </p>
             )}
         </div>

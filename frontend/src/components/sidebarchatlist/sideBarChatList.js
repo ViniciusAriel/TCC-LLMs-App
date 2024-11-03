@@ -32,7 +32,8 @@ export default function SideBarChatList({
                                     return (
                                         <SideBarChatItem
                                             key={index}
-                                            llm={chat.llm}
+                                            mainLLm={chat.main_llm}
+                                            comparedLlm={chat.secondary_llm}
                                             chatTitle={chat.title}
                                             isClosed={isClosed}
                                             onClick={() => {

@@ -19,7 +19,8 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     ];
 
     const [chatTitle, setChatTitle] = useState("Novo Chat");
-    const [chatLlm, setChatLlm] = useState();
+    const [chatMainLlm, setChatMainLlm] = useState();
+    const [chatSecondLlm, setChatSecondLlm] = useState();
     const [chatOptions, setChatOptions] = useState();
 
     const handleCloseModal = () => {
@@ -30,8 +31,12 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
         setChatTitle(event.target.value);
     };
 
-    const handleLlmOption = (event) => {
-        setChatLlm(event.value);
+    const handleMainLlmOption = (event) => {
+        setChatMainLlm(event.value);
+    };
+
+    const handleSecondLlmOption = (event) => {
+        setChatSecondLlm(event.value);
     };
 
     const handleOtherOptions = (event) => {
@@ -41,8 +46,10 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const handleCreateChat = () => {
         axios
             .post(`http://127.0.0.1:8000/chat/create`, {
+                user: 1,
                 title: chatTitle,
-                llm: chatLlm,
+                main_llm: chatMainLlm,
+                secondary_llm: chatSecondLlm,
                 date: new Date().toISOString(),
             })
             .then((response) => {
@@ -63,10 +70,16 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
                         value={chatTitle}
                     />
                     <Dropdown
-                        title={"LLM"}
+                        title={"LLM Base"}
                         placeholder={"Escolha a LLM"}
                         options={llmOptions}
-                        handleSelectedOptions={handleLlmOption}
+                        handleSelectedOptions={handleMainLlmOption}
+                    />
+                    <Dropdown
+                        title={"LLM Comparada"}
+                        placeholder={"Escolha a LLM"}
+                        options={llmOptions}
+                        handleSelectedOptions={handleSecondLlmOption}
                     />
                     <Dropdown
                         title={"Opções"}

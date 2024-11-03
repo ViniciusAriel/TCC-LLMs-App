@@ -70,6 +70,7 @@ function App() {
         const newMessage = {
             content: message,
             sender_is_llm: false,
+            sender_is_main_llm: false,
             date: localISOTime,
             chat: currentChat.id,
         };
@@ -77,10 +78,12 @@ function App() {
         axios
             .post(`http://127.0.0.1:8000/message/create`, newMessage)
             .then((response) => {
+                console.log(response.data);
                 setMessages([
                     ...messages,
                     response.data.user_message,
-                    response.data.llm_response,
+                    response.data.main_llm_response,
+                    response.data.secondary_llm_response,
                 ]);
             })
             .catch((err) => console.log(err));
