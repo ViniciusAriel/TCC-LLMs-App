@@ -23,7 +23,7 @@ class ChatUser(models.Model):
         return str(self.name)
     
 class Chat(models.Model):
-    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
+    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.CASCADE, default=1)
     main_llm = models.CharField(choices=LLM.choices, null=False)
     secondary_llm = models.CharField(choices=LLM.choices, null=False, default='Groq')
     title = models.CharField(max_length=255)
@@ -34,7 +34,7 @@ class Chat(models.Model):
         return str(self.title)
 
 class Message(models.Model):
-    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.SET_DEFAULT, default=1)
+    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE, default=1)
     content = models.CharField(max_length=4096)
     sender_is_llm = models.BooleanField(blank=False)
     sender_is_main_llm = models.BooleanField(blank=False, default=False)
