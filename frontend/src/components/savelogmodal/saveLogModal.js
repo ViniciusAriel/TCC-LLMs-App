@@ -30,7 +30,7 @@ export default function SaveLogModal({ currentChat, setSaveLogModal }) {
 
     const download = (content, fileName) => {
         var a = document.createElement("a");
-        var file = new Blob([JSON.stringify(content)], {
+        var file = new Blob([JSON.stringify(content, null, 2)], {
             type: "application/json",
         });
         a.href = URL.createObjectURL(file);

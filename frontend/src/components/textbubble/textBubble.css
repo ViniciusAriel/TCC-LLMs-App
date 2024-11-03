@@ -39,3 +39,7 @@
         margin: 10px 0px;
     }
 }
+
+.chat-message.main {
+    background-color: #FFD966;
+}
