@@ -40,6 +40,8 @@ export default function SideBarChatList({
                                                 selectedCurrentChat(
                                                     chat.id,
                                                     chat.title,
+                                                    chat.main_llm,
+                                                    chat.secondary_llm,
                                                     false
                                                 );
                                             }}

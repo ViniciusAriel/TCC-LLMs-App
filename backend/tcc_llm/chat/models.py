@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 def default_prompt():
     return [
@@ -23,7 +24,7 @@ class ChatUser(models.Model):
         return str(self.name)
     
 class Chat(models.Model):
-    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.SET_DEFAULT, default=1)
+    user_id = models.ForeignKey(ChatUser, related_name='chats', on_delete=models.CASCADE, default=1)
     main_llm = models.CharField(choices=LLM.choices, null=False)
     secondary_llm = models.CharField(choices=LLM.choices, null=False, default='Groq')
     title = models.CharField(max_length=255)
@@ -34,7 +35,7 @@ class Chat(models.Model):
         return str(self.title)
 
 class Message(models.Model):
-    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.SET_DEFAULT, default=1)
+    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE, default=1)
     content = models.CharField(max_length=4096)
     sender_is_llm = models.BooleanField(blank=False)
     sender_is_main_llm = models.BooleanField(blank=False, default=False)
@@ -42,3 +43,12 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.content)
+    
+
+class HarpiaLog(models.Model):
+    log_file = models.FileField(upload_to='uploads/')
+    llms_to_use = ArrayField(models.CharField(max_length=50, choices=LLM.choices), blank=True, default=list)
+    prompt = models.JSONField(default=default_prompt)
+
+    def __str__(self):
+        return "json file"

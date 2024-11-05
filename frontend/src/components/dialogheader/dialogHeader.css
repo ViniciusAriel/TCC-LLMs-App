@@ -39,16 +39,14 @@
     justify-content: center;
     width: fit-content;
     height: fit-content;
-    gap: 15px;
+    gap: 16px;
 }
 
-.chat-log {
+.icon {
     padding-top: 8px;
     cursor: pointer;
 }
 
-.chat-settings {
-    padding-top: 8px;
+.icon.last {
     padding-right: 3rem;
-    cursor: pointer;
 }
