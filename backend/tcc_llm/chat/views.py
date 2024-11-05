@@ -5,15 +5,18 @@ from django.http import FileResponse
 from django.http import JsonResponse
 import os
 import json
+import zipfile
+import io
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 
-from .models import ChatUser, Chat, Message
-from .serializers import ChatPromptSerializer, ChatUserSerializer, ChatSerializer, MessageSerializer
-from .utils import get_chat_response, duplicate_messages, create_chat_log
+from .models import ChatUser, Chat, Message, HarpiaLog, default_prompt
+from .serializers import ChatPromptSerializer, ChatUserSerializer, ChatSerializer, MessageSerializer, HarpiaLogSerializer
+from .utils import get_chat_response, duplicate_messages, create_chat_log, create_harpia_log
+from .forms import UploadFileForm
 
 # Common used functions
 
@@ -197,3 +200,30 @@ def index(request):
     with open(file_path, 'r') as file:
             html_content = file.read()
     return HttpResponse(html_content)
+
+class HarpiaLogView(ModelViewSet):
+     serializer_class = HarpiaLogSerializer;
+
+     def upload_tests(self, request):
+          serializer = HarpiaLogSerializer(data=request.data)
+          if not serializer.is_valid():
+               return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+          body_data = request.data
+
+          file_data = body_data.get("log_file").read().decode('utf-8')
+          data_array = create_harpia_log(file_data, default_prompt())
+
+          zip_buffer = io.BytesIO()
+
+          with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+                  # Convert each dictionary to a JSON file and add it to the ZIP archive
+                  for i, llm_data in enumerate(data_array):
+                          file_name = "output_" + llm_data["llm_model"] + ".json"  # Create a unique name for each file
+                          json_content = json.dumps(llm_data, indent=4)  # Convert dictionary to JSON string
+                          zip_file.writestr(file_name, json_content)  # Write JSON content to the ZIP file
+
+          zip_buffer.seek(0)
+          response = HttpResponse(zip_buffer, content_type="application/zip")
+          response['Content-Disposition'] = 'attachment; filename="json_files.zip"'
+          return response

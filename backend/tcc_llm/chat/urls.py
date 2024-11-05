@@ -1,6 +1,6 @@
 from django.urls import path
 from .import views
-from .views import ChatView, UserView, MessageView
+from .views import ChatView, UserView, MessageView, HarpiaLogView
 
 urlpatterns = [
     path('', views.index, name="index"),
@@ -15,4 +15,6 @@ urlpatterns = [
     path('chat/duplicate/<int:pk>', ChatView.as_view(actions={"post": "duplicate"})),
     path('chat/download_log/<int:pk>', ChatView.as_view(actions={"get": "download_log"})),
     path('chat/prompt/<int:pk>', ChatView.as_view(actions={"put": "edit_prompt", "get": "get_prompt"})),
+
+    path('harpia/log_input', HarpiaLogView.as_view(actions={"post": "upload_tests"})),
 ]
