@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ChatUser, Chat, Message
+from .models import ChatUser, Chat, Message, HarpiaLog
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,3 +39,9 @@ class ChatPromptSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
         fields = ['prompt']
+
+
+class HarpiaLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HarpiaLog
+        fields = ['log_file', 'llms_to_use']

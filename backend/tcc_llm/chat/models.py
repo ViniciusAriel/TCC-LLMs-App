@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 def default_prompt():
     return [
@@ -42,3 +43,12 @@ class Message(models.Model):
 
     def __str__(self):
         return str(self.content)
+    
+
+class HarpiaLog(models.Model):
+    log_file = models.FileField(upload_to='uploads/')
+    llms_to_use = ArrayField(models.CharField(max_length=50, choices=LLM.choices), blank=True, default=list)
+    prompt = models.JSONField(default=default_prompt)
+
+    def __str__(self):
+        return "json file"
