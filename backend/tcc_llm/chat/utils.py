@@ -87,3 +87,20 @@ def create_chat_log(messages):
                         data["instances"].append(message_data)
 
         return data
+
+def calculate_comet_metric(messages):
+        data = []
+
+        message_data = {}
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        message_data["src"] = message.content
+                elif message.sendder_is_main_llm:
+                        message_data["ref"] = message.content
+                else:
+                        message_data["mt"] = message.content
+
+                
+
+        return "empty"
