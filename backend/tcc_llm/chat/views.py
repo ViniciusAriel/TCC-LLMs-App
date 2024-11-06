@@ -15,7 +15,7 @@ from rest_framework.decorators import action
 
 from .models import ChatUser, Chat, Message, HarpiaLog, default_prompt
 from .serializers import ChatPromptSerializer, ChatUserSerializer, ChatSerializer, MessageSerializer, HarpiaLogSerializer
-from .utils import get_chat_response, duplicate_messages, create_chat_log, create_harpia_log, calculate_comet_metric
+from .utils import get_chat_response, duplicate_messages, create_chat_log, create_harpia_log, calculate_comet_metric, calculate_bertscore_metric
 from .forms import UploadFileForm
 
 # Common used functions
@@ -91,6 +91,13 @@ class ChatView(ModelViewSet):
 
           metric_result = {}
           metric_result["comet"] = calculate_comet_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def bertscore_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_bertscore_metric(messages)
 
           return Response(metric_result, status=status.HTTP_200_OK)
      
