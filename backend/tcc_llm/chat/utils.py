@@ -12,6 +12,7 @@ from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_groq import ChatGroq
 
 from comet import download_model, load_from_checkpoint
+from evaluate import load
 
 _ = load_dotenv(find_dotenv())
 
@@ -110,6 +111,26 @@ def calculate_comet_metric(messages):
         model_output = model.predict(data, batch_size=8, gpus=1)
 
         return model_output.system_score
+
+def calculate_bertscore_metric(messages):
+        bertscore = load("bertscore")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
+
+        return results
+
+
 
 def create_harpia_log(data_str, prompt_array):
         data_array = []
