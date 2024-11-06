@@ -11,6 +11,8 @@ from langchain_ollama.chat_models import ChatOllama
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_groq import ChatGroq
 
+from comet import download_model, load_from_checkpoint
+
 _ = load_dotenv(find_dotenv())
 
 openai_key = os.getenv('OPENAI_API_KEY')
@@ -96,14 +98,19 @@ def calculate_comet_metric(messages):
         for message in messages:
                 if not message.sender_is_llm:
                         message_data["src"] = message.content
-                elif message.sendder_is_main_llm:
+                elif message.sender_is_main_llm:
                         message_data["ref"] = message.content
                 else:
                         message_data["mt"] = message.content
+                        data.append(message_data)
 
-                
+        model_path = download_model("Unbabel/wmt22-comet-da")
+        model = load_from_checkpoint(model_path)
 
-        return "empty"
+        model_output = model.predict(data, batch_size=8, gpus=1)
+
+        return model_output.system_score
+
 def create_harpia_log(data_str, prompt_array):
         data_array = []
 
