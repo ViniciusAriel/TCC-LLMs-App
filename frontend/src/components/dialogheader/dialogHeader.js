@@ -12,6 +12,7 @@ export default function DialogHeader({
     setSaveLogModal,
     setPromptModal,
     setDeleteModal,
+    setEvaluationModal,
 }) {
     return (
         <div className="dialogheader-container">
@@ -46,7 +47,7 @@ export default function DialogHeader({
                         <MdAnalytics
                             size={35}
                             color="#2F4D65"
-                            // onClick={() => setDeleteModal(true)}
+                            onClick={() => setEvaluationModal(true)}
                         />
                     </div>
                     <div className="icon last">
