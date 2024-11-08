@@ -5,6 +5,7 @@ import axios from "axios";
 import Dropdown from "../dropdown/dropdown";
 import TextInput from "../textinput/textInput";
 import Button from "../button/button";
+import ModalContainer from "../modalcontainer/modalContainer";
 
 import "./alterPromptModal.css";
 
@@ -77,7 +78,7 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
     };
 
     return (
-        <div className="prompt-modal-container">
+        <ModalContainer>
             <div className="prompt-modal-content">
                 <h2>Alterar Prompt {currentChat.title}</h2>
                 <div className="prompt-itens" ref={promptEndRef}>
@@ -135,6 +136,6 @@ export default function AlterPromptModal({ setPromptModal, currentChat }) {
                     />
                 </div>
             </div>
-        </div>
+        </ModalContainer>
     );
 }

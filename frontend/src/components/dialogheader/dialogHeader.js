@@ -3,6 +3,7 @@ import { React } from "react";
 import { IoSettingsSharp } from "react-icons/io5";
 import { RiFileDownloadFill } from "react-icons/ri";
 import { BiSolidTrashAlt } from "react-icons/bi";
+import { MdAnalytics } from "react-icons/md";
 
 import "./dialogHeader.css";
 
@@ -39,6 +40,13 @@ export default function DialogHeader({
                             size={32}
                             color="#2F4D65"
                             onClick={() => setSaveLogModal(true)}
+                        />
+                    </div>
+                    <div className="icon">
+                        <MdAnalytics
+                            size={35}
+                            color="#2F4D65"
+                            // onClick={() => setDeleteModal(true)}
                         />
                     </div>
                     <div className="icon last">

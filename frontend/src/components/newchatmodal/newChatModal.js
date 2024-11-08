@@ -4,6 +4,7 @@ import axios from "axios";
 import Dropdown from "../dropdown/dropdown.js";
 import TextInput from "../textinput/textInput.js";
 import Button from "../button/button.js";
+import ModalContainer from "../modalcontainer/modalContainer.js";
 
 import "./newChatModal.css";
 
@@ -61,7 +62,7 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     };
 
     return (
-        <div className="newchat-modal-container">
+        <ModalContainer>
             <div className="newchat-modal-content">
                 <h2>Novo Chat</h2>
                 <div className="newchat-item">
@@ -102,6 +103,6 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
                     />
                 </div>
             </div>
-        </div>
+        </ModalContainer>
     );
 }
