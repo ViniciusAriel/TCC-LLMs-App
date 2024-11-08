@@ -91,6 +91,23 @@ def create_chat_log(messages):
 
         return data
 
+def calculate_bleu_metric(messages):
+        bleu = load("bleu")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append([message.content])
+                else:
+                        predictions.append(message.content)
+
+        results = bleu.compute(predictions=predictions, references=references)
+        return results["bleu"]
+
 def calculate_comet_metric(messages):
         data = []
 
@@ -129,8 +146,6 @@ def calculate_bertscore_metric(messages):
         results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
 
         return results
-
-
 
 def create_harpia_log(data_str, prompt_array):
         data_array = []
