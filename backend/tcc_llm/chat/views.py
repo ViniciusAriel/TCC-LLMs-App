@@ -12,10 +12,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-
 from .models import ChatUser, Chat, Message, HarpiaLog, default_prompt
 from .serializers import ChatPromptSerializer, ChatUserSerializer, ChatSerializer, MessageSerializer, HarpiaLogSerializer
-from .utils import get_chat_response, duplicate_messages, create_chat_log, create_harpia_log, calculate_comet_metric, calculate_bertscore_metric
+from .utils import *
 from .forms import UploadFileForm
 
 # Common used functions
@@ -85,6 +84,14 @@ class ChatView(ModelViewSet):
           json_data = create_chat_log(messages)
 
           return JsonResponse(json_data)
+     
+     def bleu_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["bleu_score"] = calculate_bleu_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
      
      def comet_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
