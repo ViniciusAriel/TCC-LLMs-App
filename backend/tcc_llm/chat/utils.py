@@ -91,6 +91,24 @@ def create_chat_log(messages):
 
         return data
 
+def calculate_bertscore_metric(messages):
+        bertscore = load("bertscore")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
+
+        return results
+
 def calculate_bleu_metric(messages):
         bleu = load("bleu")
 
@@ -107,6 +125,23 @@ def calculate_bleu_metric(messages):
 
         results = bleu.compute(predictions=predictions, references=references)
         return results["bleu"]
+
+def calculate_cer_metric(messages):
+        cer = load("cer")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = cer.compute(predictions=predictions, references=references)
+        return results
 
 def calculate_comet_metric(messages):
         data = []
@@ -128,24 +163,6 @@ def calculate_comet_metric(messages):
         model_output = model.predict(data, batch_size=8, gpus=1)
 
         return model_output.system_score
-
-def calculate_bertscore_metric(messages):
-        bertscore = load("bertscore")
-
-        predictions = []
-        references = []
-
-        for message in messages:
-                if not message.sender_is_llm:
-                        continue
-                elif message.sender_is_main_llm:
-                        references.append(message.content)
-                else:
-                        predictions.append(message.content)
-
-        results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
-
-        return results
 
 def create_harpia_log(data_str, prompt_array):
         data_array = []

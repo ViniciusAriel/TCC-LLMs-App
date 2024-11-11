@@ -85,6 +85,13 @@ class ChatView(ModelViewSet):
 
           return JsonResponse(json_data)
      
+     def bertscore_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_bertscore_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def bleu_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
@@ -93,18 +100,19 @@ class ChatView(ModelViewSet):
 
           return Response(metric_result, status=status.HTTP_200_OK)
      
+     def cer_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["cer_score"] = calculate_cer_metric(messages)
+          
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def comet_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
           metric_result = {}
           metric_result["comet"] = calculate_comet_metric(messages)
-
-          return Response(metric_result, status=status.HTTP_200_OK)
-     
-     def bertscore_metric(self, request, pk):
-          messages = Message.objects.filter(chat=pk)
-
-          metric_result = calculate_bertscore_metric(messages)
 
           return Response(metric_result, status=status.HTTP_200_OK)
      

@@ -19,6 +19,7 @@ urlpatterns = [
     path('chat/comet_metric/<int:pk>', ChatView.as_view(actions={"get": "comet_metric"})),
     path('chat/bertscore_metric/<int:pk>', ChatView.as_view(actions={"get": "bertscore_metric"})),
     path('chat/bleu_metric/<int:pk>', ChatView.as_view(actions={"get": "bleu_metric"})),
+    path('chat/cer_metric/<int:pk>', ChatView.as_view(actions={"get": "cer_metric"})),
 
     path('harpia/log_input', HarpiaLogView.as_view(actions={"post": "upload_tests"})),
 ]
