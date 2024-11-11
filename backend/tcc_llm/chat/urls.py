@@ -21,6 +21,7 @@ urlpatterns = [
     path('chat/bleu_metric/<int:pk>', ChatView.as_view(actions={"get": "bleu_metric"})),
     path('chat/cer_metric/<int:pk>', ChatView.as_view(actions={"get": "cer_metric"})),
     path('chat/character_metric/<int:pk>', ChatView.as_view(actions={"get": "character_metric"})),
+    path('chat/chrf_metric/<int:pk>', ChatView.as_view(actions={"get": "chrf_metric"})),
 
     path('harpia/log_input', HarpiaLogView.as_view(actions={"post": "upload_tests"})),
 ]

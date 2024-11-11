@@ -116,6 +116,14 @@ class ChatView(ModelViewSet):
 
           return Response(metric_results, status=status.HTTP_200_OK)
      
+     def chrf_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_results = {}
+          metric_results["chrf_score"] = calculate_chrf_metric(messages)
+
+          return Response(metric_results, status=status.HTTP_200_OK)
+     
      def comet_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 

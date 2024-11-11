@@ -160,6 +160,23 @@ def calculate_character_metric(messages):
         results = character.compute(predictions=predictions, references=references)
         return results["cer_score"]
 
+def calculate_chrf_metric(messages):
+        chrf = load("chrf")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append([message.content])
+                else:
+                        predictions.append(message.content)
+
+        results = chrf.compute(predictions=predictions, references=references)
+        return results["score"]
+
 def calculate_comet_metric(messages):
         data = []
 
