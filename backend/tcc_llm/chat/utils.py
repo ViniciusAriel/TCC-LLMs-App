@@ -143,6 +143,23 @@ def calculate_cer_metric(messages):
         results = cer.compute(predictions=predictions, references=references)
         return results
 
+def calculate_character_metric(messages):
+        character = load("character")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = character.compute(predictions=predictions, references=references)
+        return results["cer_score"]
+
 def calculate_comet_metric(messages):
         data = []
 

@@ -108,6 +108,14 @@ class ChatView(ModelViewSet):
           
           return Response(metric_result, status=status.HTTP_200_OK)
      
+     def character_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_results = {}
+          metric_results["character_score"] = calculate_character_metric(messages)
+
+          return Response(metric_results, status=status.HTTP_200_OK)
+     
      def comet_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
