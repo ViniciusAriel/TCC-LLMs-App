@@ -6,6 +6,7 @@ import DeleteChatModal from "./components/deletechatmodal/deleteChatModal.js";
 import Dialog from "./components/dialog/dialog.js";
 import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
+import EvaluationModal from "./components/evaluationmodal/evaluationModal.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
 import SaveLogModal from "./components/savelogmodal/saveLogModal.js";
 import SideBar from "./components/sidebar/sideBar.js";
@@ -21,6 +22,7 @@ function App() {
     const [isFirstRender, setIsFirstRender] = useState(true);
     const [messages, setMessages] = useState([]);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [evaluationModal, setEvaluationModal] = useState(false);
     const [promptModal, setPromptModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
@@ -115,6 +117,7 @@ function App() {
                     setSaveLogModal={setSaveLogModal}
                     setPromptModal={setPromptModal}
                     setDeleteModal={setDeleteModal}
+                    setEvaluationModal={setEvaluationModal}
                 />
                 <Dialog messages={messages} />
                 <DialogFooter sendMessage={handleSendMessage} />
@@ -141,6 +144,12 @@ function App() {
                 <DeleteChatModal
                     setChatList={setChatList}
                     setDeletePrompt={setDeleteModal}
+                    currentChat={currentChat}
+                />
+            )}
+            {evaluationModal && (
+                <EvaluationModal
+                    setEvaluationModal={setEvaluationModal}
                     currentChat={currentChat}
                 />
             )}

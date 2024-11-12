@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import Button from "../button/button";
+import ModalContainer from "../modalcontainer/modalContainer";
 
 import "./deleteChatModal.css";
 
@@ -25,7 +26,7 @@ export default function DeleteChatModal({
     };
 
     return (
-        <div className="delete-modal-container">
+        <ModalContainer>
             <div className="delete-modal-content">
                 <h2>Deletar {currentChat.title}?</h2>
                 <p>
@@ -46,6 +47,6 @@ export default function DeleteChatModal({
                     />
                 </div>
             </div>
-        </div>
+        </ModalContainer>
     );
 }

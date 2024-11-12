@@ -4,6 +4,7 @@ import axios from "axios";
 
 import Button from "../button/button.js";
 import TextInput from "../textinput/textInput.js";
+import ModalContainer from "../modalcontainer/modalContainer.js";
 
 import "./saveLogModal.css";
 
@@ -41,7 +42,7 @@ export default function SaveLogModal({ currentChat, setSaveLogModal }) {
     };
 
     return (
-        <div className="savelog-modal-container">
+        <ModalContainer>
             <div className="savelog-modal-content">
                 <h2>Baixar Log</h2>
                 <p>
@@ -67,6 +68,6 @@ export default function SaveLogModal({ currentChat, setSaveLogModal }) {
                     />
                 </div>
             </div>
-        </div>
+        </ModalContainer>
     );
 }
