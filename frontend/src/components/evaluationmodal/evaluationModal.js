@@ -12,6 +12,13 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
         { value: "comet_metric", label: "Comet" },
         { value: "bertscore_metric", label: "Bert Score" },
         { value: "bleu_metric", label: "Bleu" },
+        { value: "character_metric", label: "CharacTER" },
+        { value: "chrf_metric", label: "chrf" },
+        { value: "googlebleu_metric", label: "Google-Bleu" },
+        { value: "meteor_metric", label: "Meteor" },
+        { value: "rouge_metric", label: "Rouge" },
+        { value: "ter_metric", label: "TER" },
+        { value: "wer_metric", label: "WER" },
     ];
 
     const [evaluation, setEvaluation] = useState();
