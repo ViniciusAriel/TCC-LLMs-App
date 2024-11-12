@@ -135,7 +135,14 @@ class ChatView(ModelViewSet):
      def google_bleu_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
-          metric_result = calculate_google_bleu(messages)
+          metric_result = calculate_google_bleu_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def meteor_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_meteor_metric(messages)
 
           return Response(metric_result, status=status.HTTP_200_OK)
      

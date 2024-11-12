@@ -23,6 +23,7 @@ urlpatterns = [
     path('chat/chrf_metric/<int:pk>', ChatView.as_view(actions={"get": "chrf_metric"})),
     path('chat/comet_metric/<int:pk>', ChatView.as_view(actions={"get": "comet_metric"})),
     path('chat/googlebleu_metric/<int:pk>', ChatView.as_view(actions={"get": "google_bleu_metric"})),
+    path('chat/meteor_metric/<int:pk>', ChatView.as_view(actions={"get": "meteor_metric"})),
 
     path('harpia/log_input', HarpiaLogView.as_view(actions={"post": "upload_tests"})),
 ]

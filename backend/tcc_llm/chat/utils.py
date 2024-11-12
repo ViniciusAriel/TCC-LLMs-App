@@ -198,7 +198,7 @@ def calculate_comet_metric(messages):
 
         return model_output.system_score
 
-def calculate_google_bleu(messages):
+def calculate_google_bleu_metric(messages):
         google_bleu = load("google_bleu")
 
         predictions = []
@@ -213,6 +213,23 @@ def calculate_google_bleu(messages):
                         references.append([message.content])
 
         results = google_bleu.compute(predictions=predictions, references=references)
+        return results
+
+def calculate_meteor_metric(messages):
+        meteor = load("meteor")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        predictions.append(message.content)
+                else:
+                        references.append(message.content)
+
+        results = meteor.compute(predictions=predictions, references=references)
         return results
 
 def create_harpia_log(data_str, prompt_array):
