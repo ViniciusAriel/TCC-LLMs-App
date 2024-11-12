@@ -85,6 +85,13 @@ class ChatView(ModelViewSet):
 
           return JsonResponse(json_data)
      
+     def bertscore_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_bertscore_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def bleu_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
@@ -92,6 +99,30 @@ class ChatView(ModelViewSet):
           metric_result["bleu_score"] = calculate_bleu_metric(messages)
 
           return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def cer_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["cer_score"] = calculate_cer_metric(messages)
+          
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def character_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_results = {}
+          metric_results["character_score"] = calculate_character_metric(messages)
+
+          return Response(metric_results, status=status.HTTP_200_OK)
+     
+     def chrf_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_results = {}
+          metric_results["chrf_score"] = calculate_chrf_metric(messages)
+
+          return Response(metric_results, status=status.HTTP_200_OK)
      
      def comet_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
@@ -101,12 +132,47 @@ class ChatView(ModelViewSet):
 
           return Response(metric_result, status=status.HTTP_200_OK)
      
-     def bertscore_metric(self, request, pk):
+     def google_bleu_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 
-          metric_result = calculate_bertscore_metric(messages)
+          metric_result = calculate_google_bleu_metric(messages)
 
           return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def meteor_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_meteor_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def rouge_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_rouge_score(messages)
+
+          response_data = {}
+          response_data["rouge1"] = metric_result["rouge1"]
+          response_data["rouge2"] = metric_result["rouge2"]
+          response_data["rougeL"] = metric_result["rougeL"]
+
+          return Response(response_data, status=status.HTTP_200_OK)
+     
+     def ter_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["ter_score"] = calculate_ter_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
+     def wer_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_results = {}
+          metric_results["wer_score"] = calculate_wer_metric(messages)
+
+          return Response(metric_results, status=status.HTTP_200_OK)
      
      def get_prompt(self, request, pk):
         # Recupera o chat pelo pk

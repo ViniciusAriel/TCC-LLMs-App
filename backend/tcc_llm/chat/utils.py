@@ -91,6 +91,24 @@ def create_chat_log(messages):
 
         return data
 
+def calculate_bertscore_metric(messages):
+        bertscore = load("bertscore")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
+
+        return results
+
 def calculate_bleu_metric(messages):
         bleu = load("bleu")
 
@@ -107,6 +125,57 @@ def calculate_bleu_metric(messages):
 
         results = bleu.compute(predictions=predictions, references=references)
         return results["bleu"]
+
+def calculate_cer_metric(messages):
+        cer = load("cer")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = cer.compute(predictions=predictions, references=references)
+        return results
+
+def calculate_character_metric(messages):
+        character = load("character")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = character.compute(predictions=predictions, references=references)
+        return results["cer_score"]
+
+def calculate_chrf_metric(messages):
+        chrf = load("chrf")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append([message.content])
+                else:
+                        predictions.append(message.content)
+
+        results = chrf.compute(predictions=predictions, references=references)
+        return results["score"]
 
 def calculate_comet_metric(messages):
         data = []
@@ -129,8 +198,25 @@ def calculate_comet_metric(messages):
 
         return model_output.system_score
 
-def calculate_bertscore_metric(messages):
-        bertscore = load("bertscore")
+def calculate_google_bleu_metric(messages):
+        google_bleu = load("google_bleu")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append([message.content])
+
+        results = google_bleu.compute(predictions=predictions, references=references)
+        return results
+
+def calculate_meteor_metric(messages):
+        meteor = load("meteor")
 
         predictions = []
         references = []
@@ -143,8 +229,58 @@ def calculate_bertscore_metric(messages):
                 else:
                         predictions.append(message.content)
 
-        results = bertscore.compute(predictions=predictions, references=references, model_type="distilbert-base-uncased")
+        results = meteor.compute(predictions=predictions, references=references)
+        return results
 
+def calculate_rouge_score(messages):
+        rouge = load("rouge")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = rouge.compute(predictions=predictions, references=references)
+        return results
+                        
+def calculate_ter_metric(messages):
+        ter = load("ter")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append([message.content])
+                else:
+                        predictions.append(message.content)
+
+        results = ter.compute(predictions=predictions, references=references)
+        return results["score"]
+
+def calculate_wer_metric(messages):
+        wer = load("wer")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = wer.compute(predictions=predictions, references=references)
         return results
 
 def create_harpia_log(data_str, prompt_array):
