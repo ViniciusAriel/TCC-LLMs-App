@@ -266,6 +266,23 @@ def calculate_ter_metric(messages):
         results = ter.compute(predictions=predictions, references=references)
         return results["score"]
 
+def calculate_wer_metric(messages):
+        wer = load("wer")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = wer.compute(predictions=predictions, references=references)
+        return results
+
 def create_harpia_log(data_str, prompt_array):
         data_array = []
 
