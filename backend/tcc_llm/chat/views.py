@@ -146,6 +146,18 @@ class ChatView(ModelViewSet):
 
           return Response(metric_result, status=status.HTTP_200_OK)
      
+     def rouge_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_rouge_score(messages)
+
+          response_data = {}
+          response_data["rouge1"] = metric_result["rouge1"]
+          response_data["rouge2"] = metric_result["rouge2"]
+          response_data["rougeL"] = metric_result["rougeL"]
+
+          return Response(response_data, status=status.HTTP_200_OK)
+     
      def get_prompt(self, request, pk):
         # Recupera o chat pelo pk
         chat = Chat.objects.filter(pk=pk).first()
