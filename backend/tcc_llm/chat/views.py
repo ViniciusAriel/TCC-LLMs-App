@@ -158,6 +158,14 @@ class ChatView(ModelViewSet):
 
           return Response(response_data, status=status.HTTP_200_OK)
      
+     def ter_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["ter_score"] = calculate_ter_metric(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def get_prompt(self, request, pk):
         # Recupera o chat pelo pk
         chat = Chat.objects.filter(pk=pk).first()
