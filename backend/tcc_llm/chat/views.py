@@ -132,6 +132,13 @@ class ChatView(ModelViewSet):
 
           return Response(metric_result, status=status.HTTP_200_OK)
      
+     def google_bleu_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = calculate_google_bleu(messages)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def get_prompt(self, request, pk):
         # Recupera o chat pelo pk
         chat = Chat.objects.filter(pk=pk).first()
