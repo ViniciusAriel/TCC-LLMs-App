@@ -22,6 +22,13 @@ Ela deve ser a mesma senha configurada ao baixar o postgres.
 Exemplo:
 DATABASE_PASSWORD='MY_POSTGRES_PASSWORD123'
 
+Criar um arquivo '.env' na pasta backend/tcc_llm/chat e adicionar as chaves de API para cada LLM desejado.
+Exemplo:
+MISTRAL_API_KEY=<SUA_CHAVE_MISTRAL>
+GROQ_API_KEY=<SUA_CHAVE_GROQ>
+LLAMA_API_KEY=<SUA_CHAVE_LLAMA>
+OPENAI_API_KEY=<SUA_CHAVE_OPENAI>
+
 Opcional: criar um ambiente virtual para instalar os pacotes sem conflitos
 pip install virtualenv
 virtualenv env
