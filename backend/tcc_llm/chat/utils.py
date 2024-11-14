@@ -21,6 +21,12 @@ llama_key = os.getenv('LLAMA_API_KEY')
 mistral_key = os.getenv('MISTRAL_API_KEY')
 groq_key = os.getenv('GROQ_API_KEY')
 
+# os.environ["HF_ALLOW_CODE_EVAL"] = "1"` 
+# Essa linha de código deve ser descomentada ao utilizar a métrica HumanEval
+# A métrica existe para executar código gerado por modelos não confiáveis
+# não sendo recomendado a sua execução em ambientes não seguros e robusto.
+# Antes de rodar a métrica tome as devidas precauções.
+# Utilize por sua própria conta e risco
 
 def get_chat_response(prompt, chat_id, llm_type, prompt_array, is_main_llm):
 
