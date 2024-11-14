@@ -187,9 +187,9 @@ def calculate_codeeval_metric(messages):
                 if not message.sender_is_llm:
                         continue
                 elif message.sender_is_main_llm:
-                        references.append([message.content])
+                        references.append(message.content)
                 else:
-                        predictions.append(message.content)
+                        predictions.append([message.content])
 
         results = code_eval.compute(predictions=predictions, references=references, k=[1])
         return results
