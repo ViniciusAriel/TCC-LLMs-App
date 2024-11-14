@@ -17,6 +17,7 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
         { value: "comet_metric", label: "Comet" },
         { value: "googlebleu_metric", label: "Google-Bleu" },
         { value: "meteor_metric", label: "Meteor" },
+        { value: "sacrebleu_metric", label: "SacreBLEU" },
         { value: "rouge_metric", label: "Rouge" },
         { value: "ter_metric", label: "TER" },
         { value: "wer_metric", label: "WER" },
