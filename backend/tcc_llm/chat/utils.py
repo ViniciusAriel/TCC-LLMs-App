@@ -177,6 +177,23 @@ def calculate_chrf_metric(messages):
         results = chrf.compute(predictions=predictions, references=references)
         return results["score"]
 
+def calculate_codeeval_metric(messages):
+        code_eval = load("code_eval")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append([message.content])
+                else:
+                        predictions.append(message.content)
+
+        results = code_eval.compute(predictions=predictions, references=references, k=[1])
+        return results
+
 def calculate_comet_metric(messages):
         data = []
 

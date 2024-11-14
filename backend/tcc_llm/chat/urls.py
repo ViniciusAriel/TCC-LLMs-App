@@ -21,6 +21,7 @@ urlpatterns = [
     path('chat/cer_metric/<int:pk>', ChatView.as_view(actions={"get": "cer_metric"})),
     path('chat/character_metric/<int:pk>', ChatView.as_view(actions={"get": "character_metric"})),
     path('chat/chrf_metric/<int:pk>', ChatView.as_view(actions={"get": "chrf_metric"})),
+    path('chat/codeeval_metric/<int:pk>', ChatView.as_view(actions={"get": "codeeval_metric"})),
     path('chat/comet_metric/<int:pk>', ChatView.as_view(actions={"get": "comet_metric"})),
     path('chat/googlebleu_metric/<int:pk>', ChatView.as_view(actions={"get": "google_bleu_metric"})),
     path('chat/meteor_metric/<int:pk>', ChatView.as_view(actions={"get": "meteor_metric"})),
