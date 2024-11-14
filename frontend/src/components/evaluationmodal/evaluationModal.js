@@ -9,11 +9,12 @@ import "./evaluationModal.css";
 
 export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     const metricsOptions = [
-        { value: "comet_metric", label: "Comet" },
         { value: "bertscore_metric", label: "Bert Score" },
         { value: "bleu_metric", label: "Bleu" },
+        { value: "cer_metric", label: "CER" },
         { value: "character_metric", label: "CharacTER" },
         { value: "chrf_metric", label: "chrf" },
+        { value: "comet_metric", label: "Comet" },
         { value: "googlebleu_metric", label: "Google-Bleu" },
         { value: "meteor_metric", label: "Meteor" },
         { value: "rouge_metric", label: "Rouge" },
