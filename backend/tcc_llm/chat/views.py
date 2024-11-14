@@ -158,6 +158,14 @@ class ChatView(ModelViewSet):
 
           return Response(response_data, status=status.HTTP_200_OK)
      
+     def sacrebleu_metric(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
+
+          metric_result = {}
+          metric_result["sacrebleu_score"] = calculate_sacrebleu_metric(messages)["score"]
+
+          return Response(metric_result, status=status.HTTP_200_OK)
+     
      def ter_metric(self, request, pk):
           messages = Message.objects.filter(chat=pk)
 

@@ -248,6 +248,23 @@ def calculate_rouge_score(messages):
 
         results = rouge.compute(predictions=predictions, references=references)
         return results
+
+def calculate_sacrebleu_metric(messages):
+        sacrebleu = load("sacrebleu")
+
+        predictions = []
+        references = []
+
+        for message in messages:
+                if not message.sender_is_llm:
+                        continue
+                elif message.sender_is_main_llm:
+                        references.append(message.content)
+                else:
+                        predictions.append(message.content)
+
+        results = sacrebleu.compute(predictions=predictions, references=references)
+        return results
                         
 def calculate_ter_metric(messages):
         ter = load("ter")
