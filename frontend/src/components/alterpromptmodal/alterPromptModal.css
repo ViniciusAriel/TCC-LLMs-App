@@ -22,7 +22,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .prompt-itens::-webkit-scrollbar {

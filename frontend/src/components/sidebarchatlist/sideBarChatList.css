@@ -4,7 +4,7 @@
     height: 100%;
     width: 90%;
     line-height: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     
     h3 {
