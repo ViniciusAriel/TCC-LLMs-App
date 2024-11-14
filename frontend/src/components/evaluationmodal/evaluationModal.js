@@ -14,7 +14,7 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
         { value: "cer_metric", label: "CER" },
         { value: "character_metric", label: "CharacTER" },
         { value: "chrf_metric", label: "chrf" },
-        { value: "codeeval_metric", label: "Code HumanEval" },
+        // { value: "codeeval_metric", label: "Code HumanEval" },
         { value: "comet_metric", label: "Comet" },
         { value: "googlebleu_metric", label: "Google-Bleu" },
         { value: "meteor_metric", label: "Meteor" },
