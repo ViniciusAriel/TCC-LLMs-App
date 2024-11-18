@@ -6,7 +6,7 @@ export default function Logo({ isClosed }) {
     return (
         <div className={`logo-container ${isClosed ? "close" : ""}`}>
             <div className="logo-image" />
-            <h1>Blabinha</h1>
+            <h1>ChatIA</h1>
         </div>
     );
 }
