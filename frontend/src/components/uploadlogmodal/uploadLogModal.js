@@ -87,9 +87,17 @@ export default function UploadLogModal({ setUploadModal }) {
                     );
                     setProgress(percentCompleted);
                 },
+                responseType: "blob",
             })
             .then((response) => {
-                console.log(response.data);
+                var a = document.createElement("a");
+                var file = new Blob([response.data], {
+                    type: "application/zip",
+                });
+                a.href = URL.createObjectURL(file);
+                a.download = `json_files.zip`;
+                a.click();
+                URL.revokeObjectURL(a.href);
             })
             .catch((err) => console.log(err));
     };
