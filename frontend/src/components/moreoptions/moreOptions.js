@@ -4,7 +4,7 @@ import { CgDetailsMore } from "react-icons/cg";
 
 import "./moreOptions.css";
 
-export default function MoreOptions() {
+export default function MoreOptions({ setUploadModal }) {
     const [open, setOpen] = useState(false);
 
     const handleMoreOptions = () => {
@@ -22,7 +22,14 @@ export default function MoreOptions() {
             {open ? (
                 <div className="moreoptions-options">
                     <p>Sobre as métricas</p>
-                    <p>Upload de arquivo HarpIA</p>
+                    <p
+                        onClick={() => {
+                            setUploadModal(true);
+                            handleMoreOptions();
+                        }}
+                    >
+                        Upload de arquivo HarpIA
+                    </p>
                 </div>
             ) : null}
         </div>

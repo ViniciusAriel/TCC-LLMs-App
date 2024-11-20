@@ -11,6 +11,7 @@ export default function SideBar({
     selectedCurrentChat,
     chatList,
     setNewChatModal,
+    setUploadModal,
 }) {
     const [isClosed, setIsClosed] = useState(false);
     const [width, setWidth] = useState(window.innerWidth);
@@ -39,7 +40,7 @@ export default function SideBar({
 
     return (
         <div className={`sidebar-container ${isClosed ? "close" : ""}`}>
-            <Logo isClosed={isClosed} />
+            <Logo isClosed={isClosed} setUploadModal={setUploadModal} />
             <div className="sidebar-items">
                 <SideBarChatList
                     chatList={chatList}

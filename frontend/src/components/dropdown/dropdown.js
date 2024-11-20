@@ -8,7 +8,7 @@ export default function Dropdown({
     placeholder,
     options,
     handleSelectedOptions,
-    value,
+    isMulti,
 }) {
     return (
         <div className="dropdown-container">
@@ -20,6 +20,7 @@ export default function Dropdown({
                 options={options}
                 onChange={handleSelectedOptions}
                 isSearchable={true}
+                isMulti={isMulti ? true : false}
             />
         </div>
     );
