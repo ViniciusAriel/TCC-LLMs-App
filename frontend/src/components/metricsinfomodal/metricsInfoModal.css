@@ -1,0 +1,68 @@
+.metricsinfo-modal-content {
+    background-color: var(--light-blue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    max-width: 600px;
+    height: fit-content;
+    max-height: 70%;
+    padding: 20px 30px 20px 30px;
+    border-radius: 20px;
+    color: var(--black);
+
+    h2 {
+        margin: 0px;
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+}
+
+.metricsinfo-itens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.metric-info {
+    background-color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    width: 550px;
+    height: 180px;
+    overflow-y: auto;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.5;
+}
+
+.metric-info::-webkit-scrollbar {
+    width: 0.8rem;
+    max-height: 100px;
+  }
+  
+.metric-info::-webkit-scrollbar-track {
+    background: var(--white);
+    border-radius: 10px;
+}
+
+.metric-info::-webkit-scrollbar-thumb {
+    background: var(--white);
+    box-shadow: inset 0 0 5px rgb(56, 56, 56);
+    border-radius: 10px;
+}
+
+.modal-buttons {
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}

@@ -77,7 +77,7 @@ export default function UploadLogModal({ setUploadModal }) {
 
         const fd = new FormData();
         fd.append("log_file", file);
-        chosenLlms.forEach((item) => fd.append("llms_to_use[]", item));
+        fd.append("llms_to_use", JSON.stringify(chosenLlms));
 
         axios
             .post(`http://127.0.0.1:8000/harpia/log_input`, fd, {
@@ -114,15 +114,6 @@ export default function UploadLogModal({ setUploadModal }) {
                     do arquivo.
                 </p>
                 <div className="uploadlog-modal-itens">
-                    <Dropdown
-                        title={"LLMs"}
-                        handleSelectedOptions={(item) =>
-                            handleSelectedLlms(item)
-                        }
-                        isMulti={true}
-                        placeholder={"Selecione as LLMs desejadas..."}
-                        options={llmOptions}
-                    />
                     <div className="input-container">
                         <input
                             type="file"
@@ -162,6 +153,15 @@ export default function UploadLogModal({ setUploadModal }) {
                             </div>
                         )}
                     </div>
+                    <Dropdown
+                        title={"LLMs"}
+                        handleSelectedOptions={(item) =>
+                            handleSelectedLlms(item)
+                        }
+                        isMulti={true}
+                        placeholder={"Selecione as LLMs desejadas..."}
+                        options={llmOptions}
+                    />
                 </div>
                 <div className="modal-buttons">
                     <Button
