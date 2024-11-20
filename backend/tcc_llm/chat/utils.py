@@ -364,7 +364,7 @@ def create_harpia_log(data_str, prompt_array):
                         llm_instances.append(new_instance)
 
                 llm_data["instances"] = llm_instances
-                llm_data["metrics"] = data["metrics"]
+                llm_data["metrics"] = data["metrics"] if "metrics" in data else []
                 llm_data["llm_model"] = llm_name
                 data_array.append(llm_data)
         
