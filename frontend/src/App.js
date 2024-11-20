@@ -8,6 +8,7 @@ import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
 import EvaluationModal from "./components/evaluationmodal/evaluationModal.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
+import UploadLogModal from "./components/uploadlogmodal/uploadLogModal.js";
 import SaveLogModal from "./components/savelogmodal/saveLogModal.js";
 import SideBar from "./components/sidebar/sideBar.js";
 
@@ -26,6 +27,7 @@ function App() {
     const [promptModal, setPromptModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
+    const [uploadModal, setUploadModal] = useState(false);
 
     const handleNewChatAdded = () => {
         const chat = chatList[chatList.length - 1];
@@ -110,6 +112,7 @@ function App() {
                 chatList={chatList}
                 selectedCurrentChat={handleChangeChat}
                 setNewChatModal={setNewChatModal}
+                setUploadModal={setUploadModal}
             />
             <div className="chat-container">
                 <DialogHeader
@@ -153,6 +156,7 @@ function App() {
                     currentChat={currentChat}
                 />
             )}
+            {uploadModal && <UploadLogModal setUploadModal={setUploadModal} />}
         </div>
     );
 }

@@ -1,5 +1,5 @@
 .delete-modal-content {
-    background-color: #B5CDD2;
+    background-color: var(--light-blue);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
     max-height: 53%;
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
-    color: #252525;
+    color: var(--black);
     gap: 10px;
 
     h2 {

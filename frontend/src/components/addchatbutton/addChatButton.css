@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #B5CDD2;
+    background-color: var(--light-blue);
     border-radius: 35px;
     gap: 10px;
     width: fit-content;
@@ -16,12 +16,12 @@
         margin: 10px;
         font-size: 18px;
         right: 10px;
-        color: #2F4D65;
+        color: var(--dark-blue);
     }
 }
 
 .addbutton-container.close {
-    background-color:#2F4D65;
+    background-color: var(--dark-blue);
     width: fit-content;
     p {
         display: none;

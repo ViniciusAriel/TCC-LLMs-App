@@ -10,11 +10,11 @@
 }
 
 .button-container.blue {
-    background-color: #436987;
-    color: #FEFFFC;
+    background-color: var(--medium-blue);
+    color: var(--white);
 }
 
 .button-container.white {
-    background-color: #FEFFFC;
-    color: #252525;
+    background-color: var(--white);
+    color: var(--black);
 }

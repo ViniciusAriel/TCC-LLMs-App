@@ -7,7 +7,7 @@
     top: 0;
 
     hr {
-        background-color: #2F4D65;
+        background-color: var(--dark-blue);
         width: 40%;
         height: 1px;
         opacity: 0.33;
@@ -27,7 +27,7 @@
 .header-title {
     width: fit-content;
     h1 {
-        color: #252525;
+        color: var(--black);
         padding-left: 3rem;
         font-size: 28px;
     }

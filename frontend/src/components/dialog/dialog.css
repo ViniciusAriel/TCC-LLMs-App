@@ -15,12 +15,12 @@
   }
   
 .dialog-container::-webkit-scrollbar-track {
-    background: #FEFFFC;
+    background: var(--white);
     border-radius: 10px;
 }
 
 .dialog-container::-webkit-scrollbar-thumb {
-    background: #FEFFFC;
+    background: var(--white);
     box-shadow: inset 0 0 5px rgb(56, 56, 56);
     border-radius: 10px;
 }

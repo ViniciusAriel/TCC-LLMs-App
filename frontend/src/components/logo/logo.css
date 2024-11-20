@@ -6,7 +6,7 @@
     width: 100%;
 
     h1 {
-        color: #B5CDD2;
+        color: var(--light-blue);
         font-size: 30px;
     }
 }
@@ -21,7 +21,7 @@
 .logo-image {
     height: 4.5rem;
     width: 4.5rem;
-    background-color: #B5CDD2;
+    background-color: var(--light-blue);
     border-radius: 50%;
     display: inline-block;
 }

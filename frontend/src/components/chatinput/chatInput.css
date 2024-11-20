@@ -9,12 +9,12 @@
         height: 40px;
         border-radius: 30px;
         border: none;
-        background: #FEFFFC;
+        background: var(--white);
         padding: 2px 15px;
-        box-shadow: inset 5px #436987;
+        box-shadow: inset 5px var(--medium-blue);
         font-family: "Noto Sans", sans-serif;
         font-size: 15px;
-        color: #252525
+        color: var(--black);
     }
 
     input:focus {

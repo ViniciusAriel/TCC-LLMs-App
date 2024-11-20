@@ -1,5 +1,5 @@
 .evaluation-modal-content {
-    background-color: #B5CDD2;
+    background-color: var(--light-blue);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,11 +10,12 @@
     max-height: 53%;
     padding: 20px 30px 20px 30px;
     border-radius: 20px;
-    color: #252525;
+    color: var(--black);
     gap: 10px;
 
     h2 {
         margin: 0px;
+        text-align: center;
     }
 
     p {
@@ -49,12 +50,12 @@
   }
   
 .evaluation-itens.show::-webkit-scrollbar-track {
-    background: #FEFFFC;
+    background: var(--white);
     border-radius: 10px;
 }
 
 .evaluation-itens.show::-webkit-scrollbar-thumb {
-    background: #FEFFFC;
+    background: var(--white);
     box-shadow: inset 0 0 5px rgb(56, 56, 56);
     border-radius: 10px;
 }
