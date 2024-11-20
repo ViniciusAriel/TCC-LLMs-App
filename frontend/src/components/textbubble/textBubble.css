@@ -12,12 +12,12 @@
     max-width: 60%;
     width: fit-content;
     height: fit-content;
-    background-color: #436987;
+    background-color: var(--medium-blue);
     float: right;
     border-radius: 25px;
 
     p {
-        color: #FEFFFC;
+        color: var(--white);
         float: right;
         padding: 0px 15px;
         margin: 10px 0px;
@@ -28,12 +28,12 @@
     width: 100%;
     width: fit-content;
     height: fit-content;
-    background-color: #FEFFFC;
+    background-color: var(--white);
     float: left;
     border-radius: 25px;
 
     p {
-        color: #252525;
+        color: var(--black);
         float: left;
         padding: 0px 15px;
         margin: 10px 0px;

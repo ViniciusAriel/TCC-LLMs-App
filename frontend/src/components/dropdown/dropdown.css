@@ -18,5 +18,5 @@
     width: 350px;
     font-size: 15px;
     border-radius: 25px;
-    background: #FEFFFC;
+    background: var(--white);
 }
