@@ -315,7 +315,8 @@ class HarpiaLogView(ModelViewSet):
           body_data = request.data
 
           file_data = body_data.get("log_file").read().decode('utf-8')
-          data_array = create_harpia_log(file_data, default_prompt())
+
+          data_array = create_harpia_log(file_data, default_prompt(), body_data.getlist("llms_to_use[]"))
 
           zip_buffer = io.BytesIO()
 

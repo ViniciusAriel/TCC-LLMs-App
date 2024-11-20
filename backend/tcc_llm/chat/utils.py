@@ -323,12 +323,10 @@ def calculate_wer_metric(messages):
         results = wer.compute(predictions=predictions, references=references)
         return results
 
-def create_harpia_log(data_str, prompt_array):
+def create_harpia_log(data_str, prompt_array, llm_choices):
         data_array = []
 
         data = json.loads(data_str)
-
-        llm_choices = [LLM.GROQ]
 
         for llm_name in llm_choices:
                 llm_data = {}
