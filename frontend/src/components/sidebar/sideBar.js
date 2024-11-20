@@ -10,6 +10,7 @@ import "./sideBar.css";
 export default function SideBar({
     selectedCurrentChat,
     chatList,
+    setMetricInfoModal,
     setNewChatModal,
     setUploadModal,
 }) {
@@ -40,7 +41,11 @@ export default function SideBar({
 
     return (
         <div className={`sidebar-container ${isClosed ? "close" : ""}`}>
-            <Logo isClosed={isClosed} setUploadModal={setUploadModal} />
+            <Logo
+                isClosed={isClosed}
+                setUploadModal={setUploadModal}
+                setMetricInfoModal={setMetricInfoModal}
+            />
             <div className="sidebar-items">
                 <SideBarChatList
                     chatList={chatList}

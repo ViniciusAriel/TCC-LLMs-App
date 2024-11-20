@@ -7,6 +7,7 @@ import Dialog from "./components/dialog/dialog.js";
 import DialogHeader from "./components/dialogheader/dialogHeader.js";
 import DialogFooter from "./components/dialogfooter/dialogFooter.js";
 import EvaluationModal from "./components/evaluationmodal/evaluationModal.js";
+import MetricsInfoModal from "./components/metricsinfomodal/metricsInfoModal.js";
 import NewChatModal from "./components/newchatmodal/newChatModal.js";
 import UploadLogModal from "./components/uploadlogmodal/uploadLogModal.js";
 import SaveLogModal from "./components/savelogmodal/saveLogModal.js";
@@ -25,6 +26,7 @@ function App() {
     const [deleteModal, setDeleteModal] = useState(false);
     const [evaluationModal, setEvaluationModal] = useState(false);
     const [promptModal, setPromptModal] = useState(false);
+    const [metricInfoModal, setMetricInfoModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
     const [uploadModal, setUploadModal] = useState(false);
@@ -111,6 +113,7 @@ function App() {
             <SideBar
                 chatList={chatList}
                 selectedCurrentChat={handleChangeChat}
+                setMetricInfoModal={setMetricInfoModal}
                 setNewChatModal={setNewChatModal}
                 setUploadModal={setUploadModal}
             />
@@ -157,6 +160,9 @@ function App() {
                 />
             )}
             {uploadModal && <UploadLogModal setUploadModal={setUploadModal} />}
+            {metricInfoModal && (
+                <MetricsInfoModal setMetricInfoModal={setMetricInfoModal} />
+            )}
         </div>
     );
 }
