@@ -45,6 +45,7 @@
 
 .input-button.choose {
     background-color: var(--white);
+    width: 370px;
     cursor: pointer;
 }
 

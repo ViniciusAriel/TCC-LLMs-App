@@ -4,7 +4,7 @@ import { CgDetailsMore } from "react-icons/cg";
 
 import "./moreOptions.css";
 
-export default function MoreOptions({ setUploadModal }) {
+export default function MoreOptions({ setUploadModal, setMetricInfoModal }) {
     const [open, setOpen] = useState(false);
 
     const handleMoreOptions = () => {
@@ -21,11 +21,18 @@ export default function MoreOptions({ setUploadModal }) {
             />
             {open ? (
                 <div className="moreoptions-options">
-                    <p>Sobre as métricas</p>
+                    <p
+                        onClick={() => {
+                            setMetricInfoModal(true);
+                            setOpen(!open);
+                        }}
+                    >
+                        Sobre as métricas
+                    </p>
                     <p
                         onClick={() => {
                             setUploadModal(true);
-                            handleMoreOptions();
+                            setOpen(!open);
                         }}
                     >
                         Upload de arquivo HarpIA
