@@ -38,6 +38,7 @@ export default function UploadLogModal({ setUploadModal }) {
     const llmOptions = [
         { value: "MistralAI", label: "Mistral" },
         { value: "Groq", label: "Groq" },
+        { value: "OpenAI", label: "OpenAI"},
     ];
 
     const handleSelectedLlms = (item) => {

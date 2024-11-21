@@ -12,6 +12,7 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const llmOptions = [
         { value: "MistralAI", label: "Mistral" },
         { value: "Groq", label: "Groq" },
+        { value: "OpenAI", label: "OpenAI"},
     ];
 
     const otherOptions = [
