@@ -337,7 +337,7 @@ def create_harpia_log(data_str, prompt_array, llm_choices):
                 elif llm_name == LLM.OLLAMA:
                         llm = ChatOllama(model="llama3.1", api_key=llama_key)
                 elif llm_name == LLM.OPENAI:
-                        llm = OpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+                        llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
                 elif llm_name == LLM.GROQ:
                         llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
                 else:
