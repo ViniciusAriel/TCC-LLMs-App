@@ -119,7 +119,7 @@ export default function UploadLogModal({ setUploadModal }) {
                     Essa funcionalidade tem como objetivo automatizar o processo
                     de preenchimento do log de entrada do HarpIA. Faça o
                     download do modelo, preencha os campos "input" e
-                    "expected_output", escolha as LLMs desejadas e faça o upload
+                    "expected_output", escolha os LLMs desejados e faça o upload
                     do arquivo.
                 </p>
                 <div className="uploadlog-modal-itens">
@@ -168,7 +168,7 @@ export default function UploadLogModal({ setUploadModal }) {
                             handleSelectedLlms(item)
                         }
                         isMulti={true}
-                        placeholder={"Selecione as LLMs desejadas..."}
+                        placeholder={"Selecione os LLMs desejados"}
                         options={llmOptions}
                     />
                 </div>

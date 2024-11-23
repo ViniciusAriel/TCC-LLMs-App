@@ -57,8 +57,8 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
                     </p>
                     <div className="evaluation-itens">
                         <Dropdown
-                            title={"LLM Base"}
-                            placeholder={"Escolha a LLM"}
+                            title={"Métrica"}
+                            placeholder={"Escolha a métrica desejada"}
                             options={metricsOptions}
                             handleSelectedOptions={handleChosenMetric}
                         />
