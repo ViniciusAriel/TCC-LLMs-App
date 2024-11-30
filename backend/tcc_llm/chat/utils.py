@@ -6,7 +6,7 @@ import json
 
 from langchain.prompts import ChatPromptTemplate
 
-from langchain_openai import OpenAI
+from langchain_openai.chat_models import ChatOpenAI
 from langchain_ollama.chat_models import ChatOllama
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_groq import ChatGroq
@@ -36,7 +36,7 @@ def get_chat_response(prompt, chat_id, llm_type, prompt_array, is_main_llm):
         elif llm_type == LLM.OLLAMA:
                 llm = ChatOllama(model="llama3.1", api_key=llama_key)
         elif llm_type == LLM.OPENAI:
-                llm = OpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+                llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
         elif llm_type == LLM.GROQ:
                 llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
         else:
@@ -323,12 +323,10 @@ def calculate_wer_metric(messages):
         results = wer.compute(predictions=predictions, references=references)
         return results
 
-def create_harpia_log(data_str, prompt_array):
+def create_harpia_log(data_str, prompt_array, llm_choices):
         data_array = []
 
         data = json.loads(data_str)
-
-        llm_choices = [LLM.GROQ]
 
         for llm_name in llm_choices:
                 llm_data = {}
@@ -339,7 +337,7 @@ def create_harpia_log(data_str, prompt_array):
                 elif llm_name == LLM.OLLAMA:
                         llm = ChatOllama(model="llama3.1", api_key=llama_key)
                 elif llm_name == LLM.OPENAI:
-                        llm = OpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+                        llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
                 elif llm_name == LLM.GROQ:
                         llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
                 else:

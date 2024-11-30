@@ -219,6 +219,56 @@ class ChatView(ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+     
+     def analyse_single_message(self, request, message_pk):
+          messages = Message.objects.filter()
+
+          messages_to_analyze = []
+
+          for i in range(len(messages)):
+               if messages[i].id == message_pk:
+
+                    messages_to_analyze.append(messages[i])
+                    messages_to_analyze.append(messages[i + 1])
+                    messages_to_analyze.append(messages[i + 2])
+                    break
+          
+          body_data = request.data
+          metric_string = body_data.get("metric")
+          metric_result = {}
+
+          if metric_string == "bertscore":
+               metric_result = calculate_bertscore_metric(messages_to_analyze)
+          elif metric_string == "bleu":
+               metric_result["bleu_score"] = calculate_bleu_metric(messages_to_analyze)
+          elif metric_string == "cer":
+               metric_result["cer_score"] = calculate_cer_metric(messages_to_analyze)
+          elif metric_string == "character":
+               metric_result["character_score"] = calculate_character_metric(messages_to_analyze)
+          elif metric_string == "chrf":
+               metric_result["chrf_score"] = calculate_chrf_metric(messages_to_analyze)
+          elif metric_string == "codeeval":
+               metric_result = calculate_codeeval_metric(messages_to_analyze)
+          elif metric_string == "comet":
+               metric_result["comet"] = calculate_comet_metric(messages_to_analyze)
+          elif metric_string == "google_bleu":
+               metric_result = calculate_google_bleu_metric(messages_to_analyze)
+          elif metric_string == "meteor":
+               metric_result = calculate_meteor_metric(messages_to_analyze)
+          elif metric_string == "rouge":
+               result = calculate_rouge_score(messages_to_analyze)
+
+               metric_result["rouge1"] = result["rouge1"]
+               metric_result["rouge2"] = result["rouge2"]
+               metric_result["rougeL"] = result["rougeL"]
+          elif metric_string == "sacrebleu":
+               metric_result["sacrebleu_score"] = calculate_sacrebleu_metric(messages_to_analyze)["score"]
+          elif metric_string == "ter":
+               metric_result["ter_score"] = calculate_ter_metric(messages_to_analyze)
+          elif metric_string == "wer":
+               metric_result["wer_score"] = calculate_wer_metric(messages_to_analyze)
+
+          return Response(metric_result, status=status.HTTP_200_OK)
 
 
 class UserView(ModelViewSet):
@@ -315,7 +365,8 @@ class HarpiaLogView(ModelViewSet):
           body_data = request.data
 
           file_data = body_data.get("log_file").read().decode('utf-8')
-          data_array = create_harpia_log(file_data, default_prompt())
+
+          data_array = create_harpia_log(file_data, default_prompt(), body_data.getlist("llms_to_use[]"))
 
           zip_buffer = io.BytesIO()
 

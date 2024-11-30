@@ -77,18 +77,27 @@ export default function UploadLogModal({ setUploadModal }) {
 
         const fd = new FormData();
         fd.append("log_file", file);
-        fd.append("llms_to_use", JSON.stringify(chosenLlms));
+        chosenLlms.forEach((item) => fd.append("llms_to_use[]", item));
 
         axios
-            .post(`http://127.0.0.1:8000/harpia/log_input`, fd, {
-                onUploadProgress: (ProgressEvent) => {
-                    const percentCompleted = Math.round(
-                        (ProgressEvent.loaded * 100) / ProgressEvent.total
-                    );
-                    setProgress(percentCompleted);
+            .post(
+                `http://127.0.0.1:8000/harpia/log_input`,
+                fd,
+                {
+                    onUploadProgress: (ProgressEvent) => {
+                        const percentCompleted = Math.round(
+                            (ProgressEvent.loaded * 100) / ProgressEvent.total
+                        );
+                        setProgress(percentCompleted);
+                    },
+                    responseType: "blob",
                 },
-                responseType: "blob",
-            })
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
             .then((response) => {
                 var a = document.createElement("a");
                 var file = new Blob([response.data], {
@@ -110,7 +119,7 @@ export default function UploadLogModal({ setUploadModal }) {
                     Essa funcionalidade tem como objetivo automatizar o processo
                     de preenchimento do log de entrada do HarpIA. Faça o
                     download do modelo, preencha os campos "input" e
-                    "expected_output", escolha as LLMs desejadas e faça o upload
+                    "expected_output", escolha os LLMs desejados e faça o upload
                     do arquivo.
                 </p>
                 <div className="uploadlog-modal-itens">
@@ -159,7 +168,7 @@ export default function UploadLogModal({ setUploadModal }) {
                             handleSelectedLlms(item)
                         }
                         isMulti={true}
-                        placeholder={"Selecione as LLMs desejadas..."}
+                        placeholder={"Selecione os LLMs desejados"}
                         options={llmOptions}
                     />
                 </div>

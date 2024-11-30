@@ -14,10 +14,10 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
         { value: "Groq", label: "Groq" },
     ];
 
-    const otherOptions = [
-        { value: "save", label: "Salvar contexto de outros chats" },
-        { value: "not save", label: "Não salvar contexto de outros chats" },
-    ];
+    // const otherOptions = [
+    //     { value: "save", label: "Salvar contexto de outros chats" },
+    //     { value: "not save", label: "Não salvar contexto de outros chats" },
+    // ];
 
     const [chatTitle, setChatTitle] = useState("Novo Chat");
     const [chatMainLlm, setChatMainLlm] = useState();
@@ -41,9 +41,9 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
         setChatSecondLlm(event.value);
     };
 
-    const handleOtherOptions = (event) => {
-        setChatOptions(event.value);
-    };
+    // const handleOtherOptions = (event) => {
+    //     setChatOptions(event.value);
+    // };
 
     const handleCreateChat = () => {
         axios
@@ -73,22 +73,22 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
                     />
                     <Dropdown
                         title={"LLM Base"}
-                        placeholder={"Escolha a LLM"}
+                        placeholder={"Escolha o LLM"}
                         options={llmOptions}
                         handleSelectedOptions={handleMainLlmOption}
                     />
                     <Dropdown
-                        title={"LLM Comparada"}
-                        placeholder={"Escolha a LLM"}
+                        title={"LLM Comparado"}
+                        placeholder={"Escolha o LLM"}
                         options={llmOptions}
                         handleSelectedOptions={handleSecondLlmOption}
                     />
-                    <Dropdown
+                    {/* <Dropdown
                         title={"Opções"}
                         placeholder={"Escolha uma opção"}
                         options={otherOptions}
                         handleSelectedOptions={handleOtherOptions}
-                    />
+                    /> */}
                 </div>
                 <div className="modal-buttons">
                     <Button
