@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 
 import ModalContainer from "../modalcontainer/modalContainer";
@@ -25,8 +25,9 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     ];
 
     const [evaluation, setEvaluation] = useState();
-    const [chosenMetric, setChosenMetric] = useState();
     const [evaluationMade, setEvaluationMade] = useState(false);
+    const [chosenMetric, setChosenMetric] = useState();
+    const [metricInfo, setMetricInfo] = useState();
 
     const handleChosenMetric = (event) => {
         setChosenMetric(event.value);
@@ -35,6 +36,53 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     const handleCloseModal = () => {
         setEvaluationModal(false);
     };
+
+    const changeMetricInfo = (op) => {
+        switch (op) {
+            case "bertscore_metric":
+                setMetricInfo("AAAAAAA");
+                break;
+            case "bleu_metric":
+                setMetricInfo("BBBBBB");
+                break;
+            case "cer_metric":
+                setMetricInfo("CCCCC");
+                break;
+            case "character_metric":
+                setMetricInfo("DDDDD");
+                break;
+            case "chrf_metric":
+                setMetricInfo("EEEEEE");
+                break;
+            case "comet_metric":
+                setMetricInfo("FFFFFF");
+                break;
+            case "googlebleu_metric":
+                setMetricInfo("GGGGGG");
+                break;
+            case "meteor_metric":
+                setMetricInfo("HHHHHH");
+                break;
+            case "rouge_metric":
+                setMetricInfo("IIIIIII");
+                break;
+            case "sacrebleu_metric":
+                setMetricInfo("JJJJJJJ");
+                break;
+            case "ter_metric":
+                setMetricInfo("KKKKKKK");
+                break;
+            case "wer_metric":
+                setMetricInfo("LLLLLL");
+                break;
+            default:
+                setMetricInfo("MMMMM");
+        }
+    };
+
+    useEffect(() => {
+        changeMetricInfo(chosenMetric);
+    }, [chosenMetric]);
 
     const handleMakeEvaluation = () => {
         axios
@@ -79,6 +127,7 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
             ) : (
                 <div className="evaluation-modal-content">
                     <h2>Avaliação Feita</h2>
+                    <p>{metricInfo}</p>
                     <div className="evaluation-itens show">
                         <pre>{evaluation}</pre>
                     </div>
