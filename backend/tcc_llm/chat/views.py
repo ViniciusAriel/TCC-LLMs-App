@@ -7,6 +7,7 @@ import os
 import json
 import zipfile
 import io
+from copy import copy
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -220,54 +221,62 @@ class ChatView(ModelViewSet):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
      
-     def analyse_single_message(self, request, message_pk):
-          messages = Message.objects.filter()
+     def analyse_single_message(self, request, pk):
+          messages = Message.objects.filter(chat=pk)
 
-          messages_to_analyze = []
+          messages_groups = []
+          current_message_group = []
 
           for i in range(len(messages)):
-               if messages[i].id == message_pk:
+               current_message_group.append(messages[i])
 
-                    messages_to_analyze.append(messages[i])
-                    messages_to_analyze.append(messages[i + 1])
-                    messages_to_analyze.append(messages[i + 2])
-                    break
+               if i % 3 == 2:
+                    group_to_add = copy(current_message_group)
+                    messages_groups.append(group_to_add)
+                    current_message_group.clear()
           
           body_data = request.data
           metric_string = body_data.get("metric")
           metric_result = {}
+          score_list = []
 
-          if metric_string == "bertscore":
-               metric_result = calculate_bertscore_metric(messages_to_analyze)
-          elif metric_string == "bleu":
-               metric_result["bleu_score"] = calculate_bleu_metric(messages_to_analyze)
-          elif metric_string == "cer":
-               metric_result["cer_score"] = calculate_cer_metric(messages_to_analyze)
-          elif metric_string == "character":
-               metric_result["character_score"] = calculate_character_metric(messages_to_analyze)
-          elif metric_string == "chrf":
-               metric_result["chrf_score"] = calculate_chrf_metric(messages_to_analyze)
-          elif metric_string == "codeeval":
-               metric_result = calculate_codeeval_metric(messages_to_analyze)
-          elif metric_string == "comet":
-               metric_result["comet"] = calculate_comet_metric(messages_to_analyze)
-          elif metric_string == "google_bleu":
-               metric_result = calculate_google_bleu_metric(messages_to_analyze)
-          elif metric_string == "meteor":
-               metric_result = calculate_meteor_metric(messages_to_analyze)
-          elif metric_string == "rouge":
-               result = calculate_rouge_score(messages_to_analyze)
+          for message_group in messages_groups:
+               messages_to_analyze = message_group
 
-               metric_result["rouge1"] = result["rouge1"]
-               metric_result["rouge2"] = result["rouge2"]
-               metric_result["rougeL"] = result["rougeL"]
-          elif metric_string == "sacrebleu":
-               metric_result["sacrebleu_score"] = calculate_sacrebleu_metric(messages_to_analyze)["score"]
-          elif metric_string == "ter":
-               metric_result["ter_score"] = calculate_ter_metric(messages_to_analyze)
-          elif metric_string == "wer":
-               metric_result["wer_score"] = calculate_wer_metric(messages_to_analyze)
+               if metric_string == "bertscore":
+                    score_list.append(calculate_bertscore_metric(messages_to_analyze))
+               elif metric_string == "bleu":
+                    score_list.append(calculate_bleu_metric(messages_to_analyze))
+               elif metric_string == "cer":
+                    score_list.append(calculate_cer_metric(messages_to_analyze))
+               elif metric_string == "character":
+                    score_list.append(calculate_character_metric(messages_to_analyze))
+               elif metric_string == "chrf":
+                    score_list.append(calculate_chrf_metric(messages_to_analyze))
+               elif metric_string == "codeeval":
+                    score_list.append(calculate_codeeval_metric(messages_to_analyze))
+               elif metric_string == "comet":
+                    score_list.append(calculate_comet_metric(messages_to_analyze))
+               elif metric_string == "google_bleu":
+                    score_list.append(calculate_google_bleu_metric(messages_to_analyze))
+               elif metric_string == "meteor":
+                    score_list.append(calculate_meteor_metric(messages_to_analyze))
+               elif metric_string == "rouge":
+                    result = calculate_rouge_score(messages_to_analyze)
 
+                    score_list.append(result["rouge1"])
+                    score_list.append(result["rouge2"])
+                    score_list.append(result["rougeL"])
+
+               elif metric_string == "sacrebleu":
+                    score_list.append(calculate_sacrebleu_metric(messages_to_analyze)["score"])
+               elif metric_string == "ter":
+                    score_list.append(calculate_ter_metric(messages_to_analyze))
+               elif metric_string == "wer":
+                    score_list.append(calculate_wer_metric(messages_to_analyze))
+
+
+          metric_result["score_list"] = score_list
           return Response(metric_result, status=status.HTTP_200_OK)
 
 
