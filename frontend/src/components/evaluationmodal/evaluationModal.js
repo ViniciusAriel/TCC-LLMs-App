@@ -40,40 +40,40 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     const changeMetricInfo = (op) => {
         switch (op) {
             case "bertscore_metric":
-                setMetricInfo("AAAAAAA");
+                setMetricInfo("Essa métrica tem 3 parâmetros de avaliação. Recall: porcentagem das palavras da sentença esperada que se encontram na sentença avaliada; Precisão: porcentagem das palavras da sentença avaliada que se encontram na sentença esperada; F1: média harmônica entre precisão e recall.");
                 break;
             case "bleu_metric":
-                setMetricInfo("BBBBBB");
+                setMetricInfo("Essa métrica é avaliada de 0 a 1, com 0 sendo o pior resultado possível e 1 o melhor resultado possível.");
                 break;
             case "cer_metric":
-                setMetricInfo("CCCCC");
+                setMetricInfo("Essa métrica avalia a distância, em respeito aos caracteres, entre ambas sentenças. O melhor resultado possível é 0.");
                 break;
             case "character_metric":
-                setMetricInfo("DDDDD");
+                setMetricInfo("Essa métrica avalia a distância, em respeito aos caracteres e normalizando pelo tamanho da sentença avaliada, entre ambas sentenças. O melhor resultado possível é 0.");
                 break;
             case "chrf_metric":
-                setMetricInfo("EEEEEE");
+                setMetricInfo("Essa métrica é avaliada de 0 a 100, com 0 sendo o pior resultado possível e 100 o melhor resultado possível.");
                 break;
             case "comet_metric":
-                setMetricInfo("FFFFFF");
+                setMetricInfo("Essa métrica é avaliada de 0 a 1, com 0 sendo o pior resultado possível e 1 o melhor resultado possível.");
                 break;
             case "googlebleu_metric":
-                setMetricInfo("GGGGGG");
+                setMetricInfo("Essa métrica é avaliada de 0 a 1, com 0 sendo o pior resultado possível e 1 o melhor resultado possível.");
                 break;
             case "meteor_metric":
-                setMetricInfo("HHHHHH");
+                setMetricInfo("Essa métrica é avaliada de 0 a 1, com 0 sendo o pior resultado possível e 1 o melhor resultado possível.");
                 break;
             case "rouge_metric":
-                setMetricInfo("IIIIIII");
+                setMetricInfo("Essa métrica tem 3 parâmetros de avaliação. Rouge1: análise 1-gram match; Rouge2: análise 2-gram match; RougeL: pontuação de maior subsequência presente em ambas sentenças. Para todas elas, o pior resultado possível é 0 e o melhor resultado possível é 1.");
                 break;
             case "sacrebleu_metric":
-                setMetricInfo("JJJJJJJ");
+                setMetricInfo("Essa métrica é avaliada de 0 a 1, com 0 sendo o pior resultado possível e 1 o melhor resultado possível.");
                 break;
             case "ter_metric":
-                setMetricInfo("KKKKKKK");
+                setMetricInfo("Essa métric avalia a distância entre sentenças, em respeito às edições necessárias para se obter a sentença de referência a partir da sentença avaliada. O melhor resultado possível é 0.");
                 break;
             case "wer_metric":
-                setMetricInfo("LLLLLL");
+                setMetricInfo("Essa métrica avalia a distância, em respeito às palavras, entre ambas sentenças. O melhor resultado possível é 0.");
                 break;
             default:
                 setMetricInfo("MMMMM");
