@@ -25,6 +25,7 @@ function App() {
     const [messages, setMessages] = useState([]);
     const [deleteModal, setDeleteModal] = useState(false);
     const [evaluationModal, setEvaluationModal] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [promptModal, setPromptModal] = useState(false);
     const [metricInfoModal, setMetricInfoModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
@@ -91,6 +92,7 @@ function App() {
             chat: currentChat.id,
         };
         setMessages([...messages, newMessage]);
+        setLoading(true);
         axios
             .post(`http://127.0.0.1:8000/message/create`, newMessage)
             .then((response) => {
@@ -100,6 +102,7 @@ function App() {
                     response.data.main_llm_response,
                     response.data.secondary_llm_response,
                 ]);
+                setLoading(false);
             })
             .catch((err) => console.log(err));
     };
@@ -125,7 +128,7 @@ function App() {
                     setDeleteModal={setDeleteModal}
                     setEvaluationModal={setEvaluationModal}
                 />
-                <Dialog messages={messages} />
+                <Dialog messages={messages} loading={loading} />
                 <DialogFooter sendMessage={handleSendMessage} />
             </div>
             {newChatModal && (

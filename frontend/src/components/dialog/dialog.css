@@ -24,3 +24,21 @@
     box-shadow: inset 0 0 5px rgb(56, 56, 56);
     border-radius: 10px;
 }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 24px; /* Ajuste o tamanho do spinner */
+    animation: spin 1s linear infinite; /* Aplica a animação */
+}
