@@ -30,7 +30,7 @@ urlpatterns = [
     path('chat/ter_metric/<int:pk>', ChatView.as_view(actions={"get": "ter_metric"})),
     path('chat/wer_metric/<int:pk>', ChatView.as_view(actions={"get": "wer_metric"})),
 
-    path('chat/single_message_metric/<int:pk>', ChatView.as_view(actions={"get": "analyse_single_message"})),
+    path('chat/single_message_metric/<int:pk>', ChatView.as_view(actions={"post": "analyse_single_message"})),
 
     path('harpia/log_input', HarpiaLogView.as_view(actions={"post": "upload_tests"})),
 ]

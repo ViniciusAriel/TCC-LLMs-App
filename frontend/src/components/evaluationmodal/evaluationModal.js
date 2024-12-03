@@ -109,6 +109,22 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     }, [chosenMetric]);
 
     const handleMakeEvaluation = () => {
+        // DESCOMENTAR PARA SINGLE MESSAGE EVALUATION
+        // const metric = chosenMetric.split("_");
+        // const obj = {
+        //     metric: metric[0],
+        // };
+        // axios
+        //     .post(
+        //         `http://127.0.0.1:8000/chat/single_message_metric/${currentChat.id}`,
+        //         obj
+        //     )
+        //     .then((response) => {
+        //         setEvaluation(JSON.stringify(response.data, null, 2));
+        //         setEvaluationMade(true);
+        //     })
+        //     .catch((err) => console.log(err));
+        // DESCOMENTAR PARA CHAT EVALUATION
         axios
             .get(`http://127.0.0.1:8000/chat/${chosenMetric}/${currentChat.id}`)
             .then((response) => {
