@@ -7,7 +7,6 @@ import json
 from langchain.prompts import ChatPromptTemplate
 
 from langchain_openai.chat_models import ChatOpenAI
-from langchain_ollama.chat_models import ChatOllama
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_groq import ChatGroq
 
@@ -28,19 +27,43 @@ groq_key = os.getenv('GROQ_API_KEY')
 # Antes de rodar a métrica tome as devidas precauções.
 # Utilize por sua própria conta e risco
 
+# Seleciona a LLM sendo usada
+def select_llm(llm_type):
+        if llm_type == LLM.GROQ_GEMMA:
+                llm = ChatGroq(model="gemma-7b-it", api_key=groq_key)
+        elif llm_type == LLM.GROQ_GEMMA_2:
+                llm = ChatGroq(model="gemma2-9b-it", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_8B:
+                llm = ChatGroq(model="llama3-8b-8192", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_70B:
+                llm = ChatGroq(model="llama3-70b-8192", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_1_8B:
+                llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_1_70B:
+                llm = ChatGroq(model="llama-3.1-70b-versatile", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_2_1B:
+                llm = ChatGroq(model="llama-3.2-1b-preview", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_2_3B:
+                llm = ChatGroq(model="llama-3.2-3b-preview", api_key=groq_key)
+        elif llm_type == LLM.GROQ_MIXTRAL:
+                llm = ChatGroq(model="mixtral-8x7b-32768", api_key=groq_key)
+        elif llm_type == LLM.MISTRAL_NEMO:
+                llm = ChatMistralAI(model_name="open-mistral-nemo", api_key=mistral_key)
+        elif llm_type == LLM.MISTRAL_SMALL:
+                llm = ChatMistralAI(api_key=mistral_key)
+        elif llm_type == LLM.MISTRAL_PIXTRAL:
+                llm = ChatMistralAI(model_name="pixtral-12b-2409", api_key=mistral_key)
+        elif llm_type == LLM.GPT_3_5:
+                llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+        else:
+                llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
+
+        return llm
+
+
 def get_chat_response(prompt, chat_id, llm_type, prompt_array, is_main_llm):
 
-        # Seleciona a LLM sendo usada
-        if llm_type == LLM.MISTRAL:
-                llm = ChatMistralAI(api_key=mistral_key)
-        elif llm_type == LLM.OLLAMA:
-                llm = ChatOllama(model="llama3.1", api_key=llama_key)
-        elif llm_type == LLM.OPENAI:
-                llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
-        elif llm_type == LLM.GROQ:
-                llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
-        else:
-                llm = ChatMistralAI(api_key=mistral_key)
+        llm = select_llm(llm_type=llm_type)
 
         # Prepara o prompt array para o ChatPromptTemplate
         prompt_messages = [(item["role"], item["content"]) for item in prompt_array]
@@ -332,16 +355,7 @@ def create_harpia_log(data_str, prompt_array, llm_choices):
                 llm_data = {}
                 llm_instances = []
 
-                if llm_name == LLM.MISTRAL:
-                        llm = ChatMistralAI(api_key=mistral_key)
-                elif llm_name == LLM.OLLAMA:
-                        llm = ChatOllama(model="llama3.1", api_key=llama_key)
-                elif llm_name == LLM.OPENAI:
-                        llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
-                elif llm_name == LLM.GROQ:
-                        llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
-                else:
-                        llm = ChatMistralAI(api_key=mistral_key)
+                llm = select_llm(llm_type=llm_name)
 
                 for instance in data["instances"]:
                         # Prepara o prompt array para o ChatPromptTemplate
