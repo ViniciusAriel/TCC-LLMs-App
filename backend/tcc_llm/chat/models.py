@@ -3,18 +3,36 @@ from django.contrib.postgres.fields import ArrayField
 
 def default_prompt():
     return [
-    { "role": "system", "content": "Responda as mensagens." },
-    { "role": "human", "content": "Olá, tudo bem?" },
-    { "role": "ai", "content": "Olá! Como posso ajudar?" }
+  {
+    "role": "system",
+    "content": "Traduza as mensagens do português para o inglês, dando como resposota apenas a frase traduzida"
+  },
+  {
+    "role": "human",
+    "content": "Olá, bom dia!"
+  },
+  {
+    "role": "ai",
+    "content": "Hello, good morning!"
+  }
 ]
 
 # Create your models here.
 
 class LLM(models.TextChoices):
-    MISTRAL = 'MistralAI'
-    OLLAMA = 'Ollama'
-    OPENAI = 'OpenAI'
-    GROQ = 'Groq'
+    GPT_3_5 = 'GPT 3.5'
+    GROQ_GEMMA = 'Gemma'
+    GROQ_GEMMA_2 = 'Gemma 2'
+    GROQ_LLAMA_3_8B = 'Llama 3 8b'
+    GROQ_LLAMA_3_70B = 'Llama 3 70b'
+    GROQ_LLAMA_3_1_8B = 'Llama 3.1 8b'
+    GROQ_LLAMA_3_1_70B = 'Llama 3.1 70b'
+    GROQ_LLAMA_3_2_1B = 'Llama 3.2 1b'
+    GROQ_LLAMA_3_2_3B = 'Llama 3.2 3b'
+    GROQ_MIXTRAL = 'Mixtral 8x7b'
+    MISTRAL_NEMO = 'Mistral Nemo'
+    MISTRAL_SMALL = 'Mistral Small'
+    MISTRAL_PIXTRAL = 'Pixtral 12b'
 
 class ChatUser(models.Model):
     name = models.CharField(max_length=225, null=False, blank=False)
