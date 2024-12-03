@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv, find_dotenv
 import json
+from copy import copy
 
 from langchain.prompts import ChatPromptTemplate
 
@@ -371,13 +372,17 @@ def create_harpia_log(data_str, prompt_array, llm_choices):
                         llm_chain = prompt_template | llm
                         chat_response = llm_chain.invoke({'text': instance["input"]}).content
 
-                        new_instance = instance
+                        print("RESPONSE:")
+                        print(chat_response)
+
+                        new_instance = copy(instance)
                         new_instance["actual_output"] = chat_response
                         llm_instances.append(new_instance)
 
-                llm_data["instances"] = llm_instances
+                llm_data["instances"] = copy(llm_instances)
                 llm_data["metrics"] = data["metrics"] if "metrics" in data else []
                 llm_data["llm_model"] = llm_name
-                data_array.append(llm_data)
+                copied_data = copy(llm_data)
+                data_array.append(copied_data)
         
         return data_array
