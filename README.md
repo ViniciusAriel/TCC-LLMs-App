@@ -6,22 +6,18 @@ Para a realizações de testes e posteriormente alterações no projeto, é nece
 - Python: https://www.python.org/downloads/
 - PostgresSQL: https://www.postgresql.org/download/
 
+## Setup Inicial
+Num terminal, rode execute o arquivo 'initial_setup.bat'
+
 ## Como Rodar Nosso Sistema
 ```
-git clone https://github.com/ViniciusAriel/TCC-LLMs-App.git
-cd ./frontend
-npm install
-npm start
-
-Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin.
-Alterar o nome da database e o user em backend/tcc_llm/tcc_llm/settings.py.
-
-cd ../backend
-
 Criar um arquivo '.env' na pasta backend/tcc_llm/tcc_llm e adicionar uma variável para ser a senha de acesso ao banco de dados.
 Ela deve ser a mesma senha configurada ao baixar o postgres.
 Exemplo:
 DATABASE_PASSWORD='MY_POSTGRES_PASSWORD123'
+
+Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin.
+Alterar o nome da database e o user em backend/tcc_llm/tcc_llm/settings.py.
 
 Criar um arquivo '.env' na pasta backend/tcc_llm/chat e adicionar as chaves de API para cada LLM desejado.
 Exemplo:
@@ -30,14 +26,16 @@ GROQ_API_KEY=<SUA_CHAVE_GROQ>
 LLAMA_API_KEY=<SUA_CHAVE_LLAMA>
 OPENAI_API_KEY=<SUA_CHAVE_OPENAI>
 
-Opcional: criar um ambiente virtual para instalar os pacotes sem conflitos
-pip install virtualenv
-virtualenv env
-env/Scripts/activate
+Num terminal, executar:
+cd ./frontend
+npm start
 
+Numa outra aba de terminal executar
+
+cd ./backend
+env_llm/Scripts/activate
 pip install -r requirements.txt
-cd tcc_llm
-python ./manage.py makemigrations
-python ./manage.py migrate
+
+cd ./tcc_llm
 python ./manage.py runserver
 ```
