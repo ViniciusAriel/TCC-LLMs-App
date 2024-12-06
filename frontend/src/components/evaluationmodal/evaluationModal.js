@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from "react";
+import { FaSpinner } from "react-icons/fa6";
+
 import axios from "axios";
 
-import ModalContainer from "../modalcontainer/modalContainer";
-import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
+import Dropdown from "../dropdown/dropdown";
+import ModalContainer from "../modalcontainer/modalContainer";
 
 import "./evaluationModal.css";
 
@@ -24,9 +26,10 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
         { value: "wer_metric", label: "WER" },
     ];
 
+    const [chosenMetric, setChosenMetric] = useState();
     const [evaluation, setEvaluation] = useState();
     const [evaluationMade, setEvaluationMade] = useState(false);
-    const [chosenMetric, setChosenMetric] = useState();
+    const [loading, setLoading] = useState(false);
     const [metricInfo, setMetricInfo] = useState();
 
     const handleChosenMetric = (event) => {
@@ -109,6 +112,7 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
     }, [chosenMetric]);
 
     const handleMakeEvaluation = () => {
+        setLoading(true);
         // DESCOMENTAR PARA SINGLE MESSAGE EVALUATION
         // const metric = chosenMetric.split("_");
         // const obj = {
@@ -130,13 +134,43 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
             .then((response) => {
                 setEvaluation(JSON.stringify(response.data, null, 2));
                 setEvaluationMade(true);
+                setLoading(false);
             })
             .catch((err) => console.log(err));
     };
 
     return (
         <ModalContainer>
-            {!evaluationMade ? (
+            {loading && (
+                <div className="evaluation-modal-content">
+                    <h2>Carregando Avaliação</h2>
+                    <div className="loading-spinner">
+                        <FaSpinner color="#2F4D65" />
+                    </div>
+                    <Button
+                        color={"blue"}
+                        title={"Cancelar"}
+                        onClick={handleCloseModal}
+                    />
+                </div>
+            )}
+            {evaluationMade && !loading && (
+                <div className="evaluation-modal-content">
+                    <h2>Avaliação Feita</h2>
+                    <p>{metricInfo}</p>
+                    <div className="evaluation-itens show">
+                        <pre>{evaluation}</pre>
+                    </div>
+                    <div className="modal-buttons">
+                        <Button
+                            color={"blue"}
+                            title={"Confirmar"}
+                            onClick={handleCloseModal}
+                        />
+                    </div>
+                </div>
+            )}
+            {!evaluationMade && !loading && (
                 <div className="evaluation-modal-content">
                     <h2>Avaliar Conversa {currentChat.title}</h2>
                     <p>
@@ -161,21 +195,6 @@ export default function EvaluationModal({ currentChat, setEvaluationModal }) {
                             color={"blue"}
                             title={"Avaliar"}
                             onClick={handleMakeEvaluation}
-                        />
-                    </div>
-                </div>
-            ) : (
-                <div className="evaluation-modal-content">
-                    <h2>Avaliação Feita</h2>
-                    <p>{metricInfo}</p>
-                    <div className="evaluation-itens show">
-                        <pre>{evaluation}</pre>
-                    </div>
-                    <div className="modal-buttons">
-                        <Button
-                            color={"blue"}
-                            title={"Confirmar"}
-                            onClick={handleCloseModal}
                         />
                     </div>
                 </div>

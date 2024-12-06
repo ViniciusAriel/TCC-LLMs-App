@@ -1,8 +1,8 @@
 import { React, useState, useEffect } from "react";
 
-import ModalContainer from "../modalcontainer/modalContainer";
-import Dropdown from "../dropdown/dropdown";
 import Button from "../button/button";
+import Dropdown from "../dropdown/dropdown";
+import ModalContainer from "../modalcontainer/modalContainer";
 
 import "./metricsInfoModal.css";
 
@@ -58,7 +58,9 @@ export default function MetricsInfoModal({ setMetricInfoModal }) {
                 );
                 break;
             case "comet_metric":
-                setMetricInfo("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                setMetricInfo(
+                    "Crosslingual Optimized Metric for Evaluation of Translation ou COMET é um framework open-source para treinamento de modelos de avaliação de tradução feitas por máquinas. Um dos modelos treinados pelos autores do framework é utilizado para avaliar os resultados dos LLMs. Nesse contexto, a menor nota possível é zero e a maior é 1."
+                );
                 break;
             case "googlebleu_metric":
                 setMetricInfo(
@@ -67,20 +69,22 @@ export default function MetricsInfoModal({ setMetricInfoModal }) {
                 break;
             case "meteor_metric":
                 setMetricInfo(
-                    "METEOR é uma métrica de avaliação de traduções de máquina baseada na pontuação f1 das sentenças analisadas utilizando um n-gram matching de apenas um elemento. O valor dessa métrica representa o quão bem-ordenada estão as palavras da sentença avaliada que também correspondem (exatamente ou semanticamente) à palavras na sentença de referência"
+                    "METEOR é uma métrica de avaliação de traduções de máquina baseada na pontuação f1 das sentenças analisadas utilizando um n-gram matching de apenas um elemento. O valor dessa métrica representa o quão bem-ordenada estão as palavras da sentença avaliada que também correspondem (exatamente ou semanticamente) à palavras na sentença de referência."
                 );
                 break;
             case "rouge_metric":
                 setMetricInfo(
-                    "Rouge, ou Recall-Oriented Understudy for Gisting Evaluation é um conjunto de métricas para avaliação de traduções e resumos feitos de maneira automatizada. O conjunto de métricas utiliza n-gram matches de 1 a 2 elementos, produzindo valores diferentes para cada uma das abordagens. Além disso, também calcula uma pontuação com base na maior sub-sentença presente em ambas as sentenças avaliada e de referência. Quanto mais a pontuação se aproximar de 1, mais próximas as sentenças avaliadas são de suas referências"
+                    "Rouge, ou Recall-Oriented Understudy for Gisting Evaluation é um conjunto de métricas para avaliação de traduções e resumos feitos de maneira automatizada. O conjunto de métricas utiliza n-gram matches de 1 a 2 elementos, produzindo valores diferentes para cada uma das abordagens. Além disso, também calcula uma pontuação com base na maior sub-sentença presente em ambas as sentenças avaliada e de referência. Quanto mais a pontuação se aproximar de 1, mais próximas as sentenças avaliadas são de suas referências."
                 );
                 break;
             case "sacrebleu_metric":
-                setMetricInfo("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                setMetricInfo(
+                    "A métrica SacreBLEU busca resolver os problemas existentes na métrica BLEU relacionados aos seus parâmetros pouco conhecidos, que dificultam a comparação de scores entre casos de uso. Desta forma, o SacreBLEU resolve os problemas de pré-processamento do BLEU, explicitando as parametrizações utilizadas e mantendo um conjunto de testes padrão. Isso possibilita a comparação direta entre scores do BLEU."
+                );
                 break;
             case "ter_metric":
                 setMetricInfo(
-                    "A métrica Translation Edit Rate, ou TER mede a proximidade da sentença avaliada da sentença de referência através do número de edições necessárias para tornar a sentença avaliada igual à sentença de referência"
+                    "A métrica Translation Edit Rate, ou TER mede a proximidade da sentença avaliada da sentença de referência através do número de edições necessárias para tornar a sentença avaliada igual à sentença de referência."
                 );
                 break;
             case "wer_metric":

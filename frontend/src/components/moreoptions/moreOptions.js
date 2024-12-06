@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-
 import { CgDetailsMore } from "react-icons/cg";
 
 import "./moreOptions.css";

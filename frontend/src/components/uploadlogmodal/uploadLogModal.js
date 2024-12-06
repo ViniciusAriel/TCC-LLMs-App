@@ -1,5 +1,4 @@
 import { React, useState, useRef } from "react";
-
 import { MdOutlineFileUpload } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 
@@ -37,18 +36,18 @@ export default function UploadLogModal({ setUploadModal }) {
 
     const llmOptions = [
         { value: "Gemma", label: "Gemma" },
-        { value: "Gemma 2", label: "Gemma 2"},
-        { value: "GPT 3.5", label: "GPT 3.5"},
-        { value: "Llama 3 8b", label: "Llama 3 8b"},
-        { value: "Llama 3 70b", label: "Llama 3 70b"},
+        { value: "Gemma 2", label: "Gemma 2" },
+        { value: "GPT 3.5", label: "GPT 3.5" },
+        { value: "Llama 3 8b", label: "Llama 3 8b" },
+        { value: "Llama 3 70b", label: "Llama 3 70b" },
         { value: "Llama 3.1 8b", label: "Llama 3.1 8b" },
         { value: "Llama 3.1 70b", label: "Llama 3.1 70b" },
         { value: "Llama 3.2 1b", label: "Llama 3.2 1b" },
         { value: "Llama 3.2 3b", label: "Llama 3.2 3b" },
-        { value: "Mistral Nemo", label: "Mistral Nemo"},
+        { value: "Mistral Nemo", label: "Mistral Nemo" },
         { value: "Mistral Small", label: "Mistral Small" },
         { value: "Mixtral 8x7b", label: "Mixtral 8x7b" },
-        { value: "Pixtral 12b", label: "Pixtral 12b"},
+        { value: "Pixtral 12b", label: "Pixtral 12b" },
     ];
 
     const handleSelectedLlms = (item) => {

@@ -3,8 +3,8 @@ import { React, useState } from "react";
 import axios from "axios";
 
 import Button from "../button/button.js";
-import TextInput from "../textinput/textInput.js";
 import ModalContainer from "../modalcontainer/modalContainer.js";
+import TextInput from "../textinput/textInput.js";
 
 import "./saveLogModal.css";
 

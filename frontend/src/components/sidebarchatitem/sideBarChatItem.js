@@ -5,11 +5,10 @@ import { FiMessageSquare } from "react-icons/fi";
 import "./sideBarChatItem.css";
 
 export default function SideBarChatItem({
-    chatTitle,
-    onClick,
-    mainLLm,
     comparedLlm,
     isClosed,
+    mainLLm,
+    onClick,
 }) {
     return (
         <div

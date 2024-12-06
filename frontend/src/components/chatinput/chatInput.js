@@ -2,7 +2,7 @@ import React from "react";
 
 import "./chatInput.css";
 
-export default function ChatInput({ onChange, placeholder, onKeyDown, value }) {
+export default function ChatInput({ onChange, onKeyDown, placeholder, value }) {
     return (
         <div className="chatinput-container">
             <input

@@ -1,15 +1,15 @@
 import { React, useState, useEffect } from "react";
 import { FiSidebar } from "react-icons/fi";
 
-import Logo from "../logo/logo.js";
 import AddChatButton from "../addchatbutton/addChatButton.js";
+import Logo from "../logo/logo.js";
 import SideBarChatList from "../sidebarchatlist/sideBarChatList.js";
 
 import "./sideBar.css";
 
 export default function SideBar({
-    selectedCurrentChat,
     chatList,
+    selectedCurrentChat,
     setMetricInfoModal,
     setNewChatModal,
     setUploadModal,

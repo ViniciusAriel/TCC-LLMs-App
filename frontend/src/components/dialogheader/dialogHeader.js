@@ -1,9 +1,9 @@
 import { React } from "react";
 
-import { IoSettingsSharp } from "react-icons/io5";
-import { RiFileDownloadFill } from "react-icons/ri";
 import { BiSolidTrashAlt } from "react-icons/bi";
+import { IoSettingsSharp } from "react-icons/io5";
 import { MdAnalytics } from "react-icons/md";
+import { RiFileDownloadFill } from "react-icons/ri";
 
 import "./dialogHeader.css";
 

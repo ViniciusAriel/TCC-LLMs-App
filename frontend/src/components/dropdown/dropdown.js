@@ -4,11 +4,11 @@ import Select from "react-select";
 import "./dropdown.css";
 
 export default function Dropdown({
-    title,
-    placeholder,
-    options,
     handleSelectedOptions,
     isMulti,
+    options,
+    placeholder,
+    title,
 }) {
     return (
         <div className="dropdown-container">

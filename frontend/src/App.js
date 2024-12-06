@@ -21,14 +21,14 @@ function App() {
         id: null,
         title: "Crie um Chat",
     });
-    const [isFirstRender, setIsFirstRender] = useState(true);
-    const [messages, setMessages] = useState([]);
     const [deleteModal, setDeleteModal] = useState(false);
     const [evaluationModal, setEvaluationModal] = useState(false);
+    const [isFirstRender, setIsFirstRender] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [promptModal, setPromptModal] = useState(false);
+    const [messages, setMessages] = useState([]);
     const [metricInfoModal, setMetricInfoModal] = useState(false);
     const [newChatModal, setNewChatModal] = useState(false);
+    const [promptModal, setPromptModal] = useState(false);
     const [saveLogModal, setSaveLogModal] = useState(false);
     const [uploadModal, setUploadModal] = useState(false);
 
@@ -52,7 +52,10 @@ function App() {
         axios
             .get(`http://127.0.0.1:8000/user/1`)
             .then((response) => {
-                setChatList(response.data.chats);
+                const sortedChats = response.data.chats.sort(
+                    (a, b) => a.id - b.id
+                );
+                setChatList(sortedChats);
             })
             .catch((err) => console.log(err));
         setIsFirstRender(false);

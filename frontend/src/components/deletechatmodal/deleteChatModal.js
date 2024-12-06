@@ -7,9 +7,9 @@ import ModalContainer from "../modalcontainer/modalContainer";
 import "./deleteChatModal.css";
 
 export default function DeleteChatModal({
+    currentChat,
     setChatList,
     setDeletePrompt,
-    currentChat,
 }) {
     const handleCloseModal = () => {
         setDeletePrompt(false);
@@ -19,7 +19,8 @@ export default function DeleteChatModal({
         axios
             .delete(`http://127.0.0.1:8000/chat/${currentChat.id}`)
             .then((response) => {
-                setChatList(response.data);
+                const sortedChats = response.data.sort((a, b) => a.id - b.id);
+                setChatList(sortedChats);
             })
             .catch((err) => console.log(err));
         setDeletePrompt(false);
