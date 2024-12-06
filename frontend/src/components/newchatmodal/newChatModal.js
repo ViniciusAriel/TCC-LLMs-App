@@ -11,9 +11,14 @@ import "./newChatModal.css";
 
 export default function NewChatModal({ setNewChatModal, setNewChat }) {
     const llmOptions = [
+        { value: "Databricks DBRX", label: "Databricks DBRX" },
         { value: "Gemma", label: "Gemma" },
         { value: "Gemma 2", label: "Gemma 2" },
-        { value: "GPT 3.5", label: "GPT 3.5" },
+        { value: "GPT 3.5 Turbo", label: "GPT 3.5 Turbo" },
+        { value: "GPT 4", label: "GPT 4" },
+        { value: "GPT 4 Turbo", label: "GPT 4 Turbo" },
+        { value: "GPT 4o", label: "GPT 4o" },
+        { value: "GPT 4o Mini", label: "GPT 4o Mini" },
         { value: "Llama 3 8b", label: "Llama 3 8b" },
         { value: "Llama 3 70b", label: "Llama 3 70b" },
         { value: "Llama 3.1 8b", label: "Llama 3.1 8b" },
@@ -24,6 +29,8 @@ export default function NewChatModal({ setNewChatModal, setNewChat }) {
         { value: "Mistral Small", label: "Mistral Small" },
         { value: "Mixtral 8x7b", label: "Mixtral 8x7b" },
         { value: "Pixtral 12b", label: "Pixtral 12b" },
+        { value: "Upstage SOLAR 10.7b", label: "Upstage SOLAR 10.7b" },
+        { value: "Qwen 2.5 7B Turbo", label: "Qwen 2.5 7B Turbo" },
     ];
 
     // const otherOptions = [
