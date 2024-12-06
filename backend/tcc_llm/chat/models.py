@@ -20,7 +20,12 @@ def default_prompt():
 # Create your models here.
 
 class LLM(models.TextChoices):
-    GPT_3_5 = 'GPT 3.5'
+    DATABRICKS_DBRX = 'Databricks DBRX'
+    GPT_3_5_TURBO = 'GPT 3.5 Turbo'
+    GPT_4 = 'GPT 4'
+    GPT_4_TURBO = 'GPT 4 Turbo'
+    GPT_4O = 'GPT 4o'
+    GPT_4O_MINI = 'GPT 4o Mini'
     GROQ_GEMMA = 'Gemma'
     GROQ_GEMMA_2 = 'Gemma 2'
     GROQ_LLAMA_3_8B = 'Llama 3 8b'
@@ -33,6 +38,8 @@ class LLM(models.TextChoices):
     MISTRAL_NEMO = 'Mistral Nemo'
     MISTRAL_SMALL = 'Mistral Small'
     MISTRAL_PIXTRAL = 'Pixtral 12b'
+    UPSTAGE_SOLAR = 'Upstage SOLAR 10.7b'
+    QWEN_2_5_7B = 'Qwen 2.5 7B Turbo'
 
 class ChatUser(models.Model):
     name = models.CharField(max_length=225, null=False, blank=False)

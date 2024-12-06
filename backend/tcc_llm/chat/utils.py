@@ -10,6 +10,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_groq import ChatGroq
+from langchain_together import ChatTogether
 
 from comet import download_model, load_from_checkpoint
 from evaluate import load
@@ -20,6 +21,7 @@ openai_key = os.getenv('OPENAI_API_KEY')
 llama_key = os.getenv('LLAMA_API_KEY')
 mistral_key = os.getenv('MISTRAL_API_KEY')
 groq_key = os.getenv('GROQ_API_KEY')
+together_key = os.getenv('TOGETHER_API_KEY')
 
 # os.environ["HF_ALLOW_CODE_EVAL"] = "1"` 
 # Essa linha de código deve ser descomentada ao utilizar a métrica HumanEval
@@ -30,6 +32,7 @@ groq_key = os.getenv('GROQ_API_KEY')
 
 # Seleciona a LLM sendo usada
 def select_llm(llm_type):
+        # ChatGroq
         if llm_type == LLM.GROQ_GEMMA:
                 llm = ChatGroq(model="gemma-7b-it", api_key=groq_key)
         elif llm_type == LLM.GROQ_GEMMA_2:
@@ -48,14 +51,36 @@ def select_llm(llm_type):
                 llm = ChatGroq(model="llama-3.2-3b-preview", api_key=groq_key)
         elif llm_type == LLM.GROQ_MIXTRAL:
                 llm = ChatGroq(model="mixtral-8x7b-32768", api_key=groq_key)
+
+        # ChatMistralAI
         elif llm_type == LLM.MISTRAL_NEMO:
                 llm = ChatMistralAI(model_name="open-mistral-nemo", api_key=mistral_key)
         elif llm_type == LLM.MISTRAL_SMALL:
                 llm = ChatMistralAI(api_key=mistral_key)
         elif llm_type == LLM.MISTRAL_PIXTRAL:
                 llm = ChatMistralAI(model_name="pixtral-12b-2409", api_key=mistral_key)
-        elif llm_type == LLM.GPT_3_5:
+        
+        # ChatOpenAI
+        elif llm_type == LLM.GPT_3_5_TURBO:
                 llm = ChatOpenAI(model="gpt-3.5-turbo", api_key=openai_key)
+        elif llm_type == LLM.GPT_4:
+                llm = ChatOpenAI(model="gpt-4", api_key=openai_key)
+        elif llm_type == LLM.GPT_4_TURBO:
+                llm = ChatOpenAI(model="gpt-4-turbo", api_key=openai_key)
+        elif llm_type == LLM.GPT_4O:
+                llm = ChatOpenAI(model="gpt-4o", api_key=openai_key)
+        elif llm_type == LLM.GPT_4O_MINI:
+                llm = ChatOpenAI(model="gpt-4o-mini", api_key=openai_key)
+
+        # ChatTogether
+        elif llm_type == LLM.DATABRICKS_DBRX:
+                llm = ChatTogether(model="databricks/dbrx-instruct", api_key=together_key)
+        elif llm_type == LLM.UPSTAGE_SOLAR:
+                llm = ChatTogether(model="upstage/SOLAR-10.7B-Instruct-v1.0", api_key=together_key)
+        elif llm_type == LLM.QWEN_2_5_7B:
+                llm = ChatTogether(model="Qwen/Qwen2.5-7B-Instruct-Turbo", api_key=together_key)
+
+        # Default
         else:
                 llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
 
