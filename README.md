@@ -13,7 +13,7 @@ cd ./frontend
 npm install
 npm start
 
-Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin
+Subir a database criada do PostgresSQL pelo terminal SQLShell ou PgAdmin. Alterar o nome da database e o user em settings.py.
 
 cd ../backend
 
