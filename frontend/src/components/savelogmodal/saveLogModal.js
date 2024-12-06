@@ -47,7 +47,7 @@ export default function SaveLogModal({ currentChat, setSaveLogModal }) {
                 <h2>Baixar Log</h2>
                 <p>
                     Digite o título do arquivo a ser utilizado como log do chat{" "}
-                    {currentChat.title}?
+                    {currentChat.title}
                 </p>
                 <div className="savelog-item">
                     <TextInput
