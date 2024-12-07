@@ -7,7 +7,10 @@ Para a realizações de testes e posteriormente alterações no projeto, é nece
 - PostgresSQL: https://www.postgresql.org/download/
 
 ## Setup Inicial
-Num terminal, rode execute o arquivo 'initial_setup.bat'
+```
+Clonar o arquivo em um diretório pelo comando: git clone https://github.com/ViniciusAriel/TCC-LLMs-App.git
+Em um terminal, execute o arquivo 'initial_setup.bat' na pasta TCC-LLMs-APP pelo comando: ./initial_setup.bat
+```
 
 ## Como Rodar Nosso Sistema
 ```
