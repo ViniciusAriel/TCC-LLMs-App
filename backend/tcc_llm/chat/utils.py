@@ -45,10 +45,10 @@ def select_llm(llm_type):
                 llm = ChatGroq(model="llama-3.1-8b-instant", api_key=groq_key)
         elif llm_type == LLM.GROQ_LLAMA_3_1_70B:
                 llm = ChatGroq(model="llama-3.1-70b-versatile", api_key=groq_key)
-        elif llm_type == LLM.GROQ_LLAMA_3_2_1B:
-                llm = ChatGroq(model="llama-3.2-1b-preview", api_key=groq_key)
         elif llm_type == LLM.GROQ_LLAMA_3_2_3B:
                 llm = ChatGroq(model="llama-3.2-3b-preview", api_key=groq_key)
+        elif llm_type == LLM.GROQ_LLAMA_3_3_70B:
+                llm = ChatGroq(model="llama-3.3-70b-versatile", api_key=groq_key)
         elif llm_type == LLM.GROQ_MIXTRAL:
                 llm = ChatGroq(model="mixtral-8x7b-32768", api_key=groq_key)
 
