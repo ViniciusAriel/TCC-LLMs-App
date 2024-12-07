@@ -34,7 +34,6 @@ Numa outra aba de terminal executar
 
 cd ./backend
 env_llm/Scripts/activate
-pip install -r requirements.txt
 
 cd ./tcc_llm
 python ./manage.py runserver
