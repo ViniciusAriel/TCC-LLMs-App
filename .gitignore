@@ -3,3 +3,4 @@ backend/tcc_llm/chat/__pycache__/
 backend/tcc_llm/tcc_llm/__pycache__/
 backend/tcc_llm/chat/migrations/__pycache__
 backend/tcc_llm/tcc_llm/.env
+backend/tcc_llm/chat/.env
