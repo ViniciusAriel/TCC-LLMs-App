@@ -1,4 +1,4 @@
-# TCC - Desenvolvimento de um Ambiente Integrado para Testes de Múltiplas LLMs no Mesmo Contexto
+# TCC - Desenvolvimento de um Ambiente Integrado para Testes e Comparações de Múltiplos LLM
 
 ## Requisitos
 Para a realizações de testes e posteriormente alterações no projeto, é necessário a instalação do Node Js, Python e PostgresSQL
